@@ -1,11 +1,11 @@
-import { Button } from "./components/ui/button"
+import AuthPage  from "./pages/AuthPage"
 
 
 function App() {
 
   return (
     <>
-      <Button>Click me</Button>
+      <AuthPage />
     </>
   )
 }

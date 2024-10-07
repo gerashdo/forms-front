@@ -1,17 +1,20 @@
-import { useState } from "react"
-import * as z from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { loginSchema } from "@/constants/auth/auth"
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useLogin } from "@/hooks/auth";
+import { loginSchema } from "@/constants/auth/auth";
+import { LoginFormValues } from "@/interfaces/auth";
 
 
-type LoginFormValues = z.infer<typeof loginSchema>
+interface LoginFormProps {
+  onSuccess?: () => void
+}
 
-const LoginForm = () => {
-  const [isLoading, setIsLoading] = useState(false)
+const LoginForm = ({onSuccess}: LoginFormProps) => {
+  const {loginUser, isLoading, success} = useLogin()
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -20,18 +23,14 @@ const LoginForm = () => {
     },
   })
 
-  async function onLoginSubmit(data: LoginFormValues) {
-    setIsLoading(true)
-    try {
-      // Here you would typically call your authentication API
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      console.log('Logging in with:', data)
-    } catch (error) {
-      console.error('Login error:', error)
-      // Handle errors (e.g., show error message to user)
-    } finally {
-      setIsLoading(false)
+  useEffect(() => {
+    if (success && onSuccess) {
+      onSuccess();
     }
+  }, [success]) // eslint-disable-line
+
+  async function onLoginSubmit(data: LoginFormValues) {
+    loginUser(data);
   }
 
   return (

@@ -1,17 +1,20 @@
-import { useState } from "react"
-import * as z from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { signupSchema } from "@/constants/auth/auth"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useSingUp } from "@/hooks/auth";
+import { signupSchema } from "@/constants/auth/auth";
+import { SignupFormValues } from "@/interfaces/auth";
+import { useEffect } from "react";
 
 
-type SignupFormValues = z.infer<typeof signupSchema>
+interface SignUpFormProps {
+  onSuccess?: () => void
+}
 
-const SignUpForm = () => {
-  const [isLoading, setIsLoading] = useState(false)
+const SignUpForm = ({onSuccess}: SignUpFormProps) => {
+  const {signUpUser, success, isLoading} = useSingUp();
 
   const signupForm = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -23,18 +26,14 @@ const SignUpForm = () => {
     },
   })
 
-  async function onSignupSubmit(data: SignupFormValues) {
-    setIsLoading(true)
-    try {
-      // Here you would typically call your authentication API
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      console.log('Signing up with:', data)
-    } catch (error) {
-      console.error('Signup error:', error)
-      // Handle errors (e.g., show error message to user)
-    } finally {
-      setIsLoading(false)
+  useEffect(() => {
+    if (success) {
+      onSuccess?.();
     }
+  }, [success]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onSignupSubmit = (data: SignupFormValues) => {
+    signUpUser(data);
   }
 
   return (
@@ -100,4 +99,4 @@ const SignUpForm = () => {
   )
 }
 
-export default SignUpForm
+export default SignUpForm;

@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.1",
+    "@tanstack/react-router": "^1.62.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.447.0",
@@ -26,6 +28,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@tanstack/router-devtools": "^1.62.0",
+    "@tanstack/router-plugin": "^1.62.0",
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

@@ -16,7 +16,7 @@ export interface User {
   name:     string;
   lastName: string;
   email:    string;
-  role:     string;
+  role:     UserRoles;
 }
 
 export interface LoginResponse {
@@ -26,6 +26,11 @@ export interface LoginResponse {
 export interface DataLoginResponse {
   user:  User;
   token: string;
+}
+
+export enum UserRoles {
+  ADMIN = 'admin',
+  USER = 'user',
 }
 
 export const LoginCodeMessages: Partial<Record<ErrorCode, string>> = {

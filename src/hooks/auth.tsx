@@ -1,9 +1,11 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import { useSetRecoilState } from 'recoil';
 import { useMutation } from '@tanstack/react-query';
 import { login, signup } from '@/requests/auth';
-import { LoginFormValues, SignupFormValues } from '@/interfaces/auth';
 import { useToast } from './use-toast';
+import { AuthState } from '@/state/auth';
 import { getLoginError, getSignUpError } from '@/helpers/getErrorsRequest';
+import { LoginFormValues, LoginResponse, SignupFormValues } from '@/interfaces/auth';
 
 
 export const useSingUp = () => {
@@ -40,11 +42,15 @@ export const useSingUp = () => {
 }
 
 export const useLogin = () => {
+  const setAuthState = useSetRecoilState(AuthState);
   const {toast} = useToast();
   const mutation = useMutation({
     mutationFn: login,
-    onSuccess: () => {
-      console.log('User logged in');
+    onSuccess: (data: AxiosResponse<LoginResponse>) => {
+      setAuthState({
+        user: data.data.data.user,
+        token: data.data.data.token,
+      });
     },
     onError: (error: AxiosError) => {
       const responseCode = error.response?.status || 500;

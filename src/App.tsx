@@ -1,6 +1,7 @@
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { routeTree } from './routeTree.gen';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RecoilRoot } from "recoil";
+import { routeTree } from './routeTree.gen';
 import { Toaster } from "./components/ui/toaster";
 
 
@@ -17,7 +18,9 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <RecoilRoot>
+          <RouterProvider router={router} />
+        </RecoilRoot>
       </QueryClientProvider>
       <Toaster />
     </>

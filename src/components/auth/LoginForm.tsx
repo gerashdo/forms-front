@@ -29,6 +29,10 @@ const LoginForm = ({onSuccess}: LoginFormProps) => {
     }
   }, [success]) // eslint-disable-line
 
+  useEffect(() => {
+    if (success) loginForm.reset();
+  }, [success]) // eslint-disable-line
+
   async function onLoginSubmit(data: LoginFormValues) {
     loginUser(data);
   }

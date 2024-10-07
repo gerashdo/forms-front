@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "@tanstack/react-router"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import SignUpForm from '@/components/auth/SignUpForm'
@@ -7,9 +8,14 @@ import LoginForm from "@/components/auth/LoginForm"
 
 const AuthPage = () => {
   const [activeTab, setActiveTab] = useState<string>('login')
+  const navigate = useNavigate()
 
   const handleSingUpSuccess = () => {
     setActiveTab('login')
+  }
+
+  const handleLoginSuccess = () => {
+    navigate({to: '/', replace: true})
   }
 
   return (
@@ -26,7 +32,7 @@ const AuthPage = () => {
               <TabsTrigger value="signup">Signup</TabsTrigger>
             </TabsList>
             <TabsContent value="login">
-              <LoginForm />
+              <LoginForm onSuccess={handleLoginSuccess} />
             </TabsContent>
             <TabsContent value="signup">
               <SignUpForm onSuccess={handleSingUpSuccess}/>

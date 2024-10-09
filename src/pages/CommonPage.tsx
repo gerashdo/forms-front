@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useRecoilState } from 'recoil';
 import { uiState } from '@/state/ui';
+import { NewTemplateForm } from '@/components/template/NewTemplateForm';
 
 
 export const CommonPage = () => {
@@ -19,10 +20,10 @@ export const CommonPage = () => {
           <DialogHeader>
             <DialogTitle>Let's create a new template</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
+              Create a new template to share with the community
             </DialogDescription>
           </DialogHeader>
+          <NewTemplateForm />
         </DialogContent>
       </Dialog>
     </>

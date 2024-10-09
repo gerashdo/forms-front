@@ -1,10 +1,20 @@
+import { uiState } from "@/state/ui"
 import { Link } from "@tanstack/react-router"
+import { useSetRecoilState } from "recoil"
 // import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu"
 // import { Button } from "./button"
 // import { ChevronDown } from "lucide-react"
 
 
 export const Navbar = () => {
+  const setUiState = useSetRecoilState(uiState)
+  const openCreateTemplateDialog = () => {
+    setUiState((prev) => ({
+      ...prev,
+      isCreateTemplateDialogOpen: true
+    }))
+  }
+
   return (
     <header className="w-full border-b">
       <div className="container mx-auto flex items-center justify-between p-4">
@@ -13,7 +23,7 @@ export const Navbar = () => {
             TestYou
           </Link>
           <nav className="hidden md:flex space-x-4">
-            <Link className="text-sm font-medium">
+            <Link className="text-sm font-medium" onClick={openCreateTemplateDialog}>
               Create Template
             </Link>
             <Link className="text-sm font-medium">

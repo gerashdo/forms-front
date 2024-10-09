@@ -1,12 +1,8 @@
-import { CommonPage } from '@/pages/CommonPage'
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { QueryClient } from '@tanstack/react-query'
+import { createRootRouteWithContext } from '@tanstack/react-router'
+import { MainPage } from '@/pages/MainPage'
 
 
-export const Route = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      <CommonPage />
-    </>
-  )
+export const Route = createRootRouteWithContext<{queryClient: QueryClient}>()({
+  component: MainPage
 })

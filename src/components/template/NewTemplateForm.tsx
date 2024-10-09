@@ -1,29 +1,39 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { Button } from "../ui/button"
-import { Checkbox } from "../ui/checkbox"
-import { Textarea } from "../ui/textarea"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Textarea } from "@/components/ui/textarea"
 import { newTemplateSchema } from "@/constants/templates/template"
-import { NewTemplateFormValues } from "@/interfaces/template"
+import { NewTemplateFormValues, Tag, Topic } from "@/interfaces/template"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
+import { useState } from "react"
 
 
-export const NewTemplateForm = () => {
-  // const [availableTags, setAvailableTags] = useState<string[]>(['React', 'JavaScript', 'TypeScript', 'Node.js', 'Next.js'])
+interface NewTemplateFormProps {
+  topics: Topic[]
+  tags: Tag[]
+}
+
+export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
+  const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
 
   const form = useForm<NewTemplateFormValues>({
     resolver: zodResolver(newTemplateSchema),
     defaultValues: {
       title: '',
       description: '',
+      tags: [],
       topic: '',
       isPublic: true,
     },
   })
-
-  const topics = ['Education', 'Business', 'Technology', 'Health', 'Entertainment']
 
   // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   const file = e.target.files?.[0]
@@ -92,7 +102,7 @@ export const NewTemplateForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Topic</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a topic" />
@@ -100,8 +110,8 @@ export const NewTemplateForm = () => {
                 </FormControl>
                 <SelectContent>
                   {topics.map((topic) => (
-                    <SelectItem key={topic} value={topic}>
-                      {topic}
+                    <SelectItem key={topic.id} value={topic.id.toString()}>
+                      {topic.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -111,13 +121,13 @@ export const NewTemplateForm = () => {
           )}
         />
 
-        {/* <FormField
+        <FormField
           control={form.control}
           name="tags"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tags</FormLabel>
-              <Popover>
+              <Popover open={tagsIsOpen} onOpenChange={setTagsIsOpen}>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
@@ -138,51 +148,41 @@ export const NewTemplateForm = () => {
                 <PopoverContent className="w-full p-0">
                   <Command>
                     <CommandInput placeholder="Search tag..." />
-                    <CommandEmpty>
-                      <Button 
-                        variant="ghost" 
-                        className="w-full justify-start"
-                        onClick={() => {
-                          const newTag = form.getValues('tags').join('')
-                          if (newTag && !availableTags.includes(newTag)) {
-                            setAvailableTags([...availableTags, newTag])
-                            field.onChange([...field.value, newTag])
-                          }
-                        }}
-                      >
-                        Create new tag
-                      </Button>
-                    </CommandEmpty>
-                    <CommandGroup>
-                      {availableTags.map((tag) => (
-                        <CommandItem
-                          value={tag}
-                          key={tag}
-                          onSelect={() => {
-                            field.onChange(
-                              field.value.includes(tag)
-                                ? field.value.filter((value) => value !== tag)
-                                : [...field.value, tag]
-                            )
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              field.value.includes(tag) ? "opacity-100" : "opacity-0"
-                            )}
-                          />
-                          {tag}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
+                    <CommandList>
+                      <CommandEmpty>No tag found.</CommandEmpty>
+                      <CommandGroup>
+                        {tags.map((tag) =>(
+                          <CommandItem
+                            key={tag.id}
+                            value={tag.name}
+                            onSelect={() => {
+                              field.onChange(
+                                field.value.includes(tag.id)
+                                  ? field.value
+                                  : [...field.value, tag.id]
+                                )
+                              setTagsIsOpen(false)
+                              }
+                            }
+                          >
+                            {tag.name}
+                            <CheckIcon
+                              className={cn(
+                                "ml-auto h-4 w-4",
+                                field.value.includes(tag.id) ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
                   </Command>
                 </PopoverContent>
               </Popover>
               <div className="mt-2 flex flex-wrap gap-2">
                 {field.value.map((tag) => (
-                  <Badge key={tag} variant="secondary">
-                    {tag}
+                  <Badge key={tag} variant="secondary" className="px-2 py-1">
+                    {tags.find((t) => t.id === tag)?.name}
                     <Button
                       variant="ghost"
                       size="sm"
@@ -197,7 +197,7 @@ export const NewTemplateForm = () => {
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
         <FormField
           control={form.control}

@@ -1,19 +1,18 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useState } from "react"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { useNavigate } from "@tanstack/react-router"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Textarea } from "@/components/ui/textarea"
-import { newTemplateSchema } from "@/constants/templates/template"
-import { NewTemplateFormValues, Tag, Topic } from "@/interfaces/template"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
-import { useState } from "react"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { useNewTemplateForm } from "@/hooks/template/useNewTemplateForm"
+import { cn } from "@/lib/utils"
+import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
+import { Tag, Topic } from "@/interfaces/template"
 
 
 interface NewTemplateFormProps {
@@ -23,17 +22,14 @@ interface NewTemplateFormProps {
 
 export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
+  const navigate = useNavigate()
 
-  const form = useForm<NewTemplateFormValues>({
-    resolver: zodResolver(newTemplateSchema),
-    defaultValues: {
-      title: '',
-      description: '',
-      tags: [],
-      topic: '',
-      isPublic: true,
-    },
-  })
+  const onSuccess = (templateId: number) => {
+    setTagsIsOpen(false)
+    navigate({to: `/templates/${templateId}`})
+  }
+
+  const {form, onSubmit} = useNewTemplateForm(onSuccess)
 
   // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   const file = e.target.files?.[0]
@@ -60,10 +56,6 @@ export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
   // const handleRemoveTag = (tagToRemove: string) => {
   //   setTags(prevTags => prevTags.filter(tag => tag !== tagToRemove))
   // }
-
-  function onSubmit(values: NewTemplateFormValues) {
-    console.log(values)
-  }
 
   return (
     <Form {...form}>

@@ -10,7 +10,7 @@ export const IndexPage = () => {
   const topicsQuery = useSuspenseQuery(getTopicsQuery)
   const tags = tagsQuery.data.data.data
   const topics = topicsQuery.data.data.data
-  console.log({tags, topics})
+
   return (
     <>
       <Dialog>

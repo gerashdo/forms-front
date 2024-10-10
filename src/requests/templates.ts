@@ -1,6 +1,6 @@
 import axios from "axios"
 import { getEnvVariables } from "@/helpers/envVariables";
-import { GetAllTagsResponse, GetAllTopicsResponse, GetTemplateResponse } from "@/interfaces/template"
+import { GetAllTagsResponse, GetAllTopicsResponse, GetTemplateResponse, PostNewTemplateRequest } from "@/interfaces/template"
 
 
 const BASE_URL = getEnvVariables().VITE_API_BACKEND_URL;
@@ -15,4 +15,8 @@ export const getAllTopics = async () => {
 
 export const getTemplateById = async (id: string) => {
   return axios.get<GetTemplateResponse>(`${BASE_URL}/templates/${id}`)
+}
+
+export const createTemplate = async (data: PostNewTemplateRequest) => {
+  return axios.post(`${BASE_URL}/templates`, data)
 }

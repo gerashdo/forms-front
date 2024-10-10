@@ -18,6 +18,7 @@ export const useNewTemplateForm = (onSuccess: (id: number) => void) => {
       tags: [],
       topic: '',
       isPublic: true,
+      image: undefined,
     },
   });
 
@@ -32,6 +33,7 @@ export const useNewTemplateForm = (onSuccess: (id: number) => void) => {
       topicId: parseInt(values.topic),
       tags: values.tags,
       isPublic: values.isPublic,
+      image: values.image || null,
     };
     startCreateTemplate(valuesToSend);
   };

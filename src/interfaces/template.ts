@@ -12,6 +12,7 @@ export interface PostNewTemplateRequest {
   topicId: number;
   tags: number[];
   isPublic: boolean;
+  image: File | null;
 }
 
 export interface PostNewTemplateResponse {

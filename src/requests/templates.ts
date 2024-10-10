@@ -18,5 +18,20 @@ export const getTemplateById = async (id: string) => {
 }
 
 export const createTemplate = async (data: PostNewTemplateRequest) => {
-  return axios.post(`${BASE_URL}/templates`, data)
-}
+  const formData = new FormData();
+  formData.append('userId', data.userId.toString());
+  formData.append('title', data.title);
+  formData.append('description', data.description);
+  formData.append('topicId', data.topicId.toString());
+  formData.append('tags', JSON.stringify(data.tags));
+  formData.append('isPublic', data.isPublic.toString());
+  if (data.image) {
+    formData.append('image', data.image);
+  }
+
+  return axios.post(`${BASE_URL}/templates`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+};

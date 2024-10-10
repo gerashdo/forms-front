@@ -9,10 +9,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { Card, CardContent } from "@/components/ui/card"
 import { useNewTemplateForm } from "@/hooks/template/useNewTemplateForm"
 import { cn } from "@/lib/utils"
 import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
 import { Tag, Topic } from "@/interfaces/template"
+import { ALLOWED_IMAGE_TYPES } from "@/constants/templates/template"
 
 
 interface NewTemplateFormProps {
@@ -22,6 +24,7 @@ interface NewTemplateFormProps {
 
 export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
   const navigate = useNavigate()
 
   const onSuccess = (templateId: number) => {
@@ -31,35 +34,21 @@ export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
 
   const {form, onSubmit} = useNewTemplateForm(onSuccess)
 
-  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0]
-  //   if (file) {
-  //     form.setValue('image', file)
-  //     const reader = new FileReader()
-  //     reader.onloadend = () => {
-  //       setImagePreview(reader.result as string)
-  //     }
-  //     reader.readAsDataURL(file)
-  //   }
-  // }
-
-  // const handleAddTag = (value: string) => {
-  //   if (value && !tags.includes(value)) {
-  //     setTags(prevTags => [...prevTags, value])
-  //     if (!availableTags.includes(value)) {
-  //       setAvailableTags(prevAvailableTags => [...prevAvailableTags, value])
-  //     }
-  //     setNewTag('')
-  //   }
-  // }
-
-  // const handleRemoveTag = (tagToRemove: string) => {
-  //   setTags(prevTags => prevTags.filter(tag => tag !== tagToRemove))
-  // }
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      form.setValue('image', file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-x-6 gap-y-8">
         <FormField
           control={form.control}
           name="title"
@@ -68,20 +57,6 @@ export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input placeholder="Enter template title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea placeholder="Enter template description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,6 +83,20 @@ export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
                   ))}
                 </SelectContent>
               </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="col-span-2">
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Enter template description" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -193,29 +182,6 @@ export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
 
         <FormField
           control={form.control}
-          name="isPublic"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Make this template public
-                </FormLabel>
-                <FormDescription>
-                  This will allow any authenticated user to fill your template.
-                </FormDescription>
-              </div>
-            </FormItem>
-          )}
-        />
-
-        {/* <FormField
-          control={form.control}
           name="image"
           render={({ field }) => (
             <FormItem>
@@ -223,7 +189,7 @@ export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
               <FormControl>
                 <Input
                   type="file"
-                  accept="image/*"
+                  accept={ALLOWED_IMAGE_TYPES.join(',')}
                   onChange={(e) => {
                     handleImageChange(e)
                     field.onChange(e.target.files?.[0])
@@ -244,9 +210,32 @@ export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
-        <Button type="submit">Create Template</Button>
+        <FormField
+          control={form.control}
+          name="isPublic"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 col-span-2">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Make this template public
+                </FormLabel>
+                <FormDescription>
+                  This will allow any authenticated user to fill your template.
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" className="col-span-2">Create Template</Button>
       </form>
     </Form>
   )

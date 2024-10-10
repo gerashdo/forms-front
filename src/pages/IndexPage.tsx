@@ -3,6 +3,7 @@ import { NewTemplateForm } from "@/components/template/NewTemplateForm";
 import { Button } from "@/components/ui/button";
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getTagsQuery, getTopicsQuery } from '@/queries/template';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 export const IndexPage = () => {
@@ -14,17 +15,21 @@ export const IndexPage = () => {
   return (
     <>
       <Dialog>
-      <DialogTrigger asChild>
-        <Button>Create Template</Button>
-      </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Let's create a new template</DialogTitle>
-            <DialogDescription>
-              Create a new template to share with the community
-            </DialogDescription>
-          </DialogHeader>
-          <NewTemplateForm topics={topics} tags={tags}/>
+        <DialogTrigger asChild>
+          <Button>Create Template</Button>
+        </DialogTrigger>
+        <DialogContent className='p-1'>
+          <ScrollArea className='max-h-[80vh] p-5'>
+            <div className='m-2'>
+              <DialogHeader>
+                <DialogTitle>Let's create a new template</DialogTitle>
+                <DialogDescription>
+                  Create a new template to share with the community
+                </DialogDescription>
+              </DialogHeader>
+              <NewTemplateForm topics={topics} tags={tags}/>
+            </div>
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </>

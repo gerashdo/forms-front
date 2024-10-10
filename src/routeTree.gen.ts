@@ -14,6 +14,8 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as TemplatesIndexImport } from './routes/templates/index'
+import { Route as TemplatesTemplateIdImport } from './routes/templates/$templateId'
 
 // Create Virtual Routes
 
@@ -30,6 +32,20 @@ const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const TemplatesIndexRoute = TemplatesIndexImport.update({
+  path: '/templates/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/templates/index.lazy').then((d) => d.Route),
+)
+
+const TemplatesTemplateIdRoute = TemplatesTemplateIdImport.update({
+  path: '/templates/$templateId',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/templates/$templateId.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -49,6 +65,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLazyImport
       parentRoute: typeof rootRoute
     }
+    '/templates/$templateId': {
+      id: '/templates/$templateId'
+      path: '/templates/$templateId'
+      fullPath: '/templates/$templateId'
+      preLoaderRoute: typeof TemplatesTemplateIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/templates/': {
+      id: '/templates/'
+      path: '/templates'
+      fullPath: '/templates'
+      preLoaderRoute: typeof TemplatesIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -57,36 +87,46 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthLazyRoute
+  '/templates/$templateId': typeof TemplatesTemplateIdRoute
+  '/templates': typeof TemplatesIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthLazyRoute
+  '/templates/$templateId': typeof TemplatesTemplateIdRoute
+  '/templates': typeof TemplatesIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/auth': typeof AuthLazyRoute
+  '/templates/$templateId': typeof TemplatesTemplateIdRoute
+  '/templates/': typeof TemplatesIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth'
+  fullPaths: '/' | '/auth' | '/templates/$templateId' | '/templates'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth'
-  id: '__root__' | '/' | '/auth'
+  to: '/' | '/auth' | '/templates/$templateId' | '/templates'
+  id: '__root__' | '/' | '/auth' | '/templates/$templateId' | '/templates/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthLazyRoute: typeof AuthLazyRoute
+  TemplatesTemplateIdRoute: typeof TemplatesTemplateIdRoute
+  TemplatesIndexRoute: typeof TemplatesIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthLazyRoute: AuthLazyRoute,
+  TemplatesTemplateIdRoute: TemplatesTemplateIdRoute,
+  TemplatesIndexRoute: TemplatesIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -102,7 +142,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/auth"
+        "/auth",
+        "/templates/$templateId",
+        "/templates/"
       ]
     },
     "/": {
@@ -110,6 +152,12 @@ export const routeTree = rootRoute
     },
     "/auth": {
       "filePath": "auth.lazy.tsx"
+    },
+    "/templates/$templateId": {
+      "filePath": "templates/$templateId.tsx"
+    },
+    "/templates/": {
+      "filePath": "templates/index.tsx"
     }
   }
 }

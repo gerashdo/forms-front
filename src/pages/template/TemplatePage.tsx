@@ -11,7 +11,7 @@ export const TemplatePage = () => {
   console.log({data: templateQuery.data.data.data})
   return (
     <div>
-      Hello /templates/$templateId!
+      Hello /templates/$templateId! jeje
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { Link } from "@tanstack/react-router"
 
 export const Navbar = () => {
   return (
-    <header className="w-full border-b">
+    <header className="w-full border-b bg-white">
       <div className="container mx-auto flex items-center justify-between py-4">
         <div className="flex items-center space-x-4">
           <Link to="/" className="text-2xl font-bold">

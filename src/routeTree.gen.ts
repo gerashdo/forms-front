@@ -17,11 +17,13 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutTemplatesIndexImport } from './routes/_layout/templates/index'
 import { Route as LayoutTemplatesTemplateIdImport } from './routes/_layout/templates/$templateId'
-import { Route as LayoutTemplatesTemplateIdEditImport } from './routes/_layout/templates/$templateId.edit'
 
 // Create Virtual Routes
 
 const AuthLazyImport = createFileRoute('/auth')()
+const LayoutTemplatesEditTemplateIdLazyImport = createFileRoute(
+  '/_layout/templates/edit/$templateId',
+)()
 
 // Create/Update Routes
 
@@ -54,12 +56,12 @@ const LayoutTemplatesTemplateIdRoute = LayoutTemplatesTemplateIdImport.update({
   import('./routes/_layout/templates/$templateId.lazy').then((d) => d.Route),
 )
 
-const LayoutTemplatesTemplateIdEditRoute =
-  LayoutTemplatesTemplateIdEditImport.update({
-    path: '/edit',
-    getParentRoute: () => LayoutTemplatesTemplateIdRoute,
+const LayoutTemplatesEditTemplateIdLazyRoute =
+  LayoutTemplatesEditTemplateIdLazyImport.update({
+    path: '/templates/edit/$templateId',
+    getParentRoute: () => LayoutRoute,
   } as any).lazy(() =>
-    import('./routes/_layout/templates/$templateId.edit.lazy').then(
+    import('./routes/_layout/templates/edit.$templateId.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -103,42 +105,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutTemplatesIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/templates/$templateId/edit': {
-      id: '/_layout/templates/$templateId/edit'
-      path: '/edit'
-      fullPath: '/templates/$templateId/edit'
-      preLoaderRoute: typeof LayoutTemplatesTemplateIdEditImport
-      parentRoute: typeof LayoutTemplatesTemplateIdImport
+    '/_layout/templates/edit/$templateId': {
+      id: '/_layout/templates/edit/$templateId'
+      path: '/templates/edit/$templateId'
+      fullPath: '/templates/edit/$templateId'
+      preLoaderRoute: typeof LayoutTemplatesEditTemplateIdLazyImport
+      parentRoute: typeof LayoutImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface LayoutTemplatesTemplateIdRouteChildren {
-  LayoutTemplatesTemplateIdEditRoute: typeof LayoutTemplatesTemplateIdEditRoute
-}
-
-const LayoutTemplatesTemplateIdRouteChildren: LayoutTemplatesTemplateIdRouteChildren =
-  {
-    LayoutTemplatesTemplateIdEditRoute: LayoutTemplatesTemplateIdEditRoute,
-  }
-
-const LayoutTemplatesTemplateIdRouteWithChildren =
-  LayoutTemplatesTemplateIdRoute._addFileChildren(
-    LayoutTemplatesTemplateIdRouteChildren,
-  )
-
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutTemplatesTemplateIdRoute: typeof LayoutTemplatesTemplateIdRouteWithChildren
+  LayoutTemplatesTemplateIdRoute: typeof LayoutTemplatesTemplateIdRoute
   LayoutTemplatesIndexRoute: typeof LayoutTemplatesIndexRoute
+  LayoutTemplatesEditTemplateIdLazyRoute: typeof LayoutTemplatesEditTemplateIdLazyRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
-  LayoutTemplatesTemplateIdRoute: LayoutTemplatesTemplateIdRouteWithChildren,
+  LayoutTemplatesTemplateIdRoute: LayoutTemplatesTemplateIdRoute,
   LayoutTemplatesIndexRoute: LayoutTemplatesIndexRoute,
+  LayoutTemplatesEditTemplateIdLazyRoute:
+    LayoutTemplatesEditTemplateIdLazyRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -148,17 +139,17 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/auth': typeof AuthLazyRoute
   '/': typeof LayoutIndexRoute
-  '/templates/$templateId': typeof LayoutTemplatesTemplateIdRouteWithChildren
+  '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/templates': typeof LayoutTemplatesIndexRoute
-  '/templates/$templateId/edit': typeof LayoutTemplatesTemplateIdEditRoute
+  '/templates/edit/$templateId': typeof LayoutTemplatesEditTemplateIdLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/auth': typeof AuthLazyRoute
   '/': typeof LayoutIndexRoute
-  '/templates/$templateId': typeof LayoutTemplatesTemplateIdRouteWithChildren
+  '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/templates': typeof LayoutTemplatesIndexRoute
-  '/templates/$templateId/edit': typeof LayoutTemplatesTemplateIdEditRoute
+  '/templates/edit/$templateId': typeof LayoutTemplatesEditTemplateIdLazyRoute
 }
 
 export interface FileRoutesById {
@@ -166,9 +157,9 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/auth': typeof AuthLazyRoute
   '/_layout/': typeof LayoutIndexRoute
-  '/_layout/templates/$templateId': typeof LayoutTemplatesTemplateIdRouteWithChildren
+  '/_layout/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/_layout/templates/': typeof LayoutTemplatesIndexRoute
-  '/_layout/templates/$templateId/edit': typeof LayoutTemplatesTemplateIdEditRoute
+  '/_layout/templates/edit/$templateId': typeof LayoutTemplatesEditTemplateIdLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -179,14 +170,14 @@ export interface FileRouteTypes {
     | '/'
     | '/templates/$templateId'
     | '/templates'
-    | '/templates/$templateId/edit'
+    | '/templates/edit/$templateId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
     | '/'
     | '/templates/$templateId'
     | '/templates'
-    | '/templates/$templateId/edit'
+    | '/templates/edit/$templateId'
   id:
     | '__root__'
     | '/_layout'
@@ -194,7 +185,7 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/templates/$templateId'
     | '/_layout/templates/'
-    | '/_layout/templates/$templateId/edit'
+    | '/_layout/templates/edit/$templateId'
   fileRoutesById: FileRoutesById
 }
 
@@ -229,7 +220,8 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/",
         "/_layout/templates/$templateId",
-        "/_layout/templates/"
+        "/_layout/templates/",
+        "/_layout/templates/edit/$templateId"
       ]
     },
     "/auth": {
@@ -241,18 +233,15 @@ export const routeTree = rootRoute
     },
     "/_layout/templates/$templateId": {
       "filePath": "_layout/templates/$templateId.tsx",
-      "parent": "/_layout",
-      "children": [
-        "/_layout/templates/$templateId/edit"
-      ]
+      "parent": "/_layout"
     },
     "/_layout/templates/": {
       "filePath": "_layout/templates/index.tsx",
       "parent": "/_layout"
     },
-    "/_layout/templates/$templateId/edit": {
-      "filePath": "_layout/templates/$templateId.edit.tsx",
-      "parent": "/_layout/templates/$templateId"
+    "/_layout/templates/edit/$templateId": {
+      "filePath": "_layout/templates/edit.$templateId.lazy.tsx",
+      "parent": "/_layout"
     }
   }
 }

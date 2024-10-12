@@ -1,10 +1,13 @@
+import { AuthState } from "@/state/auth";
 import { Link } from "@tanstack/react-router"
-// import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu"
-// import { Button } from "./button"
-// import { ChevronDown } from "lucide-react"
+import { useRecoilValue } from "recoil";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu"
+import { Button } from "./button"
+import { ChevronDown } from "lucide-react"
 
 
 export const Navbar = () => {
+  const authState = useRecoilValue(AuthState);
   return (
     <header className="w-full border-b bg-white">
       <div className="container mx-auto flex items-center justify-between py-4">
@@ -23,21 +26,26 @@ export const Navbar = () => {
             <Search className="h-4 w-4 mr-2" />
             Search
           </Button> */}
-          {/* <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
-                John Doe
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu> */}
-          <Link to="/auth" className="text-sm font-medium">
-            Authenticate
-          </Link>
+          {authState.user
+            ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    {authState.user.name} {authState.user.lastName}
+                    <ChevronDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/auth" className="text-sm font-medium">
+                Authenticate
+              </Link>
+            )
+          }
         </div>
       </div>
     </header>

@@ -7,12 +7,17 @@ import { newTemplateSchema } from "@/constants/templates/template";
 import { NewTemplateFormValues, PostNewTemplateRequest } from "@/interfaces/template";
 
 
-export const useNewTemplateForm = (onSuccess: (id: number) => void) => {
+type UseNewTemplateFormProps = {
+  onSuccess: (id: number) => void;
+  defaultValues?: NewTemplateFormValues;
+}
+
+export const useNewTemplateForm = ({onSuccess, defaultValues}: UseNewTemplateFormProps) => {
   const authState = useRecoilValue(AuthState);
 
   const form = useForm<NewTemplateFormValues>({
     resolver: zodResolver(newTemplateSchema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       title: '',
       description: '',
       tags: [],

@@ -10,3 +10,18 @@ export enum QuestionTypes {
   TEXT = 'text',
   INTEGER = 'integer',
 }
+
+export interface PostQuestionResponse {
+  ok:   boolean;
+  data: Question;
+}
+
+export interface Question {
+  id:          number;
+  title:       string;
+  description: string;
+  visible:     boolean;
+  type:        QuestionTypes;
+  sequence:    number;
+  templateId:  number;
+}

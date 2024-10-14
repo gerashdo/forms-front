@@ -21,9 +21,6 @@ import { Route as LayoutTemplatesTemplateIdImport } from './routes/_layout/templ
 // Create Virtual Routes
 
 const AuthLazyImport = createFileRoute('/auth')()
-const LayoutTemplatesEditTemplateIdLazyImport = createFileRoute(
-  '/_layout/templates/edit/$templateId',
-)()
 
 // Create/Update Routes
 
@@ -55,16 +52,6 @@ const LayoutTemplatesTemplateIdRoute = LayoutTemplatesTemplateIdImport.update({
 } as any).lazy(() =>
   import('./routes/_layout/templates/$templateId.lazy').then((d) => d.Route),
 )
-
-const LayoutTemplatesEditTemplateIdLazyRoute =
-  LayoutTemplatesEditTemplateIdLazyImport.update({
-    path: '/templates/edit/$templateId',
-    getParentRoute: () => LayoutRoute,
-  } as any).lazy(() =>
-    import('./routes/_layout/templates/edit.$templateId.lazy').then(
-      (d) => d.Route,
-    ),
-  )
 
 // Populate the FileRoutesByPath interface
 
@@ -105,13 +92,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutTemplatesIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/templates/edit/$templateId': {
-      id: '/_layout/templates/edit/$templateId'
-      path: '/templates/edit/$templateId'
-      fullPath: '/templates/edit/$templateId'
-      preLoaderRoute: typeof LayoutTemplatesEditTemplateIdLazyImport
-      parentRoute: typeof LayoutImport
-    }
   }
 }
 
@@ -121,15 +101,12 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutTemplatesTemplateIdRoute: typeof LayoutTemplatesTemplateIdRoute
   LayoutTemplatesIndexRoute: typeof LayoutTemplatesIndexRoute
-  LayoutTemplatesEditTemplateIdLazyRoute: typeof LayoutTemplatesEditTemplateIdLazyRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutTemplatesTemplateIdRoute: LayoutTemplatesTemplateIdRoute,
   LayoutTemplatesIndexRoute: LayoutTemplatesIndexRoute,
-  LayoutTemplatesEditTemplateIdLazyRoute:
-    LayoutTemplatesEditTemplateIdLazyRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -141,7 +118,6 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/templates': typeof LayoutTemplatesIndexRoute
-  '/templates/edit/$templateId': typeof LayoutTemplatesEditTemplateIdLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -149,7 +125,6 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/templates': typeof LayoutTemplatesIndexRoute
-  '/templates/edit/$templateId': typeof LayoutTemplatesEditTemplateIdLazyRoute
 }
 
 export interface FileRoutesById {
@@ -159,25 +134,13 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/_layout/templates/': typeof LayoutTemplatesIndexRoute
-  '/_layout/templates/edit/$templateId': typeof LayoutTemplatesEditTemplateIdLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/auth'
-    | '/'
-    | '/templates/$templateId'
-    | '/templates'
-    | '/templates/edit/$templateId'
+  fullPaths: '' | '/auth' | '/' | '/templates/$templateId' | '/templates'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/auth'
-    | '/'
-    | '/templates/$templateId'
-    | '/templates'
-    | '/templates/edit/$templateId'
+  to: '/auth' | '/' | '/templates/$templateId' | '/templates'
   id:
     | '__root__'
     | '/_layout'
@@ -185,7 +148,6 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/templates/$templateId'
     | '/_layout/templates/'
-    | '/_layout/templates/edit/$templateId'
   fileRoutesById: FileRoutesById
 }
 
@@ -220,8 +182,7 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/",
         "/_layout/templates/$templateId",
-        "/_layout/templates/",
-        "/_layout/templates/edit/$templateId"
+        "/_layout/templates/"
       ]
     },
     "/auth": {
@@ -237,10 +198,6 @@ export const routeTree = rootRoute
     },
     "/_layout/templates/": {
       "filePath": "_layout/templates/index.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/templates/edit/$templateId": {
-      "filePath": "_layout/templates/edit.$templateId.lazy.tsx",
       "parent": "/_layout"
     }
   }

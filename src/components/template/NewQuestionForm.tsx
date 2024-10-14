@@ -11,7 +11,7 @@ import { NewQuestionFormValues, QuestionTypes } from "@/interfaces/question";
 
 
 type NewQuestionFormProps = {
-  defaultValues: NewQuestionFormValues
+  defaultValues?: NewQuestionFormValues
   onSumbit: (values: NewQuestionFormValues) => void
   onCancel: () => void
 }
@@ -20,7 +20,12 @@ export const NewQuestionForm = ({defaultValues, onSumbit, onCancel}: NewQuestion
 
   const questionForm = useForm<NewQuestionFormValues>({
     resolver: zodResolver(newQuestionSchema),
-    defaultValues,
+    defaultValues: defaultValues || {
+      title: '',
+      description: '',
+      type: undefined,
+      visible: true,
+    }
   })
 
   const onQuestionSubmit = (values: NewQuestionFormValues) => {

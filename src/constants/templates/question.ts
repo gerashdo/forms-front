@@ -12,8 +12,8 @@ export const newQuestionSchema = z.object({
 })
 
 export const questionTypeLabels = {
-  [QuestionTypes.MULTIPLE]: 'Multiple Choice',
+  [QuestionTypes.MULTIPLE]: 'Multiple Line Text',
   [QuestionTypes.BOOLEAN]: 'True/False',
   [QuestionTypes.TEXT]: 'Text',
-  [QuestionTypes.INTEGER]: 'Integer',
+  [QuestionTypes.INTEGER]: 'Integer Number',
 } as const;

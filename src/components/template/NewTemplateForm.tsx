@@ -12,17 +12,18 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Card, CardContent } from "@/components/ui/card"
 import { useNewTemplateForm } from "@/hooks/template/useNewTemplateForm"
 import { cn } from "@/lib/utils"
-import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
-import { Tag, Topic } from "@/interfaces/template"
+import { NewTemplateFormValues, Tag, Topic } from "@/interfaces/template"
 import { ALLOWED_IMAGE_TYPES } from "@/constants/templates/template"
+import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
 
 
 interface NewTemplateFormProps {
   topics: Topic[]
   tags: Tag[]
+  defaultValues?: NewTemplateFormValues
 }
 
-export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
+export const NewTemplateForm = ({topics, tags, defaultValues}: NewTemplateFormProps) => {
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ export const NewTemplateForm = ({topics, tags}: NewTemplateFormProps) => {
     navigate({to: `/templates/${templateId}`})
   }
 
-  const {form, onSubmit} = useNewTemplateForm(onSuccess)
+  const {form, onSubmit} = useNewTemplateForm({onSuccess, defaultValues})
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { NewTemplateForm } from "@/components/template/NewTemplateForm";
+import { TemplateForm } from "@/components/template/TemplateForm";
 import { Button } from "@/components/ui/button";
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getTagsQuery, getTopicsQuery } from '@/queries/template';
@@ -27,7 +27,7 @@ export const IndexPage = () => {
                   Create a new template to share with the community
                 </DialogDescription>
               </DialogHeader>
-              <NewTemplateForm topics={topics} tags={tags}/>
+              <TemplateForm topics={topics} tags={tags}/>
             </div>
           </ScrollArea>
         </DialogContent>

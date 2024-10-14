@@ -10,7 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Card, CardContent } from "@/components/ui/card"
-import { useNewTemplateForm } from "@/hooks/template/useNewTemplateForm"
+import { useTemplateForm } from "@/hooks/template/useTemplateForm"
 import { cn } from "@/lib/utils"
 import { NewTemplateFormValues, Tag, Topic } from "@/interfaces/template"
 import { ALLOWED_IMAGE_TYPES } from "@/constants/templates/template"
@@ -20,10 +20,12 @@ import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
 interface NewTemplateFormProps {
   topics: Topic[]
   tags: Tag[]
+  onCancel?: () => void
   defaultValues?: NewTemplateFormValues
+  isEditing?: boolean
 }
 
-export const NewTemplateForm = ({topics, tags, defaultValues}: NewTemplateFormProps) => {
+export const TemplateForm = ({topics, tags, onCancel, defaultValues, isEditing = false}: NewTemplateFormProps) => {
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const navigate = useNavigate()
@@ -33,7 +35,7 @@ export const NewTemplateForm = ({topics, tags, defaultValues}: NewTemplateFormPr
     navigate({to: `/templates/${templateId}`})
   }
 
-  const {form, onSubmit} = useNewTemplateForm({onSuccess, defaultValues})
+  const {form, onSubmit} = useTemplateForm({onSuccess, defaultValues, isEditing})
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -235,8 +237,12 @@ export const NewTemplateForm = ({topics, tags, defaultValues}: NewTemplateFormPr
             </FormItem>
           )}
         />
-
-        <Button type="submit" className="col-span-2">Create Template</Button>
+        <div className="flex gap-3 flex-row-reverse col-span-2">
+          {onCancel && (<Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>)}
+          <Button type="submit" className="col-span-2">
+            Save Template
+          </Button>
+        </div>
       </form>
     </Form>
   )

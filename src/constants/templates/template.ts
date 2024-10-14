@@ -10,7 +10,7 @@ export const newTemplateSchema = z.object({
   description: z.string().min(3, { message: "Description must be at least 3 characters" }),
   tags: z.array(z.number()).min(1, { message: "You must add at least one tag" }),
   isPublic: z.boolean(),
-  topic: z.string().min(1, { message: "You must select a topic" }),
+  topic: z.number().min(1, { message: "You must select a topic" }),
   image: z.instanceof(File).optional().refine(
     (file) => file?.size && file.size < MAX_ALLOWED_IMAGE_SIZE,
     { message: "Image must be less than 2MB" }

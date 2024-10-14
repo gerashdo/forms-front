@@ -4,19 +4,20 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 import { closestCenter, DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core"
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { NewQuestionForm } from "@/components/template/NewQuestionForm"
-import { NewTemplateForm } from "@/components/template/NewTemplateForm"
-import { SortableItem } from "@/components/template/SortableItem"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getTemplateByIdQuery } from "@/queries/template"
+import { TemplateTab } from "@/components/template/TemplateTab"
+import { SortableQuestionItem } from "@/components/template/SortableQuestionItem"
+import { getTagsQuery, getTemplateByIdQuery, getTopicsQuery } from "@/queries/template"
 import { questionsFake } from "@/data/question"
 import { template1 } from "@/data/template"
 import { NewQuestionFormValues, Question } from "@/interfaces/question"
 
 
 const route = getRouteApi('/_layout/templates/$templateId')
-enum PageTabsEnum {
+
+export enum PageTabsEnum {
   SETTINGS = 'settings',
   QUESTIONS = 'questions',
   RESULTS = 'results',
@@ -31,6 +32,10 @@ const PageTabs = {
 } as const;
 
 export const TemplatePage = () => {
+  const tagsQuery = useSuspenseQuery(getTagsQuery)
+  const topicsQuery = useSuspenseQuery(getTopicsQuery)
+  const tags = tagsQuery.data.data.data
+  const topics = topicsQuery.data.data.data
   const {templateId} = route.useParams()
   const templateQuery = useSuspenseQuery(getTemplateByIdQuery(templateId))
   const template = templateQuery.data.data.data
@@ -77,7 +82,7 @@ export const TemplatePage = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold mb-6 text-center">Template: {template.title}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">{template.title}</h1>
 
       <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as PageTabsEnum)}>
         <TabsList className="grid w-full grid-cols-4">
@@ -88,17 +93,7 @@ export const TemplatePage = () => {
           ))}
         </TabsList>
 
-        <TabsContent value={PageTabsEnum.SETTINGS}>
-          <Card>
-            <CardHeader>
-              <CardTitle>General Settings</CardTitle>
-              <CardDescription>Configure the general settings for the template</CardDescription>
-            </CardHeader>
-            <CardHeader>
-            <NewTemplateForm topics={[]} tags={[]} />
-            </CardHeader>
-          </Card>
-        </TabsContent>
+        <TemplateTab tabValue={PageTabsEnum.SETTINGS} template={template} topics={topics} tags={tags} />
 
         <TabsContent value={PageTabsEnum.QUESTIONS}>
           <Card>
@@ -122,10 +117,11 @@ export const TemplatePage = () => {
                 <SortableContext items={questions.map(el => el.id as UniqueIdentifier)} strategy={verticalListSortingStrategy}>
                   <div className="space-y-4">
                     {questions.map((question) => (
-                      <SortableItem
+                      <SortableQuestionItem
                         key={question.id}
                         question={question}
-                        onRemove={() => handleRemoveQuestion(question.id!)}
+                        onRemove={() => handleRemoveQuestion(question.id)}
+                        onEdit={() => console.log(question.id)}
                       />
                     ))}
                   </div>

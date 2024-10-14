@@ -9,10 +9,11 @@ import { NewTemplateFormValues, PostNewTemplateRequest } from "@/interfaces/temp
 
 type UseNewTemplateFormProps = {
   onSuccess: (id: number) => void;
+  isEditing: boolean;
   defaultValues?: NewTemplateFormValues;
 }
 
-export const useNewTemplateForm = ({onSuccess, defaultValues}: UseNewTemplateFormProps) => {
+export const useTemplateForm = ({onSuccess, isEditing, defaultValues}: UseNewTemplateFormProps) => {
   const authState = useRecoilValue(AuthState);
 
   const form = useForm<NewTemplateFormValues>({
@@ -21,7 +22,7 @@ export const useNewTemplateForm = ({onSuccess, defaultValues}: UseNewTemplateFor
       title: '',
       description: '',
       tags: [],
-      topic: '',
+      topic: undefined,
       isPublic: true,
       image: undefined,
     },
@@ -31,17 +32,26 @@ export const useNewTemplateForm = ({onSuccess, defaultValues}: UseNewTemplateFor
 
   const onSubmit = (values: NewTemplateFormValues) => {
     if (!authState.user) return;
+    if (isEditing) {
+      // handle edit
+      return;
+    }
+    createNewTemplate(values);
+  };
+
+  const createNewTemplate = (values: NewTemplateFormValues) => {
+    if (!authState.user) return;
     const valuesToSend: PostNewTemplateRequest = {
       userId: authState.user.id,
       title: values.title,
       description: values.description,
-      topicId: parseInt(values.topic),
+      topicId: values.topic,
       tags: values.tags,
       isPublic: values.isPublic,
       image: values.image || null,
     };
     startCreateTemplate(valuesToSend);
-  };
+  }
 
   return {
     form,

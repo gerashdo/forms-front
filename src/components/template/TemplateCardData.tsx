@@ -3,6 +3,7 @@ import { CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { GlobeIcon, LockIcon } from "lucide-react"
 import { UsersList } from "./UsersList"
+import { getCloudinaryUrl } from "@/helpers/images"
 
 
 interface TemplateCardDataProps {
@@ -10,6 +11,12 @@ interface TemplateCardDataProps {
 }
 
 export const TemplateCardData = ({template}: TemplateCardDataProps) => {
+  const imageParams = {
+    w: 400,
+    f: 'auto',
+    q: 'auto',
+  }
+
   return (
     <CardContent className="grid grid-cols-2 gap-x-6 gap-y-8">
       <div className="space-y-1">
@@ -27,7 +34,7 @@ export const TemplateCardData = ({template}: TemplateCardDataProps) => {
       <div className="space-y-1">
         <h3 className="text-sm font-medium">Upload Image</h3>
         {template.image ? (
-          <img src={template.image} alt={template.title} className="w-full h-32 object-cover rounded-md" />
+          <img src={getCloudinaryUrl(template.image, imageParams)} alt={template.title} className="w-1/4 h-auto object-cover rounded-md" />
         ) : (
           <p className="text-sm text-muted-foreground">No image uploaded</p>
         )}

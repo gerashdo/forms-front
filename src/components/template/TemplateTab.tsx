@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { PageTabsEnum } from "@/pages/template/TemplatePage"
+import { PencilIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { TabsContent } from "@/components/ui/tabs"
 import { TemplateCardData } from "./TemplateCardData"
 import { TemplateForm } from "./TemplateForm"
 import { Tag, Template, Topic } from "@/interfaces/template"
-import { PencilIcon } from "lucide-react"
+import { PageTabsEnum } from "@/interfaces/ui"
 
 
 interface TemplateTabProps {
@@ -46,7 +46,7 @@ export const TemplateTab = ({
                 title: template.title,
                 description: template.description,
                 tags: template.Tags.map((tag) => tag.id),
-                topic: template.Topic.id,
+                topic: template.Topic.id.toString(),
                 isPublic: template.isPublic,
                 image: undefined,
               }}

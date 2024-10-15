@@ -1,13 +1,14 @@
-import { useState, HTMLAttributes } from 'react';
-import { closestCenter, DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core"
-import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { NewQuestionForm } from "./NewQuestionForm"
-import { SortableQuestionItem } from "./SortableQuestionItem"
-import { useAddQuestionToTemplate, useDeleteQuestionFromTemplate, useReorderQuestionsMutation } from "@/hooks/template/useTemplate"
-import { NewQuestionFormValues, Question } from "@/interfaces/question"
+import { useState, HTMLAttributes, useRef } from 'react';
+import { closestCenter, DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { NewQuestionForm } from "@/components/template/NewQuestionForm";
+import { SortableQuestionItem } from "@/components/template/SortableQuestionItem";
+import { useAddQuestionToTemplate, useDeleteQuestionFromTemplate, useReorderQuestionsMutation } from "@/hooks/template/useTemplate";
+import { useUpdateQuestionMutation } from '@/hooks/template/useQuestionQueries';
+import { NewQuestionFormValues, Question } from "@/interfaces/question";
 
 
 interface QuestionsTabProps extends HTMLAttributes<HTMLDivElement> {
@@ -25,12 +26,21 @@ export const QuestionsTab = ({
   const {startAddQuestionToTemplate} = useAddQuestionToTemplate(templateId);
   const {startDeleteQuestionFromTemplate} = useDeleteQuestionFromTemplate(templateId);
   const {startReorderQuestions} = useReorderQuestionsMutation(templateId);
+  const {startUpdateQuestion} = useUpdateQuestionMutation(templateId.toString());
   const [isRemovingQuestion, setIsRemovingQuestion] = useState<boolean>(false);
   const [questionIdToRemove, setQuestionIdToRemove] = useState<number | null>(null);
+  const isEditing = useRef<boolean>(false);
+  const questionToEdit = useRef<number | null>(null);
+
+  const [defaultQuestionValues, setDefaultQuestionValues] = useState<NewQuestionFormValues | undefined>(undefined);
 
   function onQuestionSubmit(values: NewQuestionFormValues) {
-    startAddQuestionToTemplate(templateId, values);
-    setIsAddingQuestion(false);
+    if (isEditing.current && questionToEdit.current) {
+      startUpdateQuestion(questionToEdit.current, values);
+    } else {
+      startAddQuestionToTemplate(templateId, values);
+    }
+    resetIndicatorValues();
   }
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -43,10 +53,34 @@ export const QuestionsTab = ({
     }
   };
 
+  const resetIndicatorValues = () => {
+    isEditing.current = false;
+    questionToEdit.current = null;
+    setDefaultQuestionValues(undefined);
+    setIsAddingQuestion(false);
+  }
+
+  const onEditQuestion = (question: Question) => {
+    isEditing.current = true;
+    questionToEdit.current = question.id;
+    setDefaultQuestionValues({
+      title: question.title,
+      description: question.description,
+      type: question.type,
+      visible: question.visible,
+    });
+    setIsAddingQuestion(true);
+  };
+
   const onRemove = (id: number) => {
     setIsRemovingQuestion(true);
     setQuestionIdToRemove(id);
+    resetIndicatorValues();
   };
+
+  const onCancelQuestionForm = () => {
+    resetIndicatorValues();
+  }
 
   const handleDeleteQuestion = () => {
     if (!questionIdToRemove) return;
@@ -54,6 +88,7 @@ export const QuestionsTab = ({
     setIsRemovingQuestion(false);
     setQuestionIdToRemove(null);
   }
+
   return (
     <div className={className} {...props}>
       <Card>
@@ -70,7 +105,8 @@ export const QuestionsTab = ({
           {isAddingQuestion && (
             <NewQuestionForm
               onSumbit={onQuestionSubmit}
-              onCancel={() => setIsAddingQuestion(false)}
+              onCancel={onCancelQuestionForm}
+              defaultValues={defaultQuestionValues}
             />
           )}
           <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -81,7 +117,7 @@ export const QuestionsTab = ({
                     key={question.id}
                     question={question}
                     onRemove={() => onRemove(question.id)}
-                    onEdit={() => console.log(question.id)}
+                    onEdit={() => onEditQuestion(question)}
                   />
                 ))}
               </div>

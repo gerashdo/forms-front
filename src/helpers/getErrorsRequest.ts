@@ -1,6 +1,6 @@
 import { LoginCodeMessages, SignUpCodeMessages } from "@/interfaces/auth";
 import { ErrorCode } from "@/interfaces/errorsRequest";
-import { CreateNewQuestionCodeMessage, DeleteQuestionFromTemplateCodeMessage, ReorderQuestionsCodeMessage } from "@/interfaces/question";
+import { CreateNewQuestionCodeMessage, DeleteQuestionFromTemplateCodeMessage, ReorderQuestionsCodeMessage, UpdateQuestionsCodeMessage } from "@/interfaces/question";
 import { CreateNewTemplateCodeMessage } from "@/interfaces/template";
 
 
@@ -26,4 +26,8 @@ export const getDeleteQuestionError = (errorCode: number | string): string => {
 
 export const getReorderQuestionsError = (errorCode: number | string): string => {
   return ReorderQuestionsCodeMessage[errorCode as ErrorCode] || 'An error occurred, please try again later';
+}
+
+export const getUpdateQuestionError = (errorCode: number | string): string => {
+  return UpdateQuestionsCodeMessage[errorCode as ErrorCode] || 'An error occurred, please try again later';
 }

@@ -85,5 +85,5 @@ export interface Topic {
 
 export const CreateNewTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid request, please check the data for the template',
-  500: 'There was an error processing your request. Please check your email or password or try again later',
+  500: 'There was an error processing your request. Please try again later',
 }

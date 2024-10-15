@@ -29,7 +29,6 @@ export const NewQuestionForm = ({defaultValues, onSumbit, onCancel}: NewQuestion
   })
 
   const onQuestionSubmit = (values: NewQuestionFormValues) => {
-    console.log("Question values:", values)
     onSumbit(values)
     questionForm.reset()
   }

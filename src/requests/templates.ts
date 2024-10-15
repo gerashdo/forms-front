@@ -1,6 +1,7 @@
 import axios from "axios"
 import { getEnvVariables } from "@/helpers/envVariables";
 import { GetAllTagsResponse, GetAllTopicsResponse, GetTemplateResponse, PostNewTemplateRequest } from "@/interfaces/template"
+import { NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question";
 
 
 const BASE_URL = getEnvVariables().VITE_API_BACKEND_URL;
@@ -35,3 +36,12 @@ export const createTemplate = async (data: PostNewTemplateRequest) => {
     }
   });
 };
+
+type AddQuestionToTemplateProps = {
+  templateId: number;
+  questionData: NewQuestionFormValues;
+}
+
+export const addQuestionToTemplate = async ({templateId, questionData}: AddQuestionToTemplateProps) => {
+  return axios.post<PostQuestionResponse>(`${BASE_URL}/templates/${templateId}/questions`, questionData);
+}

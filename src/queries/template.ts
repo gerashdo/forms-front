@@ -13,6 +13,6 @@ export const getTagsQuery = queryOptions({
 })
 
 export const getTemplateByIdQuery = (templateId: string) => queryOptions({
-  queryKey: ['template', { templateId }],
+  queryKey: ['template', templateId],
   queryFn: () => getTemplateById(templateId),
 })

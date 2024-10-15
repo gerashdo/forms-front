@@ -2,17 +2,17 @@ import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
 import { questionTypeLabels } from "@/constants/templates/question";
-import { GripHorizontal, X } from "lucide-react";
+import { GripHorizontal, PencilIcon, X } from "lucide-react";
 import { Question } from "@/interfaces/question";
 
 
-// Change question tytpe to question
-interface SortableItemProps {
+interface SortableQuestionItemProps {
   question: Question;
   onRemove: () => void;
+  onEdit: () => void;
 }
 
-export const SortableItem = ({ question, onRemove }: SortableItemProps) => {
+export const SortableQuestionItem = ({ question, onRemove, onEdit }: SortableQuestionItemProps) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: question.id! });
 
   const style = {
@@ -26,9 +26,14 @@ export const SortableItem = ({ question, onRemove }: SortableItemProps) => {
         <div {...listeners}>
           <GripHorizontal className="h-5 w-5" />
         </div>
-        <Button type="button" variant="ghost" size="sm" onClick={onRemove}>
-          <X className="h-4 w-4" />
-        </Button>
+        <div className="flex items-center gap-1">
+          <Button type="button" variant="ghost" size="sm" onClick={onEdit}>
+            <PencilIcon className="h-4 w-4" />
+          </Button>
+          <Button type="button" variant="ghost" size="sm" onClick={onRemove}>
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
       <div className="space-y-2">
         <div>

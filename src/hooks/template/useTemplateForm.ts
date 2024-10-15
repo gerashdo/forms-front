@@ -45,7 +45,7 @@ export const useTemplateForm = ({onSuccess, isEditing, defaultValues}: UseNewTem
       userId: authState.user.id,
       title: values.title,
       description: values.description,
-      topicId: values.topic,
+      topicId: Number(values.topic),
       tags: values.tags,
       isPublic: values.isPublic,
       image: values.image || null,

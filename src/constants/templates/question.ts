@@ -8,7 +8,6 @@ export const newQuestionSchema = z.object({
   description: z.string().optional(),
   visible: z.boolean().default(true),
   type: z.enum([QuestionTypes.MULTIPLE, QuestionTypes.BOOLEAN, QuestionTypes.TEXT, QuestionTypes.INTEGER]),
-  sequence: z.number(),
 })
 
 export const questionTypeLabels = {

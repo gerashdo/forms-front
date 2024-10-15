@@ -41,3 +41,8 @@ export const DeleteQuestionFromTemplateCodeMessage: Partial<Record<ErrorCode, st
   400: 'Invalid request, template or question not found, please check the data',
   500: 'There was an error processing your request. Please try again later',
 }
+
+export const ReorderQuestionsCodeMessage: Partial<Record<ErrorCode, string>> = {
+  400: 'The order of the questions could not be updated',
+  500: 'There was an error processing your request. Please try again later',
+}

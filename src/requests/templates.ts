@@ -1,6 +1,6 @@
 import axios from "axios"
 import { getEnvVariables } from "@/helpers/envVariables";
-import { GetAllTagsResponse, GetAllTopicsResponse, GetTemplateResponse, PostNewTemplateRequest } from "@/interfaces/template"
+import { GetAllTagsResponse, GetAllTopicsResponse, GetTemplateResponse, PatchQuestionOrderResponse, PostNewTemplateRequest } from "@/interfaces/template"
 import { NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question";
 
 
@@ -53,4 +53,8 @@ type DeleteQuestionFromTemplateProps = {
 
 export const deleteQuestionFromTemplate = async ({templateId, questionId}: DeleteQuestionFromTemplateProps) => {
   return axios.delete(`${BASE_URL}/templates/${templateId}/questions/${questionId}`);
+}
+
+export const reorderTemplateQuestions = async ({templateId, questionIds}:{templateId: number, questionIds: number[]}) => {
+  return axios.patch<PatchQuestionOrderResponse>(`${BASE_URL}/templates/${templateId}/reorder-questions`, {questionsOrder: questionIds});
 }

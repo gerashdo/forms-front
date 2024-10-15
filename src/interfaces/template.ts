@@ -1,5 +1,6 @@
-import { newTemplateSchema } from '@/constants/templates/template';
 import * as z from 'zod';
+import { Question } from './question';
+import { newTemplateSchema } from '@/constants/templates/template';
 import { ErrorCode } from './errorsRequest';
 
 
@@ -82,6 +83,10 @@ export interface Topic {
   name: string;
 }
 
+export interface PatchQuestionOrderResponse {
+  ok:   boolean;
+  data: Question[];
+}
 
 export const CreateNewTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid request, please check the data for the template',

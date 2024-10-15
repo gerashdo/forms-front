@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { AxiosError, AxiosResponse } from "axios"
 import { toast } from "@/hooks/use-toast"
-import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate } from "@/requests/templates"
-import { getDeleteQuestionError, getPostNewTemplateError } from "@/helpers/getErrorsRequest"
-import { PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template"
+import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate, reorderTemplateQuestions } from "@/requests/templates"
+import { getDeleteQuestionError, getPostNewTemplateError, getReorderQuestionsError } from "@/helpers/getErrorsRequest"
+import { PatchQuestionOrderResponse, PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template"
 import { GetQuestionsResponse, NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question"
 
 
@@ -113,6 +113,41 @@ export const useDeleteQuestionFromTemplate = (templateId: number) => {
 
   return {
     startDeleteQuestionFromTemplate,
+    isLoading: mutation.isPending,
+    success: mutation.isSuccess
+  }
+}
+
+export const useReorderQuestionsMutation = (templateId: number) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: reorderTemplateQuestions,
+    onSuccess: (data: AxiosResponse<PatchQuestionOrderResponse>) => {
+      queryClient.setQueryData(['questions', {templateId: templateId.toString()}], (oldData: GetQuestionsResponse) => {
+        const questionsInNewOrder = data.data.data;
+        return {
+          ...oldData,
+          data: questionsInNewOrder,
+        }
+      });
+    },
+    onError: (error: AxiosError) => {
+      const responseCode = error.response?.status || 500;
+      const errorMessage = getReorderQuestionsError(responseCode);
+      toast({
+        title: 'Error reordering the questions',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    }
+  })
+
+  const startReorderQuestions = (questionIds: number[]) => {
+    mutation.mutate({templateId, questionIds});
+  }
+
+  return {
+    startReorderQuestions,
     isLoading: mutation.isPending,
     success: mutation.isSuccess
   }

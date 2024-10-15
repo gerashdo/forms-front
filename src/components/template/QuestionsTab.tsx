@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { TabsContent } from "@/components/ui/tabs"
 import { NewQuestionForm } from "./NewQuestionForm"
 import { SortableQuestionItem } from "./SortableQuestionItem"
-import { useAddQuestionToTemplate, useDeleteQuestionFromTemplate } from "@/hooks/template/useTemplate"
+import { useAddQuestionToTemplate, useDeleteQuestionFromTemplate, useReorderQuestionsMutation } from "@/hooks/template/useTemplate"
 import { PageTabsEnum } from "@/interfaces/ui"
 import { NewQuestionFormValues, Question } from "@/interfaces/question"
 
@@ -26,6 +26,7 @@ export const QuestionsTab = ({
   const [isAddingQuestion, setIsAddingQuestion] = useState<boolean>(false);
   const {startAddQuestionToTemplate} = useAddQuestionToTemplate(templateId);
   const {startDeleteQuestionFromTemplate} = useDeleteQuestionFromTemplate(templateId);
+  const {startReorderQuestions} = useReorderQuestionsMutation(templateId);
   const [isRemovingQuestion, setIsRemovingQuestion] = useState<boolean>(false);
   const [questionIdToRemove, setQuestionIdToRemove] = useState<number | null>(null);
 
@@ -35,17 +36,13 @@ export const QuestionsTab = ({
   }
 
   const handleDragEnd = (event: DragEndEvent) => {
-    // const { active, over } = event;
-    // if (over && active.id !== over.id) {
-    //   setQuestions((items) => {
-    //     const oldIndex = items.findIndex((item) => item.id === active.id);
-    //     const newIndex = items.findIndex((item) => item.id === over.id);
-    //     return arrayMove(items, oldIndex, newIndex).map((item, index) => ({
-    //       ...item,
-    //       sequence: index,
-    //     }));
-    //   });
-    // }
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = questions.findIndex((item) => item.id === active.id);
+      const newIndex = questions.findIndex((item) => item.id === over.id);
+      const newOrder = arrayMove(questions, oldIndex, newIndex).map((item) => item.id);
+      startReorderQuestions(newOrder);
+    }
   };
 
   const onRemove = (id: number) => {

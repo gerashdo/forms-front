@@ -1,27 +1,25 @@
-import { useState } from "react"
+import { useState, HTMLAttributes } from 'react';
 import { closestCenter, DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core"
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { TabsContent } from "@/components/ui/tabs"
 import { NewQuestionForm } from "./NewQuestionForm"
 import { SortableQuestionItem } from "./SortableQuestionItem"
 import { useAddQuestionToTemplate, useDeleteQuestionFromTemplate, useReorderQuestionsMutation } from "@/hooks/template/useTemplate"
-import { PageTabsEnum } from "@/interfaces/ui"
 import { NewQuestionFormValues, Question } from "@/interfaces/question"
 
 
-interface QuestionsTabProps {
-  tabValue: PageTabsEnum
+interface QuestionsTabProps extends HTMLAttributes<HTMLDivElement> {
   questions: Question[]
   templateId: number
 }
 
 export const QuestionsTab = ({
-  tabValue,
   questions,
   templateId,
+  className,
+  ...props
 }: QuestionsTabProps) => {
   const [isAddingQuestion, setIsAddingQuestion] = useState<boolean>(false);
   const {startAddQuestionToTemplate} = useAddQuestionToTemplate(templateId);
@@ -57,7 +55,7 @@ export const QuestionsTab = ({
     setQuestionIdToRemove(null);
   }
   return (
-    <TabsContent value={tabValue}>
+    <div className={className} {...props}>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-1.5">
@@ -107,6 +105,6 @@ export const QuestionsTab = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </TabsContent>
+    </div>
   )
 }

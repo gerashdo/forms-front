@@ -1,6 +1,7 @@
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { questionTypeLabels } from "@/constants/templates/question";
 import { GripHorizontal, PencilIcon, X } from "lucide-react";
 import { Question } from "@/interfaces/question";
@@ -21,8 +22,8 @@ export const SortableQuestionItem = ({ question, onRemove, onEdit }: SortableQue
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} className="p-4 border rounded-md">
-      <div className="flex items-center justify-between mb-2">
+    <Card ref={setNodeRef} style={style} {...attributes}>
+      <CardHeader className="flex flex-row items-center justify-between p-5 pb-3">
         <div {...listeners}>
           <GripHorizontal className="h-5 w-5" />
         </div>
@@ -34,25 +35,25 @@ export const SortableQuestionItem = ({ question, onRemove, onEdit }: SortableQue
             <X className="h-4 w-4" />
           </Button>
         </div>
-      </div>
-      <div className="space-y-2">
-        <div>
-          <span>
-            <strong>Title:</strong> {question.title}
-          </span>
+      </CardHeader>
+      <CardContent className="grid grid-cols-3 space-y-2 p-5 pt-0">
+        <div className="space-y-1">
+          <h3 className="text-sm font-medium">Title:</h3>
+          <p className="text-sm text-muted-foreground">{question.title}</p>
         </div>
-        <div>
-          <strong>Description:</strong> {question.description || "N/A"}
+        <div className="space-y-1">
+          <h3 className="text-sm font-medium">Type:</h3>
+          <p className="text-sm text-muted-foreground">{questionTypeLabels[question.type]}</p>
         </div>
-        <div className="flex gap-4">
-          <span>
-            <strong>Type:</strong> {questionTypeLabels[question.type]}
-          </span>
-          <span>
-            <strong>Visible:</strong> {question.visible ? "Yes" : "No"}
-          </span>
+        <div className="space-y-1">
+          <h3 className="text-sm font-medium">Is Visible:</h3>
+          <p className="text-sm text-muted-foreground">{question.visible ? "Yes" : "No"}</p>
         </div>
-      </div>
-    </div>
+        <div className="space-y-1 col-span-2">
+          <h3 className="text-sm font-medium">Description:</h3>
+          <p className="text-sm text-muted-foreground">{question.description || "No description provided"}</p>
+        </div>
+      </CardContent>
+    </Card>
   );
 };

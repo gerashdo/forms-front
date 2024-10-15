@@ -1,32 +1,29 @@
-import { useState } from "react"
+import { HTMLAttributes, useState } from "react"
 import { PencilIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { TabsContent } from "@/components/ui/tabs"
 import { TemplateCardData } from "./TemplateCardData"
 import { TemplateForm } from "./TemplateForm"
 import { Tag, Template, Topic } from "@/interfaces/template"
-import { PageTabsEnum } from "@/interfaces/ui"
 
 
-interface TemplateTabProps {
-  tabValue: PageTabsEnum
+interface TemplateTabProps extends HTMLAttributes<HTMLDivElement> {
   template: Template
   topics: Topic[]
   tags: Tag[]
 }
 
 export const TemplateTab = ({
-  tabValue,
   template,
   topics,
   tags,
+  className,
+  ...props
 }: TemplateTabProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   return (
-    <TabsContent value={tabValue}>
-      <Card>
+      <Card className={className} {...props}>
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-1.5">
             <CardTitle>General Settings</CardTitle>
@@ -60,6 +57,5 @@ export const TemplateTab = ({
           <TemplateCardData template={template} />
         )}
       </Card>
-    </TabsContent>
   )
 }

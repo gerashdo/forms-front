@@ -36,3 +36,8 @@ export const CreateNewQuestionCodeMessage: Partial<Record<ErrorCode, string>> = 
   400: 'Invalid request, please check the data for the question',
   500: 'There was an error processing your request. Please try again later',
 }
+
+export const DeleteQuestionFromTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
+  400: 'Invalid request, template or question not found, please check the data',
+  500: 'There was an error processing your request. Please try again later',
+}

@@ -1,14 +1,15 @@
 import { useState } from "react"
 import { closestCenter, DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core"
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
-import { Button } from "../ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { TabsContent } from "../ui/tabs"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { TabsContent } from "@/components/ui/tabs"
 import { NewQuestionForm } from "./NewQuestionForm"
 import { SortableQuestionItem } from "./SortableQuestionItem"
+import { useAddQuestionToTemplate, useDeleteQuestionFromTemplate } from "@/hooks/template/useTemplate"
 import { PageTabsEnum } from "@/interfaces/ui"
 import { NewQuestionFormValues, Question } from "@/interfaces/question"
-import { useAddQuestionToTemplate } from "@/hooks/template/useTemplate"
 
 
 interface QuestionsTabProps {
@@ -24,6 +25,9 @@ export const QuestionsTab = ({
 }: QuestionsTabProps) => {
   const [isAddingQuestion, setIsAddingQuestion] = useState<boolean>(false);
   const {startAddQuestionToTemplate} = useAddQuestionToTemplate(templateId);
+  const {startDeleteQuestionFromTemplate} = useDeleteQuestionFromTemplate(templateId);
+  const [isRemovingQuestion, setIsRemovingQuestion] = useState<boolean>(false);
+  const [questionIdToRemove, setQuestionIdToRemove] = useState<number | null>(null);
 
   function onQuestionSubmit(values: NewQuestionFormValues) {
     startAddQuestionToTemplate(templateId, values);
@@ -44,19 +48,17 @@ export const QuestionsTab = ({
     // }
   };
 
-  const handleRemoveQuestion = (id: number) => {
-    // const deletedSequence = questions.find((q) => q.id === id)?.sequence;
-    // const filteredQuestions = questions.filter((q) => q.id !== id);
-    // setQuestions(
-    //   filteredQuestions.map((q) => {
-    //     if (q.sequence > deletedSequence!) {
-    //       return { ...q, sequence: q.sequence - 1 };
-    //     }
-    //     return q;
-    //   })
-    // );
+  const onRemove = (id: number) => {
+    setIsRemovingQuestion(true);
+    setQuestionIdToRemove(id);
   };
 
+  const handleDeleteQuestion = () => {
+    if (!questionIdToRemove) return;
+    startDeleteQuestionFromTemplate(templateId, questionIdToRemove);
+    setIsRemovingQuestion(false);
+    setQuestionIdToRemove(null);
+  }
   return (
     <TabsContent value={tabValue}>
       <Card>
@@ -83,7 +85,7 @@ export const QuestionsTab = ({
                   <SortableQuestionItem
                     key={question.id}
                     question={question}
-                    onRemove={() => handleRemoveQuestion(question.id)}
+                    onRemove={() => onRemove(question.id)}
                     onEdit={() => console.log(question.id)}
                   />
                 ))}
@@ -92,6 +94,22 @@ export const QuestionsTab = ({
           </DndContext>
         </CardContent>
       </Card>
+      <Dialog open={isRemovingQuestion} onOpenChange={setIsRemovingQuestion}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              Are you sure...
+            </DialogTitle>
+            <DialogDescription>
+              you want to remove this question?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="secondary" onClick={() => setIsRemovingQuestion(false)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleDeleteQuestion}>Remove</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </TabsContent>
   )
 }

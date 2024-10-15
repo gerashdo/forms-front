@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { AxiosError, AxiosResponse } from "axios"
 import { toast } from "@/hooks/use-toast"
-import { addQuestionToTemplate, createTemplate } from "@/requests/templates"
-import { getPostNewTemplateError } from "@/helpers/getErrorsRequest"
+import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate } from "@/requests/templates"
+import { getDeleteQuestionError, getPostNewTemplateError } from "@/helpers/getErrorsRequest"
 import { PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template"
 import { GetQuestionsResponse, NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question"
 
@@ -78,6 +78,41 @@ export const useAddQuestionToTemplate = (templateId: number) => {
 
   return {
     startAddQuestionToTemplate,
+    isLoading: mutation.isPending,
+    success: mutation.isSuccess
+  }
+}
+
+export const useDeleteQuestionFromTemplate = (templateId: number) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: deleteQuestionFromTemplate,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['questions', {templateId: templateId.toString()}]
+      });
+      toast({
+        title: 'Question deleted from the template',
+        description: 'The question was deleted successfully',
+      });
+    },
+    onError: (error: AxiosError) => {
+      const responseCode = error.response?.status || 500;
+      const errorMessage = getDeleteQuestionError(responseCode);
+      toast({
+        title: 'Error adding the question',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    }
+  })
+
+  const startDeleteQuestionFromTemplate = (templateId: number, questionId: number) => {
+    mutation.mutate({templateId, questionId});
+  }
+
+  return {
+    startDeleteQuestionFromTemplate,
     isLoading: mutation.isPending,
     success: mutation.isSuccess
   }

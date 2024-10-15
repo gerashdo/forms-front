@@ -45,3 +45,12 @@ type AddQuestionToTemplateProps = {
 export const addQuestionToTemplate = async ({templateId, questionData}: AddQuestionToTemplateProps) => {
   return axios.post<PostQuestionResponse>(`${BASE_URL}/templates/${templateId}/questions`, questionData);
 }
+
+type DeleteQuestionFromTemplateProps = {
+  templateId: number;
+  questionId: number;
+}
+
+export const deleteQuestionFromTemplate = async ({templateId, questionId}: DeleteQuestionFromTemplateProps) => {
+  return axios.delete(`${BASE_URL}/templates/${templateId}/questions/${questionId}`);
+}

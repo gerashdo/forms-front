@@ -38,6 +38,19 @@ export interface GetTemplateResponse {
   data: Template;
 }
 
+export interface GetTemplatesResponse {
+  ok:   boolean;
+  data: Template[];
+  meta: MetaGetTemplates;
+}
+
+export interface MetaGetTemplates {
+  total:           number;
+  page:            number;
+  elementsPerPage: number;
+}
+
+
 export interface Topic {
   id:   number;
   name: string;

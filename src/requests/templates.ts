@@ -1,6 +1,6 @@
 import axios from "axios"
 import { getEnvVariables } from "@/helpers/envVariables";
-import { GetAllTagsResponse, GetAllTopicsResponse, GetTemplateResponse, PatchQuestionOrderResponse, PostNewTemplateRequest } from "@/interfaces/template"
+import { GetAllTagsResponse, GetAllTopicsResponse, GetTemplateResponse, GetTemplatesResponse, PatchQuestionOrderResponse, PostNewTemplateRequest } from "@/interfaces/template"
 import { NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question";
 
 
@@ -16,6 +16,17 @@ export const getAllTopics = async () => {
 
 export const getTemplateById = async (id: string) => {
   return axios.get<GetTemplateResponse>(`${BASE_URL}/templates/${id}`)
+}
+
+export const getMostRecentTemplates = async () => {
+  return axios.get<GetTemplatesResponse>(`${BASE_URL}/templates`, {
+    params: {
+      limit: 6,
+      page: 1,
+      orderBy: 'createdAt',
+      order: 'DESC'
+    }
+  }).then((response) => response.data);
 }
 
 export const createTemplate = async (data: PostNewTemplateRequest) => {

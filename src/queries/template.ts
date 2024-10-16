@@ -1,4 +1,4 @@
-import { getAllTags, getAllTopics, getTemplateById } from "@/requests/templates";
+import { getAllTags, getAllTopics, getMostRecentTemplates, getTemplateById } from "@/requests/templates";
 import { queryOptions } from "@tanstack/react-query";
 
 
@@ -15,4 +15,9 @@ export const getTagsQuery = queryOptions({
 export const getTemplateByIdQuery = (templateId: string) => queryOptions({
   queryKey: ['template', templateId],
   queryFn: () => getTemplateById(templateId),
+})
+
+export const getRecentTemplatesQuery = queryOptions({
+  queryKey: ['recentTemplates'],
+  queryFn: getMostRecentTemplates,
 })

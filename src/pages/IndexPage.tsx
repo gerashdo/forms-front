@@ -3,7 +3,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { TemplateForm } from "@/components/template/TemplateForm";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { TemplateCard } from '@/components/template/TemplateCard';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { getRecentTemplatesQuery, getTagsQuery, getTopicsQuery } from '@/queries/template';
@@ -52,15 +53,7 @@ export const IndexPage = () => {
           <h2 className="text-2xl font-bold mb-4 text-center">Latest Templates</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {latestTemplates.map((template) => (
-              <Card key={template.id}>
-                <CardHeader>
-                  <CardTitle>{template.title}</CardTitle>
-                  <CardDescription>{template.description}</CardDescription>
-                </CardHeader>
-                <CardFooter>
-                  <p className="text-sm text-muted-foreground">By {template.User.name} {template.User.lastName}</p>
-                </CardFooter>
-              </Card>
+              <TemplateCard key={template.id} template={template} />
             ))}
           </div>
         </section>

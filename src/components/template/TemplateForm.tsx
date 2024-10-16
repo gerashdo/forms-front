@@ -23,11 +23,12 @@ interface NewTemplateFormProps {
   onCancel?: () => void
   defaultValues?: NewTemplateFormValues
   isEditing?: boolean
+  image?: string
 }
 
-export const TemplateForm = ({topics, tags, onCancel, defaultValues, isEditing = false}: NewTemplateFormProps) => {
+export const TemplateForm = ({topics, tags, onCancel, defaultValues, isEditing = false, image}: NewTemplateFormProps) => {
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | undefined>(image)
   const navigate = useNavigate()
 
   const onSuccess = (templateId: number) => {
@@ -72,7 +73,7 @@ export const TemplateForm = ({topics, tags, onCancel, defaultValues, isEditing =
           render={({ field }) => (
             <FormItem>
               <FormLabel>Topic</FormLabel>
-              <Select onValueChange={field.onChange}>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a topic" />
@@ -200,12 +201,12 @@ export const TemplateForm = ({topics, tags, onCancel, defaultValues, isEditing =
                 />
               </FormControl>
               {imagePreview && (
-                <Card className="mt-2">
+                <Card className="mt-2 w-1/3">
                   <CardContent className="p-2">
                     <img
                       src={imagePreview}
                       alt="Preview"
-                      className="max-w-full h-auto"
+                      className="w-full h-auto"
                     />
                   </CardContent>
                 </Card>

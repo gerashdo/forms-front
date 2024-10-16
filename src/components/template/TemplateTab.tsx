@@ -51,6 +51,7 @@ export const TemplateTab = ({
               tags={tags}
               isEditing
               onCancel={() => setIsEditing(false)}
+              image={template.image || undefined}
             />
           </CardContent>
         ) : (

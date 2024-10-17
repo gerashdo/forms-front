@@ -1,19 +1,20 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateTemplate } from "@/hooks/template/useTemplate";
+import { useCreateTemplate, useUpdateTemplateMutation } from "@/hooks/template/useTemplate";
 import { useRecoilValue } from "recoil";
 import { AuthState } from "@/state/auth";
 import { newTemplateSchema } from "@/constants/templates/template";
-import { NewTemplateFormValues, PostNewTemplateRequest } from "@/interfaces/template";
+import { NewTemplateFormValues, PatchTemplateRequest } from "@/interfaces/template";
 
 
 type UseNewTemplateFormProps = {
   onSuccess: (id: number) => void;
   isEditing: boolean;
+  templateId?: number;
   defaultValues?: NewTemplateFormValues;
 }
 
-export const useTemplateForm = ({onSuccess, isEditing, defaultValues}: UseNewTemplateFormProps) => {
+export const useTemplateForm = ({onSuccess, isEditing, defaultValues, templateId}: UseNewTemplateFormProps) => {
   const authState = useRecoilValue(AuthState);
 
   const form = useForm<NewTemplateFormValues>({
@@ -22,18 +23,26 @@ export const useTemplateForm = ({onSuccess, isEditing, defaultValues}: UseNewTem
       title: '',
       description: '',
       tags: [],
-      topic: undefined,
+      topicId: undefined,
       isPublic: true,
       image: undefined,
     },
   });
 
   const { startCreateTemplate } = useCreateTemplate({ onSuccess });
+  const { startUpdateTemplate } = useUpdateTemplateMutation({ onSuccess });
 
   const onSubmit = (values: NewTemplateFormValues) => {
     if (!authState.user) return;
-    if (isEditing) {
-      // handle edit
+    if (isEditing && templateId) {
+      const updatedValues: PatchTemplateRequest = {};
+      if (form.getFieldState('title').isDirty) updatedValues.title = values.title;
+      if (form.getFieldState('description').isDirty) updatedValues.description = values.description;
+      if (form.getFieldState('topicId').isDirty) updatedValues.topicId = values.topicId;
+      if (form.getFieldState('tags').isDirty) updatedValues.tags = values.tags;
+      if (form.getFieldState('isPublic').isDirty) updatedValues.isPublic = values.isPublic;
+      if (form.getFieldState('image').isDirty) updatedValues.image = values.image;
+      updateTemplate(updatedValues);
       return;
     }
     createNewTemplate(values);
@@ -41,16 +50,13 @@ export const useTemplateForm = ({onSuccess, isEditing, defaultValues}: UseNewTem
 
   const createNewTemplate = (values: NewTemplateFormValues) => {
     if (!authState.user) return;
-    const valuesToSend: PostNewTemplateRequest = {
-      userId: authState.user.id,
-      title: values.title,
-      description: values.description,
-      topicId: Number(values.topic),
-      tags: values.tags,
-      isPublic: values.isPublic,
-      image: values.image || null,
-    };
-    startCreateTemplate(valuesToSend);
+    startCreateTemplate({...values, userId: authState.user.id});
+  }
+
+  const updateTemplate = (values: PatchTemplateRequest) => {
+    if (!authState.user || !templateId) return;
+    console.log('update', values);
+    startUpdateTemplate(templateId, values);
   }
 
   return {

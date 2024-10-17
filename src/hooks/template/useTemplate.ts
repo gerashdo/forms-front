@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { AxiosError, AxiosResponse } from "axios"
 import { toast } from "@/hooks/use-toast"
-import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate, reorderTemplateQuestions } from "@/requests/templates"
+import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate, reorderTemplateQuestions, updateTemplate } from "@/requests/templates"
 import { getDeleteQuestionError, getPostNewTemplateError, getReorderQuestionsError } from "@/helpers/getErrorsRequest"
-import { PatchQuestionOrderResponse, PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template"
+import { PatchQuestionOrderResponse, PatchTemplateRequest, PatchTemplateResponse, PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template"
 import { GetQuestionsResponse, NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question"
 
 
@@ -35,6 +35,43 @@ export const useCreateTemplate = ({onSuccess}: UseCreateTemplateProps) => {
 
   return {
     startCreateTemplate,
+    isLoading: mutation.isPending,
+    success: mutation.isSuccess,
+    error: mutation.error,
+  }
+}
+
+export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: updateTemplate,
+    onSuccess: (data: AxiosResponse<PatchTemplateResponse>) => {
+      const templateId = data.data.data.id.toString();
+      queryClient.invalidateQueries({queryKey: ['template', {templateId}]});
+      onSuccess(data.data.data.id);
+      toast({
+        title: 'Template updated',
+        description: 'The template was updated successfully',
+      });
+    },
+    onError: (error: AxiosError) => {
+      console.log(error);
+      const responseCode = error.response?.status || 500;
+      const errorMessage = getPostNewTemplateError(responseCode);
+      toast({
+        title: 'Error updating the template',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    }
+  })
+
+  const startUpdateTemplate = (templateId: number, data: PatchTemplateRequest) => {
+    mutation.mutate({templateId, data});
+  }
+
+  return {
+    startUpdateTemplate,
     isLoading: mutation.isPending,
     success: mutation.isSuccess,
     error: mutation.error,

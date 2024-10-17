@@ -1,4 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { TemplateForm } from "@/components/template/TemplateForm";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ export const IndexPage = () => {
   const tagsQuery = useSuspenseQuery(getTagsQuery)
   const topicsQuery = useSuspenseQuery(getTopicsQuery)
   const recentTemplatesQuery = useSuspenseQuery(getRecentTemplatesQuery)
+  const navigate = useNavigate()
   const tags = tagsQuery.data.data.data
   const topics = topicsQuery.data.data.data
   const latestTemplates = recentTemplatesQuery.data.data
@@ -25,6 +27,10 @@ export const IndexPage = () => {
     { id: 4, name: "Course Evaluation", submissions: 800 },
     { id: 5, name: "Market Research Survey", submissions: 750 },
   ]
+
+  const handleSuccessCreateTemplate = (templateId: number) => {
+    navigate({to: `/templates/${templateId}`})
+  }
 
   return (
     <>
@@ -43,7 +49,11 @@ export const IndexPage = () => {
                   Create a new template to share with the community
                 </DialogDescription>
               </DialogHeader>
-              <TemplateForm topics={topics} tags={tags}/>
+              <TemplateForm
+                topics={topics}
+                tags={tags}
+                onSuccessful={handleSuccessCreateTemplate}
+              />
             </div>
           </ScrollArea>
         </DialogContent>

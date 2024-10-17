@@ -1,42 +1,51 @@
-import { useState } from "react"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { useNavigate } from "@tanstack/react-router"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Textarea } from "@/components/ui/textarea"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Badge } from "@/components/ui/badge"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { Card, CardContent } from "@/components/ui/card"
-import { useTemplateForm } from "@/hooks/template/useTemplateForm"
-import { cn } from "@/lib/utils"
-import { NewTemplateFormValues, Tag, Topic } from "@/interfaces/template"
-import { ALLOWED_IMAGE_TYPES } from "@/constants/templates/template"
-import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
+import { useState } from "react";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Card, CardContent } from "@/components/ui/card";
+import { useTemplateForm } from "@/hooks/template/useTemplateForm";
+import { cn } from "@/lib/utils";
+import { NewTemplateFormValues, Tag, Topic } from "@/interfaces/template";
+import { ALLOWED_IMAGE_TYPES } from "@/constants/templates/template";
+import { CheckIcon, ChevronsUpDown, X } from "lucide-react";
 
 
 interface NewTemplateFormProps {
   topics: Topic[]
   tags: Tag[]
   onCancel?: () => void
+  onSuccessful?: (id: number) => void
   defaultValues?: NewTemplateFormValues
   isEditing?: boolean
   image?: string
+  templateId?: number
 }
 
-export const TemplateForm = ({topics, tags, onCancel, defaultValues, isEditing = false, image}: NewTemplateFormProps) => {
+export const TemplateForm = ({
+  topics,
+  tags,
+  onCancel,
+  onSuccessful,
+  defaultValues,
+  isEditing = false,
+  image,
+  templateId,
+}: NewTemplateFormProps) => {
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
   const [imagePreview, setImagePreview] = useState<string | undefined>(image)
-  const navigate = useNavigate()
 
   const onSuccess = (templateId: number) => {
     setTagsIsOpen(false)
-    navigate({to: `/templates/${templateId}`})
+    onSuccessful?.(templateId)
   }
 
-  const {form, onSubmit} = useTemplateForm({onSuccess, defaultValues, isEditing})
+  const {form, onSubmit} = useTemplateForm({onSuccess, defaultValues, isEditing, templateId})
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -69,11 +78,14 @@ export const TemplateForm = ({topics, tags, onCancel, defaultValues, isEditing =
 
         <FormField
           control={form.control}
-          name="topic"
+          name="topicId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Topic</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={(value) => field.onChange(parseInt(value))}
+                defaultValue={field.value?.toString()}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a topic" />

@@ -6,17 +6,18 @@ import { ErrorCode } from './errorsRequest';
 
 export type NewTemplateFormValues = z.infer<typeof newTemplateSchema>;
 
-export interface PostNewTemplateRequest {
+export interface PostNewTemplateRequest extends NewTemplateFormValues {
   userId: number;
-  title: string;
-  description: string;
-  topicId: number;
-  tags: number[];
-  isPublic: boolean;
-  image: File | null;
 }
 
+export type PatchTemplateRequest = Partial<NewTemplateFormValues>;
+
 export interface PostNewTemplateResponse {
+  ok:   boolean;
+  data: Template;
+}
+
+export interface PatchTemplateResponse {
   ok:   boolean;
   data: Template;
 }

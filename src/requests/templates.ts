@@ -1,6 +1,15 @@
 import axios from "axios"
 import { getEnvVariables } from "@/helpers/envVariables";
-import { GetAllTagsResponse, GetAllTopicsResponse, GetTemplateResponse, GetTemplatesResponse, PatchQuestionOrderResponse, PostNewTemplateRequest } from "@/interfaces/template"
+import {
+  GetAllTagsResponse,
+  GetAllTopicsResponse,
+  GetTemplateResponse,
+  GetTemplatesResponse,
+  PatchQuestionOrderResponse,
+  PatchTemplateRequest,
+  PatchTemplateResponse,
+  PostNewTemplateRequest
+} from "@/interfaces/template"
 import { NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question";
 
 
@@ -47,6 +56,34 @@ export const createTemplate = async (data: PostNewTemplateRequest) => {
     }
   });
 };
+
+export const updateTemplate = async ({templateId, data}: {templateId: number, data: PatchTemplateRequest}) => {
+  const formData = new FormData();
+  if (data.title) {
+    formData.append('title', data.title);
+  }
+  if (data.description) {
+    formData.append('description', data.description);
+  }
+  if (data.topicId) {
+    formData.append('topicId', data.topicId.toString());
+  }
+  if (data.tags) {
+    formData.append('tags', JSON.stringify(data.tags));
+  }
+  if (data.isPublic !== undefined) {
+    formData.append('isPublic', data.isPublic.toString());
+  }
+  if (data.image !== undefined) {
+    formData.append('image', data.image);
+  }
+  console.log('data to update', data);
+  return axios.patch<PatchTemplateResponse>(`${BASE_URL}/templates/${templateId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+}
 
 type AddQuestionToTemplateProps = {
   templateId: number;

@@ -22,6 +22,10 @@ export const TemplateTab = ({
 }: TemplateTabProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
+  const handleOnSuccessEditTemplate = () => {
+    setIsEditing(false);
+  }
+
   return (
       <Card className={className} {...props}>
         <CardHeader className="flex flex-row items-center justify-between">
@@ -43,15 +47,17 @@ export const TemplateTab = ({
                 title: template.title,
                 description: template.description,
                 tags: template.Tags.map((tag) => tag.id),
-                topic: template.Topic.id.toString(),
+                topicId: template.Topic.id,
                 isPublic: template.isPublic,
                 image: undefined,
               }}
               topics={topics}
               tags={tags}
               isEditing
+              templateId={template.id}
               onCancel={() => setIsEditing(false)}
               image={template.image || undefined}
+              onSuccessful={handleOnSuccessEditTemplate}
             />
           </CardContent>
         ) : (

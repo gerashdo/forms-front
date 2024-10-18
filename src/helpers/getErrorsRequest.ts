@@ -1,5 +1,6 @@
 import { LoginCodeMessages, SignUpCodeMessages } from "@/interfaces/auth";
 import { ErrorCode } from "@/interfaces/errorsRequest";
+import { PostFormCodeMessage } from "@/interfaces/form";
 import { CreateNewQuestionCodeMessage, DeleteQuestionFromTemplateCodeMessage, ReorderQuestionsCodeMessage, UpdateQuestionsCodeMessage } from "@/interfaces/question";
 import { CreateNewTemplateCodeMessage } from "@/interfaces/template";
 
@@ -30,4 +31,8 @@ export const getReorderQuestionsError = (errorCode: number | string): string => 
 
 export const getUpdateQuestionError = (errorCode: number | string): string => {
   return UpdateQuestionsCodeMessage[errorCode as ErrorCode] || 'An error occurred, please try again later';
+}
+
+export const getPostFormError = (errorCode: number | string): string => {
+  return PostFormCodeMessage[errorCode as ErrorCode] || 'An error occurred, please try again later';
 }

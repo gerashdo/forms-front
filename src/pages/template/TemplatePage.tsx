@@ -1,12 +1,13 @@
-import { useState } from "react"
-import { getRouteApi } from "@tanstack/react-router"
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { TemplateTab } from "@/components/template/TemplateTab"
-import { QuestionsTab } from "@/components/template/QuestionsTab"
-import { getTagsQuery, getTemplateByIdQuery, getTopicsQuery } from "@/queries/template"
-import { PageTabsEnum } from "@/interfaces/ui"
-import { getQuestionsByTemplateIdQuery } from "@/queries/question"
+import { useState } from "react";
+import { getRouteApi } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TemplateTab } from "@/components/template/TemplateTab";
+import { TemplatePageResultsTab } from "@/components/form/TemplatePageResultsTab";
+import { QuestionsTab } from "@/components/template/QuestionsTab";
+import { getTagsQuery, getTemplateByIdQuery, getTopicsQuery } from "@/queries/template";
+import { PageTabsEnum } from "@/interfaces/ui";
+import { getQuestionsByTemplateIdQuery } from "@/queries/question";
 
 
 const route = getRouteApi('/_layout/templates/$templateId')
@@ -27,7 +28,6 @@ export const TemplatePage = () => {
   const template = templateQuery.data.data;
   const questionsQuery = useSuspenseQuery(getQuestionsByTemplateIdQuery(templateId));
   const questions = questionsQuery.data.data;
-
   const [activeTab, setActiveTab] = useState<PageTabsEnum>(PageTabsEnum.SETTINGS);
 
   return (
@@ -55,6 +55,9 @@ export const TemplatePage = () => {
             tags={tags}
             className="col-span-1 lg:col-span-3"
           />
+        </TabsContent>
+        <TabsContent value={PageTabsEnum.RESULTS}>
+          <TemplatePageResultsTab templateId={templateId}/>
         </TabsContent>
       </Tabs>
     </>

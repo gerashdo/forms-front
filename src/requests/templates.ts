@@ -33,7 +33,7 @@ export const getMostRecentTemplates = async () => {
       limit: 6,
       page: 1,
       orderBy: 'createdAt',
-      order: 'DESC'
+      order: 'desc'
     }
   }).then((response) => response.data);
 }

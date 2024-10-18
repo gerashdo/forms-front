@@ -24,7 +24,7 @@ export const getAllTopics = async () => {
 }
 
 export const getTemplateById = async (id: string) => {
-  return axios.get<GetTemplateResponse>(`${BASE_URL}/templates/${id}`)
+  return axios.get<GetTemplateResponse>(`${BASE_URL}/templates/${id}`).then((response) => response.data);
 }
 
 export const getMostRecentTemplates = async () => {

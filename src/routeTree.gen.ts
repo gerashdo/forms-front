@@ -17,6 +17,7 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutTemplatesIndexImport } from './routes/_layout/templates/index'
 import { Route as LayoutTemplatesTemplateIdImport } from './routes/_layout/templates/$templateId'
+import { Route as LayoutTemplatesTemplateIdFormsSubmitImport } from './routes/_layout/templates_/$templateId.forms.submit'
 
 // Create Virtual Routes
 
@@ -52,6 +53,16 @@ const LayoutTemplatesTemplateIdRoute = LayoutTemplatesTemplateIdImport.update({
 } as any).lazy(() =>
   import('./routes/_layout/templates/$templateId.lazy').then((d) => d.Route),
 )
+
+const LayoutTemplatesTemplateIdFormsSubmitRoute =
+  LayoutTemplatesTemplateIdFormsSubmitImport.update({
+    path: '/templates/$templateId/forms/submit',
+    getParentRoute: () => LayoutRoute,
+  } as any).lazy(() =>
+    import('./routes/_layout/templates_/$templateId.forms.submit.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -92,6 +103,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutTemplatesIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/templates/$templateId/forms/submit': {
+      id: '/_layout/templates/$templateId/forms/submit'
+      path: '/templates/$templateId/forms/submit'
+      fullPath: '/templates/$templateId/forms/submit'
+      preLoaderRoute: typeof LayoutTemplatesTemplateIdFormsSubmitImport
+      parentRoute: typeof LayoutImport
+    }
   }
 }
 
@@ -101,12 +119,15 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutTemplatesTemplateIdRoute: typeof LayoutTemplatesTemplateIdRoute
   LayoutTemplatesIndexRoute: typeof LayoutTemplatesIndexRoute
+  LayoutTemplatesTemplateIdFormsSubmitRoute: typeof LayoutTemplatesTemplateIdFormsSubmitRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutTemplatesTemplateIdRoute: LayoutTemplatesTemplateIdRoute,
   LayoutTemplatesIndexRoute: LayoutTemplatesIndexRoute,
+  LayoutTemplatesTemplateIdFormsSubmitRoute:
+    LayoutTemplatesTemplateIdFormsSubmitRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -118,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/templates': typeof LayoutTemplatesIndexRoute
+  '/templates/$templateId/forms/submit': typeof LayoutTemplatesTemplateIdFormsSubmitRoute
 }
 
 export interface FileRoutesByTo {
@@ -125,6 +147,7 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/templates': typeof LayoutTemplatesIndexRoute
+  '/templates/$templateId/forms/submit': typeof LayoutTemplatesTemplateIdFormsSubmitRoute
 }
 
 export interface FileRoutesById {
@@ -134,13 +157,25 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/_layout/templates/': typeof LayoutTemplatesIndexRoute
+  '/_layout/templates/$templateId/forms/submit': typeof LayoutTemplatesTemplateIdFormsSubmitRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/auth' | '/' | '/templates/$templateId' | '/templates'
+  fullPaths:
+    | ''
+    | '/auth'
+    | '/'
+    | '/templates/$templateId'
+    | '/templates'
+    | '/templates/$templateId/forms/submit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/' | '/templates/$templateId' | '/templates'
+  to:
+    | '/auth'
+    | '/'
+    | '/templates/$templateId'
+    | '/templates'
+    | '/templates/$templateId/forms/submit'
   id:
     | '__root__'
     | '/_layout'
@@ -148,6 +183,7 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/templates/$templateId'
     | '/_layout/templates/'
+    | '/_layout/templates/$templateId/forms/submit'
   fileRoutesById: FileRoutesById
 }
 
@@ -182,7 +218,8 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/",
         "/_layout/templates/$templateId",
-        "/_layout/templates/"
+        "/_layout/templates/",
+        "/_layout/templates/$templateId/forms/submit"
       ]
     },
     "/auth": {
@@ -198,6 +235,10 @@ export const routeTree = rootRoute
     },
     "/_layout/templates/": {
       "filePath": "_layout/templates/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/templates/$templateId/forms/submit": {
+      "filePath": "_layout/templates_/$templateId.forms.submit.tsx",
       "parent": "/_layout"
     }
   }

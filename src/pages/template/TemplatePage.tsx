@@ -18,17 +18,17 @@ const PageTabs = {
 } as const;
 
 export const TemplatePage = () => {
-  const tagsQuery = useSuspenseQuery(getTagsQuery)
-  const topicsQuery = useSuspenseQuery(getTopicsQuery)
-  const tags = tagsQuery.data.data.data
-  const topics = topicsQuery.data.data.data
-  const {templateId} = route.useParams()
-  const templateQuery = useSuspenseQuery(getTemplateByIdQuery(templateId))
-  const template = templateQuery.data.data.data
-  const questionsQuery = useSuspenseQuery(getQuestionsByTemplateIdQuery(templateId))
-  const questions = questionsQuery.data.data
+  const tagsQuery = useSuspenseQuery(getTagsQuery);
+  const topicsQuery = useSuspenseQuery(getTopicsQuery);
+  const tags = tagsQuery.data.data.data;
+  const topics = topicsQuery.data.data.data;
+  const {templateId} = route.useParams();
+  const templateQuery = useSuspenseQuery(getTemplateByIdQuery(templateId));
+  const template = templateQuery.data.data;
+  const questionsQuery = useSuspenseQuery(getQuestionsByTemplateIdQuery(templateId));
+  const questions = questionsQuery.data.data;
 
-  const [activeTab, setActiveTab] = useState<PageTabsEnum>(PageTabsEnum.SETTINGS)
+  const [activeTab, setActiveTab] = useState<PageTabsEnum>(PageTabsEnum.SETTINGS);
 
   return (
     <>

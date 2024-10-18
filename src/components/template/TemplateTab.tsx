@@ -1,4 +1,5 @@
 import { HTMLAttributes, useState } from "react"
+import { Link } from "@tanstack/react-router"
 import { PencilIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -33,12 +34,19 @@ export const TemplateTab = ({
             <CardTitle>General Settings</CardTitle>
             <CardDescription>Configure the general settings for the template</CardDescription>
           </div>
-          {!isEditing && (
-            <Button type="button" variant="ghost" onClick={() => setIsEditing(true)}>
-              Edit Template
-              <PencilIcon className="ml-2 h-4 w-4" />
-            </Button>
-          )}
+          <div className="flex gap-2">
+            <Link to={`/templates/${template.id}/forms/submit`}>
+              <Button type="button">
+                Answer Template Form
+              </Button>
+            </Link>
+            {!isEditing && (
+              <Button type="button" variant="ghost" onClick={() => setIsEditing(true)}>
+                Edit Template
+                <PencilIcon className="ml-2 h-4 w-4" />
+              </Button>
+            )}
+          </div>
         </CardHeader>
         {isEditing ? (
           <CardContent>

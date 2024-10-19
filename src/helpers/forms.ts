@@ -4,12 +4,12 @@ import { User } from "@/interfaces/auth";
 import { PostFormRequest } from "@/interfaces/form";
 
 
-export const isEmailQuestion = (question: Question): boolean => {
-  return question.type === QuestionTypes.TEXT && question.title.toLowerCase().includes('email');
+export const isEmailQuestion = (questionType: QuestionTypes, questionTitle: string): boolean => {
+  return questionType === QuestionTypes.TEXT && questionTitle.toLowerCase().includes('email');
 }
 
-export const isDateQuestion = (question: Question): boolean => {
-  return question.type === QuestionTypes.TEXT && question.title.toLowerCase().includes('date');
+export const isDateQuestion = (questionType: QuestionTypes, questionTitle: string): boolean => {
+  return questionType === QuestionTypes.TEXT && questionTitle.toLowerCase().includes('date');
 }
 
 export const generateFormSchemaFromQuestions = (questions: Question[]) => {
@@ -39,8 +39,8 @@ export const generateFormSchemaFromQuestions = (questions: Question[]) => {
 export const getDefaultValue = (question: Question, user: User): string | number | boolean | undefined  => {
   switch (question.type) {
     case QuestionTypes.TEXT:
-      if (isEmailQuestion(question) && user) return user.email;
-      if (isDateQuestion(question)) return new Date().toISOString();
+      if (isEmailQuestion(question.type, question.title) && user) return user.email;
+      if (isDateQuestion(question.type, question.title)) return new Date().toISOString();
       return "";
     case QuestionTypes.MULTIPLE:
       return "";

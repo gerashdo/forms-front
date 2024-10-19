@@ -36,7 +36,9 @@ export const FormForm = ({
   }>) => {
     switch (question.type) {
       case QuestionTypes.TEXT:
-        return <Input {...field} disabled={isDateQuestion(question) || isEmailQuestion(question)} />;
+        return <Input {...field}
+          disabled={isDateQuestion(question.type, question.title) || isEmailQuestion(question.type, question.title)}
+        />;
       case QuestionTypes.MULTIPLE:
         return <Textarea {...field} />;
       case QuestionTypes.INTEGER:

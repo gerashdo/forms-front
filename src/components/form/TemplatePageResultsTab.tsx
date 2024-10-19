@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { ColumnDef, getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { initialQueryParamsToGetForms } from "@/constants/form/form";
@@ -17,6 +18,7 @@ interface TemplatePageResultsTabProps {
 
 export const TemplatePageResultsTab = ({templateId}: TemplatePageResultsTabProps) => {
   const [page, setPage] = useState<number>(initialQueryParamsToGetForms.page);
+  const navigation = useNavigate();
   const [sorting, setSorting] = useState<SortingState>([]);
   const formsQuery = useSuspenseQuery(getFormsQuery({
     ...initialQueryParamsToGetForms,
@@ -55,8 +57,8 @@ export const TemplatePageResultsTab = ({templateId}: TemplatePageResultsTabProps
       cell: ({ row }) => {
         const form = row.original;
         const menuItems = [
-          {id: "view", label: "View details", action: () => console.log(form.id)},
-          {id: "edit", label: "Edit form", action: () => console.log(form.id)},
+          {id: "view", label: "View details", action: () => navigation({to: `/forms/${form.id}`})},
+          // {id: "edit", label: "Edit form", action: () => console.log(form.id)},
           {id: "delete", label: "Delete form", action: () => console.log(form.id)},
         ];
         return <DataTableDropdownMenu label="Actions" items={menuItems} triggerLabel="Open menu"/>;

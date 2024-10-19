@@ -19,21 +19,29 @@ export interface PostFormResponse {
   data: Form;
 }
 
-export interface Form {
-  id:             number;
-  submissionDate: Date;
-  templateId:     number;
-  userId:         number;
-  Answers:        Answer[];
+export interface GetFormResponse {
+  ok:   boolean;
+  data: Form;
 }
 
-export interface Answer {
-  id:                    number;
-  questionId:            number;
-  textValue:             string | null;
-  numberValue:           number | null;
-  booleanValue:          boolean | null;
-  multipleTextLineValue: string | null;
+export interface Form {
+  id:             number;
+  submissionDate: string;
+  templateId:     number;
+  userId:         number;
+  User:           GetFormResponseUser;
+  Template:       GetFormResponseTemplate;
+}
+
+export interface GetFormResponseTemplate {
+  title:       string;
+  description: string;
+}
+
+export interface GetFormResponseUser {
+  email:    string;
+  name:     string;
+  lastName: string;
 }
 
 export interface GetFormsResponse {
@@ -44,7 +52,7 @@ export interface GetFormsResponse {
 
 export interface GetFormsResponseForm {
   id:             number;
-  submissionDate: Date;
+  submissionDate: string;
   User:           GetFormsResponseUser;
   Template:       GetFormsResponseTemplate;
 }

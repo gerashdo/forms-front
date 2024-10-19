@@ -17,6 +17,7 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutTemplatesIndexImport } from './routes/_layout/templates/index'
 import { Route as LayoutTemplatesTemplateIdImport } from './routes/_layout/templates/$templateId'
+import { Route as LayoutFormsFormIdImport } from './routes/_layout/forms/$formId'
 import { Route as LayoutTemplatesTemplateIdFormsSubmitImport } from './routes/_layout/templates_/$templateId.forms.submit'
 
 // Create Virtual Routes
@@ -54,6 +55,13 @@ const LayoutTemplatesTemplateIdRoute = LayoutTemplatesTemplateIdImport.update({
   import('./routes/_layout/templates/$templateId.lazy').then((d) => d.Route),
 )
 
+const LayoutFormsFormIdRoute = LayoutFormsFormIdImport.update({
+  path: '/forms/$formId',
+  getParentRoute: () => LayoutRoute,
+} as any).lazy(() =>
+  import('./routes/_layout/forms/$formId.lazy').then((d) => d.Route),
+)
+
 const LayoutTemplatesTemplateIdFormsSubmitRoute =
   LayoutTemplatesTemplateIdFormsSubmitImport.update({
     path: '/templates/$templateId/forms/submit',
@@ -89,6 +97,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/forms/$formId': {
+      id: '/_layout/forms/$formId'
+      path: '/forms/$formId'
+      fullPath: '/forms/$formId'
+      preLoaderRoute: typeof LayoutFormsFormIdImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/templates/$templateId': {
       id: '/_layout/templates/$templateId'
       path: '/templates/$templateId'
@@ -117,6 +132,7 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutFormsFormIdRoute: typeof LayoutFormsFormIdRoute
   LayoutTemplatesTemplateIdRoute: typeof LayoutTemplatesTemplateIdRoute
   LayoutTemplatesIndexRoute: typeof LayoutTemplatesIndexRoute
   LayoutTemplatesTemplateIdFormsSubmitRoute: typeof LayoutTemplatesTemplateIdFormsSubmitRoute
@@ -124,6 +140,7 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutFormsFormIdRoute: LayoutFormsFormIdRoute,
   LayoutTemplatesTemplateIdRoute: LayoutTemplatesTemplateIdRoute,
   LayoutTemplatesIndexRoute: LayoutTemplatesIndexRoute,
   LayoutTemplatesTemplateIdFormsSubmitRoute:
@@ -137,6 +154,7 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/auth': typeof AuthLazyRoute
   '/': typeof LayoutIndexRoute
+  '/forms/$formId': typeof LayoutFormsFormIdRoute
   '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/templates': typeof LayoutTemplatesIndexRoute
   '/templates/$templateId/forms/submit': typeof LayoutTemplatesTemplateIdFormsSubmitRoute
@@ -145,6 +163,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/auth': typeof AuthLazyRoute
   '/': typeof LayoutIndexRoute
+  '/forms/$formId': typeof LayoutFormsFormIdRoute
   '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/templates': typeof LayoutTemplatesIndexRoute
   '/templates/$templateId/forms/submit': typeof LayoutTemplatesTemplateIdFormsSubmitRoute
@@ -155,6 +174,7 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/auth': typeof AuthLazyRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/forms/$formId': typeof LayoutFormsFormIdRoute
   '/_layout/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
   '/_layout/templates/': typeof LayoutTemplatesIndexRoute
   '/_layout/templates/$templateId/forms/submit': typeof LayoutTemplatesTemplateIdFormsSubmitRoute
@@ -166,6 +186,7 @@ export interface FileRouteTypes {
     | ''
     | '/auth'
     | '/'
+    | '/forms/$formId'
     | '/templates/$templateId'
     | '/templates'
     | '/templates/$templateId/forms/submit'
@@ -173,6 +194,7 @@ export interface FileRouteTypes {
   to:
     | '/auth'
     | '/'
+    | '/forms/$formId'
     | '/templates/$templateId'
     | '/templates'
     | '/templates/$templateId/forms/submit'
@@ -181,6 +203,7 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/auth'
     | '/_layout/'
+    | '/_layout/forms/$formId'
     | '/_layout/templates/$templateId'
     | '/_layout/templates/'
     | '/_layout/templates/$templateId/forms/submit'
@@ -217,6 +240,7 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
+        "/_layout/forms/$formId",
         "/_layout/templates/$templateId",
         "/_layout/templates/",
         "/_layout/templates/$templateId/forms/submit"
@@ -227,6 +251,10 @@ export const routeTree = rootRoute
     },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/forms/$formId": {
+      "filePath": "_layout/forms/$formId.tsx",
       "parent": "/_layout"
     },
     "/_layout/templates/$templateId": {

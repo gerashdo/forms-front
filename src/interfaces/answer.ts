@@ -1,3 +1,4 @@
+import { ErrorCode } from "./errorsRequest";
 import { QuestionTypes } from "./question";
 
 
@@ -24,4 +25,15 @@ export interface GetAnswersResponseQuestion {
 
 export interface GetAnswersParams {
   formId: number;
+}
+
+export interface PatchAnswerResponse {
+  ok:   boolean;
+  data: Answer;
+}
+
+export const PatchAnswerCodeMessage: Partial<Record<ErrorCode, string>> = {
+  400: 'Invalid data, please check the data for the answer edition',
+  422: 'You are trying to set values in the wrong type of question',
+  500: 'There was an error processing your request. Please try again later',
 }

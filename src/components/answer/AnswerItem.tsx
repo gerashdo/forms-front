@@ -9,9 +9,10 @@ import { Answer } from "@/interfaces/answer";
 
 interface AnswerItemProps {
   answer: Answer;
+  onSubmitEditAnswer?: (value: string | number | boolean) => void;
 }
 
-export const AnswerItem = ({answer}: AnswerItemProps) => {
+export const AnswerItem = ({answer, onSubmitEditAnswer}: AnswerItemProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const renderAnswer = (answer: Answer) => {
@@ -36,8 +37,8 @@ export const AnswerItem = ({answer}: AnswerItemProps) => {
     setIsEditing(false);
   }
 
-  const handleUpdate = (newValue: string | number | boolean) => {
-    console.log("Update", {newValue});
+  const handleSumbit = (value: string | number | boolean) => {
+    if (onSubmitEditAnswer) onSubmitEditAnswer(value);
     setIsEditing(false);
   }
 
@@ -60,7 +61,7 @@ export const AnswerItem = ({answer}: AnswerItemProps) => {
       {isEditing ? (
         <AnswerForm
           answer={answer}
-          onSubmit={handleUpdate}
+          onSubmit={handleSumbit}
           onCancel={handleOnCancelEdit}
         />
       ): (

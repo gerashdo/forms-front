@@ -8,10 +8,11 @@ export interface GetAnswersResponse {
 
 export interface Answer {
   id:                    number;
-  textValue:             string | null;
-  numberValue:           number | null;
+  textValue:             string  | null;
+  numberValue:           number  | null;
   booleanValue:          boolean | null;
-  multipleTextLineValue: string | null;
+  multipleTextLineValue: string  | null;
+  questionId:            number;
   Question:              GetAnswersResponseQuestion;
 }
 

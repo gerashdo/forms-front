@@ -12,26 +12,26 @@ export const isDateQuestion = (questionType: QuestionTypes, questionTitle: strin
   return questionType === QuestionTypes.TEXT && questionTitle.toLowerCase().includes('date');
 }
 
+export const getQuestionZodType = (type: QuestionTypes) => {
+  switch (type) {
+    case QuestionTypes.TEXT:
+      return z.string().min(1, "This field is required");
+    case QuestionTypes.MULTIPLE:
+      return z.string().min(1, "This field is required");
+    case QuestionTypes.INTEGER:
+      return z.coerce.number({message: "The value should be a number"}).min(0, "Must be greater or equals to 0");
+    case QuestionTypes.BOOLEAN:
+      return z.boolean();
+    default:
+      return z.string().min(1, "This field is required");
+  }
+}
+
 export const generateFormSchemaFromQuestions = (questions: Question[]) => {
   const schemaFields: Record<number, z.ZodString | z.ZodBoolean | z.ZodNumber> = {}; // Ensure the object type allows numeric keys
 
   questions.forEach(question => {
-    switch (question.type) {
-      case QuestionTypes.TEXT:
-        schemaFields[question.id] = z.string().min(1, "This field is required");
-        break;
-      case QuestionTypes.MULTIPLE:
-        schemaFields[question.id] = z.string().min(1, "This field is required");
-        break;
-      case QuestionTypes.INTEGER:
-        schemaFields[question.id] = z.coerce.number({message: "The value should be a number"}).min(0, "Must be greater or equals to 0");
-        break;
-      case QuestionTypes.BOOLEAN:
-        schemaFields[question.id] = z.boolean();
-        break;
-      default:
-        break;
-    }
+    schemaFields[question.id] = getQuestionZodType(question.type);
   });
   return z.object(schemaFields);
 };

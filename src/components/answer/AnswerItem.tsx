@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { AnswerForm } from "@/components/answer/AnswerForm";
 import { isDateQuestion, isEmailQuestion } from "@/helpers/forms";
 import { formatDateTime } from "@/helpers/dateFormat";
 import { QuestionTypes } from "@/interfaces/question";
@@ -31,11 +32,22 @@ export const AnswerItem = ({answer}: AnswerItemProps) => {
     }
   }
 
+  const handleOnCancelEdit = () => {
+    setIsEditing(false);
+  }
+
+  const handleUpdate = (newValue: string | number | boolean) => {
+    console.log("Update", {newValue});
+    setIsEditing(false);
+  }
+
   return (
     <div className="mb-4 p-4 border rounded">
       <div className="flex justify-between items-start mb-2">
         <h3 className="text-lg font-semibold">{answer.Question.title}</h3>
-        {!isDateQuestion(answer.Question.type, answer.Question.title) && !isEmailQuestion(answer.Question.type, answer.Question.title) && (
+        {!isDateQuestion(answer.Question.type, answer.Question.title) &&
+          !isEmailQuestion(answer.Question.type, answer.Question.title) &&
+          !isEditing && (
           <Button
             variant="ghost"
             size="sm"
@@ -45,13 +57,15 @@ export const AnswerItem = ({answer}: AnswerItemProps) => {
           </Button>
         )}
       </div>
-      {renderAnswer(answer)}
-      {/* <EditQuestionDialog
-        question={question}
-        isOpen={isEditing}
-        onClose={() => setIsEditing(false)}
-        onUpdate={onUpdate}
-      /> */}
+      {isEditing ? (
+        <AnswerForm
+          answer={answer}
+          onSubmit={handleUpdate}
+          onCancel={handleOnCancelEdit}
+        />
+      ): (
+        renderAnswer(answer)
+      )}
     </div>
   );
 }

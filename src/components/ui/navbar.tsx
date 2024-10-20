@@ -36,7 +36,11 @@ export const Navbar = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <Link to="/profile">
+                    <DropdownMenuItem>
+                      Profile
+                    </DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

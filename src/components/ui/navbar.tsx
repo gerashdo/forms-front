@@ -1,13 +1,20 @@
 import { AuthState } from "@/state/auth";
 import { Link } from "@tanstack/react-router"
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu"
 import { Button } from "./button"
 import { ChevronDown } from "lucide-react"
 
 
 export const Navbar = () => {
-  const authState = useRecoilValue(AuthState);
+  const [authState, setAuthState] = useRecoilState(AuthState);
+  const onLogout = () => {
+    setAuthState({
+      user: null,
+      token: null,
+    })
+  }
+
   return (
     <header className="w-full border-b bg-white">
       <div className="container mx-auto flex items-center justify-between py-4">
@@ -16,7 +23,10 @@ export const Navbar = () => {
             TestYou
           </Link>
           <nav className="hidden md:flex space-x-4">
-            <Link className="text-sm font-medium">
+            <Link
+              to="/users"
+              className="text-sm font-medium"
+            >
               Users
             </Link>
           </nav>
@@ -41,7 +51,7 @@ export const Navbar = () => {
                       Profile
                     </DropdownMenuItem>
                   </Link>
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                  <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (

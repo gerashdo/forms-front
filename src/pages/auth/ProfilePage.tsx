@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FormDataTable } from "@/components/form/FormDataTable";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { TemplateDataTable } from "@/components/template/TemplateDataTable";
+import { NewTemplateDialog } from "@/components/template/NewTemplateDialog";
+import { useTagsTopics } from "@/hooks/useTagsTopics";
 import { AuthState } from "@/state/auth";
 import { getTemplatesQuery } from "@/queries/template";
 import { getFormsQuery } from "@/queries/form";
@@ -17,6 +19,7 @@ import { initialQueryParamsToGetForms } from "@/constants/form/form";
 const ProfilePage = () => {
   const authState = useRecoilValue(AuthState);
   const navigation = useNavigate();
+  const {tags, topics} = useTagsTopics();
   const {user} = authState;
   const [templatesPage, setTemplatesPage] = useState<number>(initialQueryParamsToGetTemplates.page);
   const [formsPage, setFormsPage] = useState<number>(initialQueryParamsToGetForms.page);
@@ -60,9 +63,16 @@ const ProfilePage = () => {
         </TabsList>
         <TabsContent value="templates">
           <Card>
-            <CardHeader>
-              <CardTitle>My Templates</CardTitle>
-              <CardDescription>Manage your created templates here</CardDescription>
+            <CardHeader className="flex flex-row justify-between align-middle">
+              <div>
+                <CardTitle>My Templates</CardTitle>
+                <CardDescription>Manage your created templates here</CardDescription>
+              </div>
+              <NewTemplateDialog
+                topics={topics}
+                tags={tags}
+                onSuccess={(templateId) => navigation({to: `/templates/${templateId}`})}
+              />
             </CardHeader>
             <CardContent>
               <TemplateDataTable

@@ -45,7 +45,7 @@ export const TemplateForm = ({
     onSuccessful?.(templateId)
   }
 
-  const {form, onSubmit} = useTemplateForm({onSuccess, defaultValues, isEditing, templateId})
+  const {form, onSubmit, isLoading} = useTemplateForm({onSuccess, defaultValues, isEditing, templateId})
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -252,8 +252,12 @@ export const TemplateForm = ({
         />
         <div className="flex gap-3 flex-row-reverse col-span-2">
           {onCancel && (<Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>)}
-          <Button type="submit" className="col-span-2">
-            Save Template
+          <Button
+            type="submit"
+            className="col-span-2"
+            disabled={isLoading}
+          >
+            {isLoading ? "Submitting..." : "Save Template"}
           </Button>
         </div>
       </form>

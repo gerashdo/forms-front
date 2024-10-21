@@ -29,8 +29,8 @@ export const useTemplateForm = ({onSuccess, isEditing, defaultValues, templateId
     },
   });
 
-  const { startCreateTemplate } = useCreateTemplate({ onSuccess });
-  const { startUpdateTemplate } = useUpdateTemplateMutation({ onSuccess });
+  const { startCreateTemplate, isLoading: isLoadingCreation } = useCreateTemplate({ onSuccess });
+  const { startUpdateTemplate, isLoading: isLoadingEdition } = useUpdateTemplateMutation({ onSuccess });
 
   const onSubmit = (values: NewTemplateFormValues) => {
     if (!authState.user) return;
@@ -62,5 +62,6 @@ export const useTemplateForm = ({onSuccess, isEditing, defaultValues, templateId
   return {
     form,
     onSubmit,
+    isLoading: isLoadingCreation || isLoadingEdition,
   };
 };

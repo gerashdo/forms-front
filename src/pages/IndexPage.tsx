@@ -1,24 +1,16 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { TemplateForm } from "@/components/template/TemplateForm";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { TemplateCard } from '@/components/template/TemplateCard';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { getRecentTemplatesQuery, getTagsQuery, getTopicsQuery } from '@/queries/template';
+import { getRecentTemplatesQuery } from '@/queries/template';
+import { useTags } from '@/hooks/useTagsTopics';
 
 
 export const IndexPage = () => {
-  const tagsQuery = useSuspenseQuery(getTagsQuery)
-  const topicsQuery = useSuspenseQuery(getTopicsQuery)
-  const recentTemplatesQuery = useSuspenseQuery(getRecentTemplatesQuery)
-  const navigate = useNavigate()
-  const tags = tagsQuery.data.data.data
-  const topics = topicsQuery.data.data.data
-  const latestTemplates = recentTemplatesQuery.data.data
+  const tags = useTags();
+  const recentTemplatesQuery = useSuspenseQuery(getRecentTemplatesQuery);
+  const latestTemplates = recentTemplatesQuery.data.data;
 
   const popularTemplates = [
     { id: 1, name: "Customer Feedback", submissions: 1500 },
@@ -26,38 +18,10 @@ export const IndexPage = () => {
     { id: 3, name: "Job Application", submissions: 1000 },
     { id: 4, name: "Course Evaluation", submissions: 800 },
     { id: 5, name: "Market Research Survey", submissions: 750 },
-  ]
-
-  const handleSuccessCreateTemplate = (templateId: number) => {
-    navigate({to: `/templates/${templateId}`})
-  }
+  ];
 
   return (
     <>
-      <Dialog>
-        <div className='flex flex-row-reverse'>
-          <DialogTrigger asChild>
-            <Button>Create Template</Button>
-          </DialogTrigger>
-        </div>
-        <DialogContent className='p-1'>
-          <ScrollArea className='max-h-[80vh] p-5'>
-            <div className='m-2'>
-              <DialogHeader>
-                <DialogTitle>Let's create a new template</DialogTitle>
-                <DialogDescription>
-                  Create a new template to share with the community
-                </DialogDescription>
-              </DialogHeader>
-              <TemplateForm
-                topics={topics}
-                tags={tags}
-                onSuccessful={handleSuccessCreateTemplate}
-              />
-            </div>
-          </ScrollArea>
-        </DialogContent>
-      </Dialog>
       <main className="flex-grow mt-4">
         <section className="mb-8">
           <h2 className="text-2xl font-bold mb-4 text-center">Latest Templates</h2>

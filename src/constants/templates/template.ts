@@ -19,3 +19,12 @@ export const newTemplateSchema = z.object({
     { message: "File must be an png, jpg or jepg image" }
   ).optional(),
 })
+
+export enum ALLOWED_TEMPLATE_ORDER_BY_FIELDS {
+  createdAt = "createdAt",
+}
+
+export enum ALLOWED_TEMPLATE_ORDER_BY {
+  ASC = "asc",
+  DESC = "desc",
+}

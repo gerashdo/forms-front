@@ -1,6 +1,6 @@
 import * as z from 'zod';
 import { Question } from './question';
-import { newTemplateSchema } from '@/constants/templates/template';
+import { ALLOWED_TEMPLATE_ORDER_BY, ALLOWED_TEMPLATE_ORDER_BY_FIELDS, newTemplateSchema } from '@/constants/templates/template';
 import { ErrorCode } from './errorsRequest';
 
 
@@ -39,6 +39,14 @@ export interface GetTemplateResponse {
   data: Template;
 }
 
+export interface GetTemplatesQueryParams {
+  limit:    number;
+  page:     number;
+  orderBy:  ALLOWED_TEMPLATE_ORDER_BY_FIELDS;
+  order:    ALLOWED_TEMPLATE_ORDER_BY;
+  userId?:  number;
+}
+
 export interface GetTemplatesResponse {
   ok:   boolean;
   data: Template[];
@@ -50,7 +58,6 @@ export interface MetaGetTemplates {
   page:            number;
   elementsPerPage: number;
 }
-
 
 export interface Topic {
   id:   number;
@@ -64,11 +71,6 @@ export interface User {
   email:    string;
 }
 
-
-export interface Topic {
-  id:   number;
-  name: string;
-}
 
 export interface User {
   id:       number;
@@ -90,11 +92,6 @@ export interface Tag {
 export interface GetAllTopicsResponse {
   ok:   boolean;
   data: Topic[];
-}
-
-export interface Topic {
-  id:   number;
-  name: string;
 }
 
 export interface PatchQuestionOrderResponse {

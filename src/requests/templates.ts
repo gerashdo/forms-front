@@ -4,6 +4,7 @@ import {
   GetAllTagsResponse,
   GetAllTopicsResponse,
   GetTemplateResponse,
+  GetTemplatesQueryParams,
   GetTemplatesResponse,
   PatchQuestionOrderResponse,
   PatchTemplateRequest,
@@ -11,6 +12,7 @@ import {
   PostNewTemplateRequest
 } from "@/interfaces/template"
 import { NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question";
+import { ALLOWED_TEMPLATE_ORDER_BY, ALLOWED_TEMPLATE_ORDER_BY_FIELDS } from "@/constants/templates/template";
 
 
 const BASE_URL = getEnvVariables().VITE_API_BACKEND_URL;
@@ -27,15 +29,18 @@ export const getTemplateById = async (id: string) => {
   return axios.get<GetTemplateResponse>(`${BASE_URL}/templates/${id}`).then((response) => response.data);
 }
 
+export const getTemplates = async (params: GetTemplatesQueryParams) => {
+  return axios.get<GetTemplatesResponse>(`${BASE_URL}/templates`, {params}).then((response) => response.data);
+}
+
 export const getMostRecentTemplates = async () => {
-  return axios.get<GetTemplatesResponse>(`${BASE_URL}/templates`, {
-    params: {
-      limit: 6,
-      page: 1,
-      orderBy: 'createdAt',
-      order: 'desc'
-    }
-  }).then((response) => response.data);
+  const params: GetTemplatesQueryParams = {
+    limit: 6,
+    page: 1,
+    orderBy: ALLOWED_TEMPLATE_ORDER_BY_FIELDS.createdAt,
+    order: ALLOWED_TEMPLATE_ORDER_BY.DESC,
+  }
+  return axios.get<GetTemplatesResponse>(`${BASE_URL}/templates`, {params}).then((response) => response.data);
 }
 
 export const createTemplate = async (data: PostNewTemplateRequest) => {

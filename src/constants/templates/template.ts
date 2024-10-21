@@ -28,3 +28,10 @@ export enum ALLOWED_TEMPLATE_ORDER_BY {
   ASC = "asc",
   DESC = "desc",
 }
+
+export const initialQueryParamsToGetTemplates = {
+  page: 1,
+  limit: 10,
+  order: ALLOWED_TEMPLATE_ORDER_BY.DESC,
+  orderBy: ALLOWED_TEMPLATE_ORDER_BY_FIELDS.createdAt,
+} as const;

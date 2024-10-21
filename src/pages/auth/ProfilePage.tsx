@@ -1,37 +1,41 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { redirect } from "@tanstack/react-router";
+import { redirect, useNavigate } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AuthState } from "@/state/auth";
+import { FormDataTable } from "@/components/form/FormDataTable";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getTemplatesQuery } from "@/queries/template";
-import { ALLOWED_TEMPLATE_ORDER_BY, ALLOWED_TEMPLATE_ORDER_BY_FIELDS } from "@/constants/templates/template";
 import { TemplateDataTable } from "@/components/template/TemplateDataTable";
+import { AuthState } from "@/state/auth";
+import { getTemplatesQuery } from "@/queries/template";
+import { getFormsQuery } from "@/queries/form";
+import { initialQueryParamsToGetTemplates } from "@/constants/templates/template";
+import { initialQueryParamsToGetForms } from "@/constants/form/form";
 
 
 const ProfilePage = () => {
   const authState = useRecoilValue(AuthState);
+  const navigation = useNavigate();
   const {user} = authState;
-  const [templatesPage, setTemplatesPage] = useState<number>(1);
+  const [templatesPage, setTemplatesPage] = useState<number>(initialQueryParamsToGetTemplates.page);
+  const [formsPage, setFormsPage] = useState<number>(initialQueryParamsToGetForms.page);
   const templatesQuery = useSuspenseQuery(getTemplatesQuery({
-    limit: 10,
+    ...initialQueryParamsToGetTemplates,
     page: templatesPage,
-    orderBy: ALLOWED_TEMPLATE_ORDER_BY_FIELDS.createdAt,
-    order: ALLOWED_TEMPLATE_ORDER_BY.DESC,
     userId: user?.id,
   }))
+  const formsQuery = useSuspenseQuery(getFormsQuery({
+    ...initialQueryParamsToGetForms,
+    page: formsPage,
+    userId: user?.id,
+  }));
+
   if (!user) return redirect({to: '/auth', search: {redirect: '/profile'}});
   const templates = templatesQuery.data.data;
+  const forms = formsQuery.data.data;
   const templatesTotalPages = Math.ceil(templatesQuery.data.meta.total / templatesQuery.data.meta.elementsPerPage);
-
-  const handleTemplatesNextPage = () => {
-    setTemplatesPage((prev) => prev + 1);
-  }
-  const handleTemplatesPreviousPage = () => {
-    setTemplatesPage((prev) => prev - 1);
-  }
+  const formsTotalPages = Math.ceil(formsQuery.data.meta.total / formsQuery.data.meta.elementsPerPage);
 
   return (
     <div>
@@ -65,8 +69,10 @@ const ProfilePage = () => {
                 templates={templates}
                 currentPage={templatesPage}
                 totalPages={templatesTotalPages}
-                onNextPage={handleTemplatesNextPage}
-                onPreviousPage={handleTemplatesPreviousPage}
+                onNextPage={() => setTemplatesPage((prev) => prev + 1)}
+                onPreviousPage={() => setTemplatesPage((prev) => prev - 1)}
+                onViewDetails={(templateId) => navigation({to: `/templates/${templateId}`})}
+                onDelete={(templateId) => console.log('Delete template', templateId)}
               />
             </CardContent>
           </Card>
@@ -77,6 +83,17 @@ const ProfilePage = () => {
               <CardTitle>Filled Forms</CardTitle>
               <CardDescription>View your filled forms here</CardDescription>
             </CardHeader>
+            <CardContent>
+              <FormDataTable
+                forms={forms}
+                currentPage={formsPage}
+                totalPages={formsTotalPages}
+                onNextPage={() => setFormsPage((prev) => prev + 1)}
+                onPreviousPage={() => setFormsPage((prev) => prev - 1)}
+                onViewDetails={(formId) => navigation({to: `/forms/${formId}`})}
+                onDelete={(formId) => console.log('Delete form', formId)}
+              />
+            </CardContent>
           </Card>
         </TabsContent>
       </Tabs>

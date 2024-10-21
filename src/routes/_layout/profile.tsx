@@ -2,7 +2,9 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 import { snapshot_UNSTABLE } from 'recoil';
 import { AuthState } from '@/state/auth';
 import { getTemplatesQuery } from '@/queries/template';
-import { ALLOWED_TEMPLATE_ORDER_BY, ALLOWED_TEMPLATE_ORDER_BY_FIELDS } from '@/constants/templates/template';
+import { getFormsQuery } from '@/queries/form';
+import { initialQueryParamsToGetTemplates } from '@/constants/templates/template';
+import { initialQueryParamsToGetForms } from '@/constants/form/form';
 
 
 export const Route = createFileRoute('/_layout/profile')({
@@ -23,10 +25,11 @@ export const Route = createFileRoute('/_layout/profile')({
     const authState = snapshot.getLoadable(AuthState).getValue();
     const userId = authState.user!.id;
     queryClient.ensureQueryData(getTemplatesQuery({
-      limit: 10,
-      page: 1,
-      orderBy: ALLOWED_TEMPLATE_ORDER_BY_FIELDS.createdAt,
-      order: ALLOWED_TEMPLATE_ORDER_BY.DESC,
+      ...initialQueryParamsToGetTemplates,
+      userId,
+    }))
+    queryClient.ensureQueryData(getFormsQuery({
+      ...initialQueryParamsToGetForms,
       userId,
     }))
   },

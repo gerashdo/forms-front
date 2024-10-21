@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ColumnDef, getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
-import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { DataTable, DataTableDropdownMenu } from "@/components/ui/DataTable";
 import { Pagination } from "@/components/ui/Pagitation";
@@ -15,6 +14,8 @@ interface TemplateDataTableProps {
   currentPage: number;
   onNextPage: () => void;
   onPreviousPage: () => void;
+  onViewDetails: (templateId: number) => void;
+  onDelete: (templateId: number) => void;
 }
 
 export const TemplateDataTable = ({
@@ -23,9 +24,10 @@ export const TemplateDataTable = ({
   totalPages,
   onNextPage,
   onPreviousPage,
+  onViewDetails,
+  onDelete,
 }: TemplateDataTableProps) => {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const navigation = useNavigate();
 
   const columns: ColumnDef<Template>[] = [
     {
@@ -74,8 +76,8 @@ export const TemplateDataTable = ({
       cell: ({row}) => {
         const template = row.original;
         const menuItems = [
-          {id: "view", label: "View details", action: () => navigation({to: `/templates/${template.id}`})},
-          {id: "delete", label: "Delete template", action: () => console.log(template.id)},
+          {id: "view", label: "View details", action: () => onViewDetails(template.id)},
+          {id: "delete", label: "Delete template", action: () => onDelete(template.id)},
         ];
         return <DataTableDropdownMenu label="Actions" items={menuItems} triggerLabel="Open menu"/>;
       },

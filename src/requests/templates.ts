@@ -64,7 +64,7 @@ export const createTemplate = async ({token, data}:{token: string, data: PostNew
   });
 };
 
-export const updateTemplate = async ({templateId, data}: {templateId: number, data: PatchTemplateRequest}) => {
+export const updateTemplate = async ({templateId, data, token}: {token: string, templateId: number, data: PatchTemplateRequest}) => {
   const formData = new FormData();
   if (data.title) {
     formData.append('title', data.title);
@@ -87,7 +87,8 @@ export const updateTemplate = async ({templateId, data}: {templateId: number, da
   console.log('data to update', data);
   return axios.patch<PatchTemplateResponse>(`${BASE_URL}/templates/${templateId}`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      'Authorization': getTokenString(token),
     }
   });
 }
@@ -95,21 +96,30 @@ export const updateTemplate = async ({templateId, data}: {templateId: number, da
 type AddQuestionToTemplateProps = {
   templateId: number;
   questionData: NewQuestionFormValues;
+  token: string;
 }
 
-export const addQuestionToTemplate = async ({templateId, questionData}: AddQuestionToTemplateProps) => {
-  return axios.post<PostQuestionResponse>(`${BASE_URL}/templates/${templateId}/questions`, questionData);
+export const addQuestionToTemplate = async ({templateId, questionData, token}: AddQuestionToTemplateProps) => {
+  return axios.post<PostQuestionResponse>(`${BASE_URL}/templates/${templateId}/questions`, questionData, 
+    {headers: {'Authorization': getTokenString(token)}}
+  );
 }
 
 type DeleteQuestionFromTemplateProps = {
   templateId: number;
   questionId: number;
+  token: string;
 }
 
-export const deleteQuestionFromTemplate = async ({templateId, questionId}: DeleteQuestionFromTemplateProps) => {
-  return axios.delete(`${BASE_URL}/templates/${templateId}/questions/${questionId}`);
+export const deleteQuestionFromTemplate = async ({templateId, questionId, token}: DeleteQuestionFromTemplateProps) => {
+  return axios.delete(`${BASE_URL}/templates/${templateId}/questions/${questionId}`, {
+    headers: {'Authorization': getTokenString(token)}
+  });
 }
 
-export const reorderTemplateQuestions = async ({templateId, questionIds}:{templateId: number, questionIds: number[]}) => {
-  return axios.patch<PatchQuestionOrderResponse>(`${BASE_URL}/templates/${templateId}/reorder-questions`, {questionsOrder: questionIds});
+export const reorderTemplateQuestions = async ({token, templateId, questionIds}:{token: string, templateId: number, questionIds: number[]}) => {
+  return axios.patch<PatchQuestionOrderResponse>(`${BASE_URL}/templates/${templateId}/reorder-questions`,
+    {questionsOrder: questionIds},
+    {headers: {'Authorization': getTokenString(token)}}
+  );
 }

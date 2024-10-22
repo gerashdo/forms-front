@@ -45,6 +45,7 @@ export const useCreateTemplate = ({onSuccess}: UseCreateTemplateProps) => {
 }
 
 export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) => {
+  const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: updateTemplate,
@@ -70,7 +71,7 @@ export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) =
   })
 
   const startUpdateTemplate = (templateId: number, data: PatchTemplateRequest) => {
-    mutation.mutate({templateId, data});
+    mutation.mutate({templateId, data, token: authState.token || ''});
   }
 
   return {
@@ -82,6 +83,7 @@ export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) =
 }
 
 export const useAddQuestionToTemplate = (templateId: number) => {
+  const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: addQuestionToTemplate,
@@ -113,7 +115,7 @@ export const useAddQuestionToTemplate = (templateId: number) => {
   })
 
   const startAddQuestionToTemplate = (templateId: number, questionData: NewQuestionFormValues) => {
-    mutation.mutate({templateId, questionData});
+    mutation.mutate({templateId, questionData, token: authState.token || ''});
   }
 
   return {
@@ -124,6 +126,7 @@ export const useAddQuestionToTemplate = (templateId: number) => {
 }
 
 export const useDeleteQuestionFromTemplate = (templateId: number) => {
+  const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: deleteQuestionFromTemplate,
@@ -148,7 +151,7 @@ export const useDeleteQuestionFromTemplate = (templateId: number) => {
   })
 
   const startDeleteQuestionFromTemplate = (templateId: number, questionId: number) => {
-    mutation.mutate({templateId, questionId});
+    mutation.mutate({templateId, questionId, token: authState.token || ''});
   }
 
   return {
@@ -159,6 +162,7 @@ export const useDeleteQuestionFromTemplate = (templateId: number) => {
 }
 
 export const useReorderQuestionsMutation = (templateId: number) => {
+  const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: reorderTemplateQuestions,
@@ -183,7 +187,7 @@ export const useReorderQuestionsMutation = (templateId: number) => {
   })
 
   const startReorderQuestions = (questionIds: number[]) => {
-    mutation.mutate({templateId, questionIds});
+    mutation.mutate({templateId, questionIds, token: authState.token || ''});
   }
 
   return {

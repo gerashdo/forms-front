@@ -1,12 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { GetQuestionsResponse, PatchQuestionRequest } from "@/interfaces/question"
-import { updateQuestion } from "@/requests/questions"
-import { toast } from "../use-toast";
 import { AxiosError } from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useRecoilValue } from "recoil";
+import { AuthState } from "@/state/auth";
+import { toast } from "@/hooks/use-toast";
+import { updateQuestion } from "@/requests/questions"
 import { getUpdateQuestionError } from "@/helpers/getErrorsRequest";
+import { GetQuestionsResponse, PatchQuestionRequest } from "@/interfaces/question"
 
 
 export const useUpdateQuestionMutation = (templateId: string) => {
+  const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: updateQuestion,
@@ -37,7 +40,7 @@ export const useUpdateQuestionMutation = (templateId: string) => {
   })
 
   const startUpdateQuestion = (questionId: number, data: PatchQuestionRequest) => {
-    mutation.mutate({questionId, data})
+    mutation.mutate({questionId, data, token: authState.token || ''})
   }
 
   return {

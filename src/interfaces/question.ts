@@ -41,20 +41,24 @@ export type PatchQuestionRequest = Omit<Partial<Question>, "id" | "templateId">;
 
 export const CreateNewQuestionCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid request, please check the data for the question',
+  401: 'Please log in again to create a new question',
   500: 'There was an error processing your request. Please try again later',
 }
 
 export const DeleteQuestionFromTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid request, template or question not found, please check the data',
+  401: 'Please log in again to delete the question',
   500: 'There was an error processing your request. Please try again later',
 }
 
 export const ReorderQuestionsCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: 'The order of the questions could not be updated',
+  401: 'Please log in again to reorder the questions',
   500: 'There was an error processing your request. Please try again later',
 }
 
 export const UpdateQuestionsCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid data, please check the data for the question',
+  401: 'Please log in again to update the question',
   500: 'There was an error processing your request. Please try again later',
 }

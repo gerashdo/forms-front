@@ -12,12 +12,16 @@ interface TemplateTabProps extends HTMLAttributes<HTMLDivElement> {
   template: Template
   topics: Topic[]
   tags: Tag[]
+  allowEdition?: boolean
+  allowAnswer?: boolean
 }
 
 export const TemplateTab = ({
   template,
   topics,
   tags,
+  allowEdition,
+  allowAnswer,
   className,
   ...props
 }: TemplateTabProps) => {
@@ -32,15 +36,19 @@ export const TemplateTab = ({
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-1.5">
             <CardTitle>General Settings</CardTitle>
-            <CardDescription>Configure the general settings for the template</CardDescription>
+            <CardDescription>
+              {allowEdition ? 'Edit the template settings' : 'General data of the template'}
+            </CardDescription>
           </div>
           <div className="flex gap-2">
-            <Link to={`/templates/${template.id}/forms/submit`}>
-              <Button type="button">
-                Answer Template Form
-              </Button>
-            </Link>
-            {!isEditing && (
+            {allowAnswer && (
+              <Link to={`/templates/${template.id}/forms/submit`}>
+                <Button type="button">
+                  Answer Template Form
+                </Button>
+              </Link>
+            )}
+            {!isEditing && allowEdition && (
               <Button type="button" variant="ghost" onClick={() => setIsEditing(true)}>
                 Edit Template
                 <PencilIcon className="ml-2 h-4 w-4" />

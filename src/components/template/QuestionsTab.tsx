@@ -14,11 +14,13 @@ import { NewQuestionFormValues, Question } from "@/interfaces/question";
 interface QuestionsTabProps extends HTMLAttributes<HTMLDivElement> {
   questions: Question[]
   templateId: number
+  allowEdition?: boolean
 }
 
 export const QuestionsTab = ({
   questions,
   templateId,
+  allowEdition,
   className,
   ...props
 }: QuestionsTabProps) => {
@@ -95,11 +97,15 @@ export const QuestionsTab = ({
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-1.5">
             <CardTitle>Questions</CardTitle>
-            <CardDescription>Configure the questions for the template</CardDescription>
+            <CardDescription>
+            {allowEdition ? 'Configure the questions for the template' : 'Questions for the template'}
+            </CardDescription>
           </div>
-          <Button type="button" onClick={() => setIsAddingQuestion(true)}>
-            Add Question
-          </Button>
+          {allowEdition && (
+            <Button type="button" onClick={() => setIsAddingQuestion(true)}>
+              Add Question
+            </Button>
+          )}
         </CardHeader>
         <CardContent className="space-y-4">
           {isAddingQuestion && (
@@ -118,6 +124,7 @@ export const QuestionsTab = ({
                     question={question}
                     onRemove={() => onRemove(question.id)}
                     onEdit={() => onEditQuestion(question)}
+                    allowEdition={allowEdition}
                   />
                 ))}
               </div>

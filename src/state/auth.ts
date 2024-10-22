@@ -2,12 +2,12 @@ import { localStorageEffect } from "@/helpers/localStorageState";
 import { User } from "@/interfaces/auth";
 import { atom } from "recoil";
 
-type AuthState = {
+export type AuthStateType = {
   user: User | null;
   token: string | null;
 }
 
-export const AuthState = atom<AuthState>({
+export const AuthState = atom<AuthStateType>({
   key: 'authState',
   default: {
     user: null,

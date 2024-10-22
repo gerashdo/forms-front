@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutUsersImport } from './routes/_layout/users'
 import { Route as LayoutProfileImport } from './routes/_layout/profile'
 import { Route as LayoutTemplatesIndexImport } from './routes/_layout/templates/index'
 import { Route as LayoutTemplatesTemplateIdImport } from './routes/_layout/templates/$templateId'
@@ -41,6 +42,11 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any).lazy(() => import('./routes/_layout/index.lazy').then((d) => d.Route))
+
+const LayoutUsersRoute = LayoutUsersImport.update({
+  path: '/users',
+  getParentRoute: () => LayoutRoute,
+} as any).lazy(() => import('./routes/_layout/users.lazy').then((d) => d.Route))
 
 const LayoutProfileRoute = LayoutProfileImport.update({
   path: '/profile',
@@ -105,6 +111,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProfileImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/users': {
+      id: '/_layout/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof LayoutUsersImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
@@ -147,6 +160,7 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutProfileRoute: typeof LayoutProfileRoute
+  LayoutUsersRoute: typeof LayoutUsersRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutFormsFormIdRoute: typeof LayoutFormsFormIdRoute
   LayoutTemplatesTemplateIdRoute: typeof LayoutTemplatesTemplateIdRoute
@@ -156,6 +170,7 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutProfileRoute: LayoutProfileRoute,
+  LayoutUsersRoute: LayoutUsersRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutFormsFormIdRoute: LayoutFormsFormIdRoute,
   LayoutTemplatesTemplateIdRoute: LayoutTemplatesTemplateIdRoute,
@@ -171,6 +186,7 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/auth': typeof AuthLazyRoute
   '/profile': typeof LayoutProfileRoute
+  '/users': typeof LayoutUsersRoute
   '/': typeof LayoutIndexRoute
   '/forms/$formId': typeof LayoutFormsFormIdRoute
   '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
@@ -181,6 +197,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/auth': typeof AuthLazyRoute
   '/profile': typeof LayoutProfileRoute
+  '/users': typeof LayoutUsersRoute
   '/': typeof LayoutIndexRoute
   '/forms/$formId': typeof LayoutFormsFormIdRoute
   '/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
@@ -193,6 +210,7 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/auth': typeof AuthLazyRoute
   '/_layout/profile': typeof LayoutProfileRoute
+  '/_layout/users': typeof LayoutUsersRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/forms/$formId': typeof LayoutFormsFormIdRoute
   '/_layout/templates/$templateId': typeof LayoutTemplatesTemplateIdRoute
@@ -206,6 +224,7 @@ export interface FileRouteTypes {
     | ''
     | '/auth'
     | '/profile'
+    | '/users'
     | '/'
     | '/forms/$formId'
     | '/templates/$templateId'
@@ -215,6 +234,7 @@ export interface FileRouteTypes {
   to:
     | '/auth'
     | '/profile'
+    | '/users'
     | '/'
     | '/forms/$formId'
     | '/templates/$templateId'
@@ -225,6 +245,7 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/auth'
     | '/_layout/profile'
+    | '/_layout/users'
     | '/_layout/'
     | '/_layout/forms/$formId'
     | '/_layout/templates/$templateId'
@@ -263,6 +284,7 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/profile",
+        "/_layout/users",
         "/_layout/",
         "/_layout/forms/$formId",
         "/_layout/templates/$templateId",
@@ -275,6 +297,10 @@ export const routeTree = rootRoute
     },
     "/_layout/profile": {
       "filePath": "_layout/profile.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/users": {
+      "filePath": "_layout/users.tsx",
       "parent": "/_layout"
     },
     "/_layout/": {

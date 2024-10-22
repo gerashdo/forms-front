@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { redirect, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -34,7 +34,7 @@ const ProfilePage = () => {
     userId: user?.id,
   }));
 
-  if (!user) return redirect({to: '/auth', search: {redirect: '/profile'}});
+  if (!user) return null;
   const templates = templatesQuery.data.data;
   const forms = formsQuery.data.data;
   const templatesTotalPages = Math.ceil(templatesQuery.data.meta.total / templatesQuery.data.meta.elementsPerPage);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getTokenString } from '@/helpers/auth';
 import { getEnvVariables } from '@/helpers/envVariables';
-import { GetUsersParams, GetUsersResponse, LoginFormValues, LoginResponse, SignupFormValues, SignUpResponse } from '@/interfaces/auth';
+import { GetUsersParams, GetUsersResponse, LoginFormValues, LoginResponse, PatchUserRequestBody, SignupFormValues, SignUpResponse } from '@/interfaces/auth';
 
 
 const BASE_URL = getEnvVariables().VITE_API_BACKEND_URL;
@@ -21,4 +21,12 @@ export const getUsers = async ({userToken, params}:{ userToken: string, params: 
     },
     params,
   }).then(res => res.data);
+}
+
+export const updateUser = async ({userToken, userToUpdateId, data}:{ userToken: string, userToUpdateId: number, data: PatchUserRequestBody}) => {
+  return axios.patch(`${BASE_URL}/auth/users/${userToUpdateId}`, data, {
+    headers: {
+      Authorization: getTokenString(userToken),
+    },
+  })
 }

@@ -1,11 +1,11 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { useSetRecoilState } from 'recoil';
-import { useMutation } from '@tanstack/react-query';
-import { login, signup } from '@/requests/auth';
-import { useToast } from './use-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { login, signup, updateUser } from '@/requests/auth';
+import { toast, useToast } from '@/hooks/use-toast';
 import { AuthState } from '@/state/auth';
-import { getLoginError, getSignUpError } from '@/helpers/getErrorsRequest';
-import { LoginFormValues, LoginResponse, SignupFormValues } from '@/interfaces/auth';
+import { getLoginError, getPatchUserError, getSignUpError } from '@/helpers/getErrorsRequest';
+import { GetUsersResponse, LoginFormValues, LoginResponse, PatchUserRequestBody, PatchUserResponse, SignupFormValues } from '@/interfaces/auth';
 
 
 export const useSingUp = () => {
@@ -68,6 +68,41 @@ export const useLogin = () => {
 
   return {
     loginUser,
+    isLoading: mutation.isPending,
+    success: mutation.isSuccess,
+    error: mutation.error,
+  }
+}
+
+export const useUpdateUserMutation = (page: number) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: updateUser,
+    onSuccess: (data: AxiosResponse<PatchUserResponse>) => {
+      queryClient.setQueryData(['users', {page}], (oldData: GetUsersResponse) => {
+        const updatedUser = data.data.data;
+        return {
+          ...oldData,
+          data: oldData.data.map(user => user.id === updatedUser.id ? updatedUser : user),
+        }
+      })
+    },
+    onError: (error: AxiosError) => {
+      const responseCode = error.response?.status || 500;
+      const errorMessage = getPatchUserError(responseCode);
+      toast({
+        description: errorMessage,
+        variant:'destructive',
+      });
+    }
+  })
+
+  const startUpdateUser = (userToUpdateId: number, userToken: string, data: PatchUserRequestBody) => {
+    mutation.mutate({userToken, userToUpdateId, data});
+  }
+
+  return {
+    startUpdateUser,
     isLoading: mutation.isPending,
     success: mutation.isSuccess,
     error: mutation.error,

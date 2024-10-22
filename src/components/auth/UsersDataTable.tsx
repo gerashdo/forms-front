@@ -17,8 +17,11 @@ interface UsersDataTableProps {
   onPreviousPage: () => void;
   includeMakeAdmin?: boolean;
   includeActions?: boolean;
+  includeBlock?: boolean;
   onViewDetails?: (userId: number) => void;
   onDelete?: (userId: number) => void;
+  onToggleBlock?: (userId: number, newValue: boolean) => void;
+  onToggleAdmin?: (userId: number, newRole: UserRoles) => void;
 }
 
 export const UsersDataTable = ({
@@ -29,8 +32,11 @@ export const UsersDataTable = ({
   onPreviousPage,
   includeMakeAdmin,
   includeActions,
+  includeBlock,
   onViewDetails,
   onDelete,
+  onToggleBlock,
+  onToggleAdmin,
 }: UsersDataTableProps) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const columns: ColumnDef<User>[] = [
@@ -81,7 +87,7 @@ export const UsersDataTable = ({
     },
   ]
 
-  if (includeMakeAdmin) {
+  if (includeMakeAdmin && onToggleAdmin) {
     columns.push({
       id: "makeAdmin",
       header: "Give admin role",
@@ -90,7 +96,23 @@ export const UsersDataTable = ({
         return (
           <Switch
             checked={user.role === UserRoles.ADMIN}
-            onChange={() => console.log("Toggle role", user)}
+            onCheckedChange={() => onToggleAdmin(user.id, user.role === UserRoles.ADMIN ? UserRoles.USER : UserRoles.ADMIN)}
+          />
+        )
+      }
+    })
+  }
+
+  if (includeBlock && onToggleBlock) {
+    columns.push({
+      id: "block",
+      header: "Block user",
+      cell: ({row}) => {
+        const user = row.original;
+        return (
+          <Switch
+            checked={user.blocked}
+            onCheckedChange={() => onToggleBlock(user.id, !user.blocked)}
           />
         )
       }

@@ -17,6 +17,7 @@ export interface User {
   lastName: string;
   email:    string;
   role:     UserRoles;
+  blocked:  boolean;
 }
 
 export interface LoginResponse {
@@ -48,6 +49,13 @@ export interface GetUsersResponseMeta {
   totalPages:      number;
 }
 
+export type PatchUserRequestBody = Omit<Partial<User>, 'id'>;
+
+export interface PatchUserResponse {
+  ok:   boolean;
+  data: User;
+}
+
 export enum UserRoles {
   ADMIN = 'admin',
   USER = 'user',
@@ -62,5 +70,12 @@ export const LoginCodeMessages: Partial<Record<ErrorCode, string>> = {
 export const SignUpCodeMessages: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid request, please check your data',
   409: 'Email already in use',
+  500: 'There was an error processing your request. Please try again later',
+}
+
+export const PatchUserCodeMessages: Partial<Record<ErrorCode, string>> = {
+  400: 'Invalid request, the data you provided is not valid',
+  401: 'Please login again to continue',
+  403: 'You are not allowed to perform this action',
   500: 'There was an error processing your request. Please try again later',
 }

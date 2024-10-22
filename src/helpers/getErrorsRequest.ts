@@ -1,5 +1,5 @@
 import { PatchAnswerCodeMessage } from "@/interfaces/answer";
-import { LoginCodeMessages, SignUpCodeMessages } from "@/interfaces/auth";
+import { LoginCodeMessages, PatchUserCodeMessages, SignUpCodeMessages } from "@/interfaces/auth";
 import { ErrorCode } from "@/interfaces/errorsRequest";
 import { PostFormCodeMessage } from "@/interfaces/form";
 import { CreateNewQuestionCodeMessage, DeleteQuestionFromTemplateCodeMessage, ReorderQuestionsCodeMessage, UpdateQuestionsCodeMessage } from "@/interfaces/question";
@@ -40,4 +40,8 @@ export const getPostFormError = (errorCode: number | string): string => {
 
 export const getPatchAnswerError = (errorCode: number | string): string => {
   return PatchAnswerCodeMessage[errorCode as ErrorCode] || 'An error occurred, please try again later';
+}
+
+export const getPatchUserError = (errorCode: number | string): string => {
+  return PatchUserCodeMessages[errorCode as ErrorCode] || 'An error occurred, please try again later';
 }

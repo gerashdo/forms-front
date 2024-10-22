@@ -1,8 +1,9 @@
 import { AuthState } from "@/state/auth";
 import { Link } from "@tanstack/react-router"
 import { useRecoilState } from "recoil";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu"
-import { Button } from "./button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { isUserAdmin } from "@/helpers/auth";
 import { ChevronDown } from "lucide-react"
 
 
@@ -19,16 +20,18 @@ export const Navbar = () => {
     <header className="w-full border-b bg-white">
       <div className="container mx-auto flex items-center justify-between py-4">
         <div className="flex items-center space-x-4">
-          <Link to="/" className="text-2xl font-bold">
+          <Link to="/" className="text-3xl font-bold">
             TestYou
           </Link>
-          <nav className="hidden md:flex space-x-4">
-            <Link
-              to="/users"
-              className="text-sm font-medium"
-            >
-              Users
-            </Link>
+          <nav className="hidden md:flex space-x-4 ps-20">
+            {authState.user && isUserAdmin(authState.user) && (
+              <Link
+                to="/users"
+                className="text-sm font-medium"
+              >
+                Users
+              </Link>
+            )}
           </nav>
         </div>
         <div className="flex items-center space-x-4">

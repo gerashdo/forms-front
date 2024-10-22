@@ -1,5 +1,6 @@
-import axios from "axios"
+import axios from "axios";
 import { getEnvVariables } from "@/helpers/envVariables";
+import { getTokenString } from "@/helpers/auth";
 import {
   GetAllTagsResponse,
   GetAllTopicsResponse,
@@ -43,7 +44,7 @@ export const getMostRecentTemplates = async () => {
   return axios.get<GetTemplatesResponse>(`${BASE_URL}/templates`, {params}).then((response) => response.data);
 }
 
-export const createTemplate = async (data: PostNewTemplateRequest) => {
+export const createTemplate = async ({token, data}:{token: string, data: PostNewTemplateRequest}) => {
   const formData = new FormData();
   formData.append('userId', data.userId.toString());
   formData.append('title', data.title);
@@ -57,7 +58,8 @@ export const createTemplate = async (data: PostNewTemplateRequest) => {
 
   return axios.post(`${BASE_URL}/templates`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      'Authorization': getTokenString(token),
     }
   });
 };

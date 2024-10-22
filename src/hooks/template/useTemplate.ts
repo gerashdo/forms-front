@@ -1,10 +1,12 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { AxiosError, AxiosResponse } from "axios"
-import { toast } from "@/hooks/use-toast"
-import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate, reorderTemplateQuestions, updateTemplate } from "@/requests/templates"
-import { getDeleteQuestionError, getPostNewTemplateError, getReorderQuestionsError } from "@/helpers/getErrorsRequest"
-import { PatchQuestionOrderResponse, PatchTemplateRequest, PatchTemplateResponse, PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template"
-import { GetQuestionsResponse, NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRecoilValue } from "recoil";
+import { AxiosError, AxiosResponse } from "axios";
+import { toast } from "@/hooks/use-toast";
+import { AuthState } from "@/state/auth";
+import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate, reorderTemplateQuestions, updateTemplate } from "@/requests/templates";
+import { getDeleteQuestionError, getPostNewTemplateError, getReorderQuestionsError } from "@/helpers/getErrorsRequest";
+import { PatchQuestionOrderResponse, PatchTemplateRequest, PatchTemplateResponse, PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template";
+import { GetQuestionsResponse, NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question";
 
 
 type UseCreateTemplateProps = {
@@ -12,6 +14,7 @@ type UseCreateTemplateProps = {
 }
 
 export const useCreateTemplate = ({onSuccess}: UseCreateTemplateProps) => {
+  const authState = useRecoilValue(AuthState);
   const mutation = useMutation({
     mutationFn: createTemplate,
     onSuccess: (data: AxiosResponse<PostNewTemplateResponse>) => {
@@ -30,7 +33,7 @@ export const useCreateTemplate = ({onSuccess}: UseCreateTemplateProps) => {
   })
 
   const startCreateTemplate = (data: PostNewTemplateRequest) => {
-    mutation.mutate(data);
+    mutation.mutate({token: authState.token || '', data});
   }
 
   return {

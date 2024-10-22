@@ -101,5 +101,6 @@ export interface PatchQuestionOrderResponse {
 
 export const CreateNewTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid request, please check the data for the template',
+  401: 'Please log in to create a new template',
   500: 'There was an error processing your request. Please try again later',
 }

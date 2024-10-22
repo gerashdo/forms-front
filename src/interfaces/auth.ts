@@ -56,6 +56,11 @@ export interface PatchUserResponse {
   data: User;
 }
 
+export interface GetUserByIdResponse {
+  ok:   boolean;
+  data: User;
+}
+
 export enum UserRoles {
   ADMIN = 'admin',
   USER = 'user',

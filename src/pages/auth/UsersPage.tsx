@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UsersDataTable } from "@/components/auth/UsersDataTable";
 import { useUpdateUserMutation } from "@/hooks/auth";
@@ -12,6 +13,7 @@ import { UserRoles } from "@/interfaces/auth";
 
 
 export const UsersPage = () => {
+  const navigation = useNavigate();
   const {token} = useRecoilValue(AuthState);
   const [page, setPage] = useState<number>(initialGetUsersParams.page);
   const {startUpdateUser} = useUpdateUserMutation(page);
@@ -22,7 +24,7 @@ export const UsersPage = () => {
   const users = usersQuery.data.data;
 
   const handleViewDetails = (userId: number) => {
-    console.log('View details of user', userId);
+    navigation({to: `/users/${userId}`});
   }
 
   const handleDelete = (userId: number) => {

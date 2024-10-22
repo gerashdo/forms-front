@@ -15,3 +15,7 @@ export const getAuthStateSnapshot = () => {
   const snapshot = snapshot_UNSTABLE();
   return snapshot.getLoadable(AuthState).getValue();
 }
+
+export const getTokenString = (token: string) => {
+  return `Bearer ${token}`;
+}

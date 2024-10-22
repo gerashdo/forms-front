@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { loginSchema, signupSchema } from "@/constants/auth/auth";
+import { ALLOWED_USER_ORDER_BY, ALLOWED_USER_ORDER_BY_FIELDS, loginSchema, signupSchema } from "@/constants/auth/auth";
 import { ErrorCode } from "./errorsRequest";
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
@@ -26,6 +26,26 @@ export interface LoginResponse {
 export interface DataLoginResponse {
   user:  User;
   token: string;
+}
+
+export interface GetUsersParams {
+  page:   number;
+  limit:  number;
+  orderBy?: ALLOWED_USER_ORDER_BY_FIELDS.createdAt;
+  order?:   ALLOWED_USER_ORDER_BY.DESC;
+}
+
+export interface GetUsersResponse {
+  ok:   boolean;
+  data: User[];
+  meta: GetUsersResponseMeta;
+}
+
+export interface GetUsersResponseMeta {
+  total:           number;
+  page:            number;
+  elementsPerPage: number;
+  totalPages:      number;
 }
 
 export enum UserRoles {

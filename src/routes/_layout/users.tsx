@@ -1,5 +1,7 @@
 import { getAuthStateSnapshot, isAuthenticated, isUserAdmin } from '@/helpers/auth'
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { getUsersQuery } from '@/queries/auth'
+import { createFileRoute, Navigate, redirect } from '@tanstack/react-router'
+import { initialGetUsersParams } from '../../constants/auth/auth';
 
 export const Route = createFileRoute('/_layout/users')({
   beforeLoad: () => {
@@ -10,4 +12,12 @@ export const Route = createFileRoute('/_layout/users')({
       })
     }
   },
+  loader: async ({context: {queryClient}}) => {
+    const authState = getAuthStateSnapshot()
+    queryClient.ensureQueryData(getUsersQuery(
+      authState.token || '',
+      {...initialGetUsersParams}
+    ))
+  },
+  errorComponent: () => <Navigate to="/" />,
 })

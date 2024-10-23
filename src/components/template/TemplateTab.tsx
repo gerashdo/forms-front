@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { TemplateCardData } from "./TemplateCardData"
 import { TemplateForm } from "./TemplateForm"
 import { Tag, Template, Topic } from "@/interfaces/template"
+import { useTranslation } from "react-i18next"
 
 
 interface TemplateTabProps extends HTMLAttributes<HTMLDivElement> {
@@ -25,6 +26,7 @@ export const TemplateTab = ({
   className,
   ...props
 }: TemplateTabProps) => {
+  const {t} = useTranslation();
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const handleOnSuccessEditTemplate = () => {
@@ -35,22 +37,25 @@ export const TemplateTab = ({
       <Card className={className} {...props}>
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-1.5">
-            <CardTitle>General Settings</CardTitle>
+            <CardTitle>{t("components.templateTab.title")}</CardTitle>
             <CardDescription>
-              {allowEdition ? 'Edit the template settings' : 'General data of the template'}
+              {allowEdition ?
+                t("components.templateTab.description.edit") :
+                t("components.templateTab.description.view")
+              }
             </CardDescription>
           </div>
           <div className="flex gap-2">
             {allowAnswer && (
               <Link to={`/templates/${template.id}/forms/submit`}>
                 <Button type="button">
-                  Answer Template Form
+                  {t("components.templateTab.answerTemplate")}
                 </Button>
               </Link>
             )}
             {!isEditing && allowEdition && (
               <Button type="button" variant="ghost" onClick={() => setIsEditing(true)}>
-                Edit Template
+                {t("components.templateTab.edit")}
                 <PencilIcon className="ml-2 h-4 w-4" />
               </Button>
             )}

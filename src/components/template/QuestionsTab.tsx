@@ -9,6 +9,7 @@ import { SortableQuestionItem } from "@/components/template/SortableQuestionItem
 import { useAddQuestionToTemplate, useDeleteQuestionFromTemplate, useReorderQuestionsMutation } from "@/hooks/template/useTemplate";
 import { useUpdateQuestionMutation } from '@/hooks/template/useQuestionQueries';
 import { NewQuestionFormValues, Question } from "@/interfaces/question";
+import { useTranslation } from 'react-i18next';
 
 
 interface QuestionsTabProps extends HTMLAttributes<HTMLDivElement> {
@@ -24,6 +25,7 @@ export const QuestionsTab = ({
   className,
   ...props
 }: QuestionsTabProps) => {
+  const {t} = useTranslation();
   const [isAddingQuestion, setIsAddingQuestion] = useState<boolean>(false);
   const {startAddQuestionToTemplate} = useAddQuestionToTemplate(templateId);
   const {startDeleteQuestionFromTemplate} = useDeleteQuestionFromTemplate(templateId);
@@ -96,14 +98,16 @@ export const QuestionsTab = ({
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-1.5">
-            <CardTitle>Questions</CardTitle>
+            <CardTitle>{t('components.questionsTab.title')}</CardTitle>
             <CardDescription>
-            {allowEdition ? 'Configure the questions for the template' : 'Questions for the template'}
+            {allowEdition ?
+              t('components.questionsTab.description.edit') :
+              t('components.questionsTab.description.view')}
             </CardDescription>
           </div>
           {allowEdition && (
             <Button type="button" onClick={() => setIsAddingQuestion(true)}>
-              Add Question
+              {t('components.questionsTab.addQuestion')}
             </Button>
           )}
         </CardHeader>
@@ -136,15 +140,19 @@ export const QuestionsTab = ({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              Are you sure...
+              {t('components.questionsTab.sure')}
             </DialogTitle>
             <DialogDescription>
-              you want to remove this question?
+              {t('components.questionsTab.deleteDescription')}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="secondary" onClick={() => setIsRemovingQuestion(false)}>Cancel</Button>
-            <Button variant="destructive" onClick={handleDeleteQuestion}>Remove</Button>
+            <Button variant="secondary" onClick={() => setIsRemovingQuestion(false)}>
+              {t('components.questionsTab.cancel')}
+            </Button>
+            <Button variant="destructive" onClick={handleDeleteQuestion}>
+              {t('components.questionsTab.remove')}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

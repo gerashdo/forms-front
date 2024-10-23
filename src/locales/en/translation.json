@@ -14,6 +14,117 @@
     },
     "templateCard": {
       "by": "by"
+    },
+    "questionsTab": {
+      "title": "Questions",
+      "description": {
+        "edit": "Configure the questions for the template.",
+        "view": "Questions for the template."
+      },
+      "addQuestion": "Add Question",
+      "sure": "Are you sure...",
+      "deleteDescription": "you want to remove this question?",
+      "remove": "Remove",
+      "cancel": "Cancel"
+    },
+    "newQuestionForm": {
+      "title": "Question Title",
+      "description": "Description",
+      "type": "Type",
+      "selectType": "Select question type",
+      "visible": "Visible",
+      "visibleDescription": "Make this question visible in the template.",
+      "save": "Save Question",
+      "cancel": "Cancel"
+    },
+    "sortableQuestionItem": {
+      "title": "Title",
+      "type": "Type",
+      "visible": "Is Visible",
+      "description": "Description",
+      "noDescription": "No description provided."
+    },
+    "templateTab": {
+      "title": "General Settings",
+      "description": {
+        "edit": "Configure the general settings for the template.",
+        "view": "General settings for the template."
+      },
+      "answerTemplate": "Answer Template Form",
+      "edit": "EditTemplate"
+    },
+    "templateForm": {
+      "title": "Title",
+      "titlePlaceholder": "Enter a title for the template",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter a description for the template",
+      "topic": "Topic",
+      "topicPlaceholder": "Select a topic",
+      "tags": "Tags",
+      "noTags": "No tag found",
+      "selected": "selected",
+      "selectTags": "Select tags",
+      "search": "Search tags...",
+      "image": "Upload Image",
+      "publicLabel": "Make this template public",
+      "publicDescription": "This will allow any authenticated user to fill your template.",
+      "save": "Save Template",
+      "submitting": "Submitting...",
+      "cancel": "Cancel"
+    },
+    "templateCardData": {
+      "title": "Title",
+      "description": "Description",
+      "topic": "Topic",
+      "image": "Image",
+      "noImage": "No image provided",
+      "tags": "Tags",
+      "isPublic": {
+        "yes": "This template is public and can be filled by any authenticated user.",
+        "no": "This template is private. Only allowed users can fill it."
+      },
+      "usersWithAccess": "Allowed Users"
+    },
+    "templatePageResultsTab": {
+      "deleteToast": {
+        "title": "Form is being deleted",
+        "description": "The form and all its answers will be deleted as well."
+      },
+      "title": "Results",
+      "description": "Filled out forms for this template."
+    },
+    "formDataTable": {
+      "date": "Submission Date",
+      "template": "Template",
+      "email": "User Email",
+      "view": "View details",
+      "delete": "Delete submission",
+      "label": "Actions",
+      "triggerLabel": "Open menu",
+      "noDataMessage": "No forms submitted yet."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "of": "of"
+    }
+  },
+  "hooks": {
+    "useUndo": {
+      "undo": "Undo"
+    }
+  },
+  "constants": {
+    "pageTabs": {
+      "settings": "Settings",
+      "results": "Results",
+      "aggregations": "Aggregations"
+    },
+    "questionTypeLabels": {
+      "text": "One Line Text",
+      "integer": "Integer Number",
+      "boolean": "True/False",
+      "multiple": "Multiple Lines Text"
     }
   }
 }

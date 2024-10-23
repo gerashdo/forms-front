@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 
 interface PaginationProps {
@@ -9,6 +10,7 @@ interface PaginationProps {
 }
 
 export const Pagination = ({page, totalPages, onNextPage, onPreviousPage}: PaginationProps) => {
+  const {t} = useTranslation();
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
       {totalPages > 1 ? (
@@ -20,17 +22,17 @@ export const Pagination = ({page, totalPages, onNextPage, onPreviousPage}: Pagin
               onClick={onPreviousPage}
               disabled={page === 1}
             >
-              Previous
+              {t("components.pagination.previous")}
             </Button>
           )}
-          <span>{page} of {totalPages}</span>
+          <span>{page} {t("components.pagination.of")} {totalPages}</span>
           {page < totalPages && (
             <Button
               variant="outline"
               size="sm"
               onClick={onNextPage}
             >
-              Next
+              {t("components.pagination.next")}
             </Button>
           )}
         </>

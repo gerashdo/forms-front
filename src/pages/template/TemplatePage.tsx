@@ -12,14 +12,15 @@ import { getQuestionsByTemplateIdQuery } from "@/queries/question";
 import { isAuthenticated } from "@/helpers/auth";
 import { PageTabsEnum } from "@/interfaces/ui";
 import { UserRoles } from "@/interfaces/auth";
+import i18n from "@/i18n";
 
 
 const route = getRouteApi('/_layout/templates/$templateId')
 
 const PageTabs = {
-  [PageTabsEnum.SETTINGS]: 'Settings',
-  [PageTabsEnum.RESULTS]: 'Results',
-  [PageTabsEnum.AGGREGATION]: 'Aggregations'
+  [PageTabsEnum.SETTINGS]: i18n.t("constants.pageTabs.settings"),
+  [PageTabsEnum.RESULTS]: i18n.t("constants.pageTabs.results"),
+  [PageTabsEnum.AGGREGATION]: i18n.t("constants.pageTabs.aggregations"),
 } as const;
 
 export const TemplatePage = () => {

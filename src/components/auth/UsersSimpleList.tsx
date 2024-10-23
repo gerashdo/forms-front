@@ -2,10 +2,16 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { user1, user2 } from "@/data/user"
 
 
-export const UsersList = () => {
+interface UsersSimpleListProps {
+  title: string
+}
+
+export const UsersSimpleList = ({
+  title,
+}: UsersSimpleListProps) => {
   return (
     <>
-      <h3 className="text-sm font-medium">Allowed Users</h3>
+      <h3 className="text-sm font-medium">{title}</h3>
       <Table>
         <TableHeader>
           <TableRow>

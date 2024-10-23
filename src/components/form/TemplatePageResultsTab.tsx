@@ -7,6 +7,7 @@ import { useDeleteFormMutation } from "@/hooks/form/useFormMutations";
 import { useUndo } from "@/hooks/useUndo";
 import { getFormsQuery } from "@/queries/form";
 import { initialQueryParamsToGetForms } from "@/constants/form/form";
+import { useTranslation } from "react-i18next";
 
 
 interface TemplatePageResultsTabProps {
@@ -15,6 +16,7 @@ interface TemplatePageResultsTabProps {
 }
 
 export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageResultsTabProps) => {
+  const {t} = useTranslation();
   const [page, setPage] = useState<number>(initialQueryParamsToGetForms.page);
   const {showToast} = useUndo();
   const {startDeleteForm} = useDeleteFormMutation();
@@ -31,8 +33,8 @@ export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageR
     showToast(
       () => startDeleteForm(formId),
       {
-        title: 'Form is being deleted',
-        description: 'The form and all its answers will be deleted',
+        title: t("components.templatePageResultsTab.deleteToast.title"),
+        description: t("components.templatePageResultsTab.deleteToast.description"),
       },
       7000,
     )
@@ -41,9 +43,11 @@ export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageR
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Results</CardTitle>
+        <CardTitle>
+          {t("components.templatePageResultsTab.title")}
+        </CardTitle>
         <CardDescription>
-          Filled out forms for this template.
+          {t("components.templatePageResultsTab.description")}
         </CardDescription>
       </CardHeader>
       <CardContent>

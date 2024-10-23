@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { NewTemplateFormValues, Tag, Topic } from "@/interfaces/template";
 import { ALLOWED_IMAGE_TYPES } from "@/constants/templates/template";
 import { CheckIcon, ChevronsUpDown, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 
 interface NewTemplateFormProps {
@@ -37,6 +38,7 @@ export const TemplateForm = ({
   image,
   templateId,
 }: NewTemplateFormProps) => {
+  const {t} = useTranslation()
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
   const [imagePreview, setImagePreview] = useState<string | undefined>(image)
 
@@ -67,9 +69,14 @@ export const TemplateForm = ({
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>
+                {t("components.templateForm.title")}
+              </FormLabel>
               <FormControl>
-                <Input placeholder="Enter template title" {...field} />
+                <Input
+                  placeholder={t("components.templateForm.titlePlaceholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -81,14 +88,18 @@ export const TemplateForm = ({
           name="topicId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Topic</FormLabel>
+              <FormLabel>
+                {t("components.templateForm.topic")}
+              </FormLabel>
               <Select
                 onValueChange={(value) => field.onChange(parseInt(value))}
                 defaultValue={field.value?.toString()}
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a topic" />
+                    <SelectValue
+                      placeholder={t("components.templateForm.topicPlaceholder")}
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -109,9 +120,14 @@ export const TemplateForm = ({
           name="description"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel>Description</FormLabel>
+              <FormLabel>
+                {t("components.templateForm.description")}
+              </FormLabel>
               <FormControl>
-                <Textarea placeholder="Enter template description" {...field} />
+                <Textarea
+                  placeholder={t("components.templateForm.descriptionPlaceholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -123,7 +139,9 @@ export const TemplateForm = ({
           name="tags"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tags</FormLabel>
+              <FormLabel>
+                {t("components.templateForm.tags")}
+              </FormLabel>
               <Popover open={tagsIsOpen} onOpenChange={setTagsIsOpen}>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -135,17 +153,19 @@ export const TemplateForm = ({
                       )}
                     >
                       {field.value.length > 0
-                        ? `${field.value.length} selected`
-                        : "Select tags"}
+                        ? `${field.value.length} ${t("components.templateForm.selected")}`
+                        : t("components.templateForm.selectTags")}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
                 <PopoverContent className="w-full p-0">
                   <Command>
-                    <CommandInput placeholder="Search tag..." />
+                    <CommandInput placeholder={t("components.templateForm.search")} />
                     <CommandList>
-                      <CommandEmpty>No tag found.</CommandEmpty>
+                      <CommandEmpty>
+                        {t("components.templateForm.noTags")}
+                      </CommandEmpty>
                       <CommandGroup>
                         {tags.map((tag) =>(
                           <CommandItem
@@ -200,7 +220,9 @@ export const TemplateForm = ({
           name="image"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Upload Image</FormLabel>
+              <FormLabel>
+                {t("components.templateForm.image")}
+              </FormLabel>
               <FormControl>
                 <Input
                   type="file"
@@ -240,23 +262,27 @@ export const TemplateForm = ({
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  Make this template public
+                  {t("components.templateForm.publicLabel")}
                 </FormLabel>
                 <FormDescription>
-                  This will allow any authenticated user to fill your template.
+                  {t("components.templateForm.publicDescription")}
                 </FormDescription>
               </div>
             </FormItem>
           )}
         />
         <div className="flex gap-3 flex-row-reverse col-span-2">
-          {onCancel && (<Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>)}
+          {onCancel && (<Button type="button" variant="outline" onClick={onCancel}>
+            {t("components.templateForm.cancel")}
+          </Button>)}
           <Button
             type="submit"
             className="col-span-2"
             disabled={isLoading}
           >
-            {isLoading ? "Submitting..." : "Save Template"}
+            {isLoading ?
+              t("components.templateForm.submitting") :
+              t("components.templateForm.save")}
           </Button>
         </div>
       </form>

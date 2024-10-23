@@ -1,5 +1,6 @@
-import * as z from "zod"
-import { QuestionTypes } from "@/interfaces/question"
+import * as z from "zod";
+import { QuestionTypes } from "@/interfaces/question";
+import i18n from "@/i18n";
 
 
 export const newQuestionSchema = z.object({
@@ -11,8 +12,8 @@ export const newQuestionSchema = z.object({
 })
 
 export const questionTypeLabels = {
-  [QuestionTypes.MULTIPLE]: 'Multiple Line Text',
-  [QuestionTypes.BOOLEAN]: 'True/False',
-  [QuestionTypes.TEXT]: 'Text',
-  [QuestionTypes.INTEGER]: 'Integer Number',
+  [QuestionTypes.MULTIPLE]: i18n.t("constants.questionTypeLabels.multiple"),
+  [QuestionTypes.BOOLEAN]: i18n.t("constants.questionTypeLabels.boolean"),
+  [QuestionTypes.TEXT]: i18n.t("constants.questionTypeLabels.text"),
+  [QuestionTypes.INTEGER]: i18n.t("constants.questionTypeLabels.integer"),
 } as const;

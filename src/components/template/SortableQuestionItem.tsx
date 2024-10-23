@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { questionTypeLabels } from "@/constants/templates/question";
 import { GripHorizontal, PencilIcon, X } from "lucide-react";
 import { Question } from "@/interfaces/question";
+import { useTranslation } from "react-i18next";
 
 
 interface SortableQuestionItemProps {
@@ -15,6 +16,7 @@ interface SortableQuestionItemProps {
 }
 
 export const SortableQuestionItem = ({ question, onRemove, onEdit, allowEdition }: SortableQuestionItemProps) => {
+  const {t} = useTranslation();
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: question.id! });
 
   const style = {
@@ -41,20 +43,20 @@ export const SortableQuestionItem = ({ question, onRemove, onEdit, allowEdition 
       )}
       <CardContent className="grid grid-cols-3 space-y-2 p-5 pt-5">
         <div className="space-y-1">
-          <h3 className="text-sm font-medium">Title:</h3>
+          <h3 className="text-sm font-medium">{t("components.sortableQuestionItem.title")}:</h3>
           <p className="text-sm text-muted-foreground">{question.title}</p>
         </div>
         <div className="space-y-1">
-          <h3 className="text-sm font-medium">Type:</h3>
+          <h3 className="text-sm font-medium">{t("components.sortableQuestionItem.type")}:</h3>
           <p className="text-sm text-muted-foreground">{questionTypeLabels[question.type]}</p>
         </div>
         <div className="space-y-1">
-          <h3 className="text-sm font-medium">Is Visible:</h3>
+          <h3 className="text-sm font-medium">{t("components.sortableQuestionItem.visible")}:</h3>
           <p className="text-sm text-muted-foreground">{question.visible ? "Yes" : "No"}</p>
         </div>
         <div className="space-y-1 col-span-2">
-          <h3 className="text-sm font-medium">Description:</h3>
-          <p className="text-sm text-muted-foreground">{question.description || "No description provided"}</p>
+          <h3 className="text-sm font-medium">{t("components.sortableQuestionItem.description")}:</h3>
+          <p className="text-sm text-muted-foreground">{question.description || t("components.sortableQuestionItem.noDescription")}</p>
         </div>
       </CardContent>
     </Card>

@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { useToast } from "./use-toast";
 import { ToastAction } from "@/components/ui/toast";
 
 
 export const useUndo = () => {
+  const {t} = useTranslation();
   const { toast } = useToast();
 
   const showToast = (
@@ -17,7 +19,7 @@ export const useUndo = () => {
       description: messge.description,
       action: (
         <ToastAction
-          altText="Undo"
+          altText={t("hooks.useUndo.undo")}
           onClick={() => {
             undo = true;
             if (onUndo) onUndo();

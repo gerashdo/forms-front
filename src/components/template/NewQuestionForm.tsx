@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { newQuestionSchema, questionTypeLabels } from "@/constants/templates/question";
 import { NewQuestionFormValues, QuestionTypes } from "@/interfaces/question";
+import { useTranslation } from "react-i18next";
 
 
 type NewQuestionFormProps = {
@@ -17,7 +18,7 @@ type NewQuestionFormProps = {
 }
 
 export const NewQuestionForm = ({defaultValues, onSumbit, onCancel}: NewQuestionFormProps) => {
-
+  const {t} = useTranslation();
   const questionForm = useForm<NewQuestionFormValues>({
     resolver: zodResolver(newQuestionSchema),
     defaultValues: defaultValues || {
@@ -41,7 +42,7 @@ export const NewQuestionForm = ({defaultValues, onSumbit, onCancel}: NewQuestion
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Question Title</FormLabel>
+              <FormLabel>{t("components.newQuestionForm.title")}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -54,7 +55,7 @@ export const NewQuestionForm = ({defaultValues, onSumbit, onCancel}: NewQuestion
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{t("components.newQuestionForm.description")}</FormLabel>
               <FormControl>
                 <Textarea {...field} />
               </FormControl>
@@ -67,11 +68,11 @@ export const NewQuestionForm = ({defaultValues, onSumbit, onCancel}: NewQuestion
           name="type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Type</FormLabel>
+              <FormLabel>{t("components.newQuestionForm.type")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select question type" />
+                    <SelectValue placeholder={t("components.newQuestionForm.selectType")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -99,18 +100,22 @@ export const NewQuestionForm = ({defaultValues, onSumbit, onCancel}: NewQuestion
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  Visible
+                  {t("components.newQuestionForm.visible")}
                 </FormLabel>
                 <FormDescription>
-                  Make this question visible in the template.
+                  {t("components.newQuestionForm.visibleDescription")}
                 </FormDescription>
               </div>
             </FormItem>
           )}
         />
         <div className="flex gap-3 flex-row-reverse">
-          <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
-          <Button type="submit">Save Question</Button>
+          <Button type="button" variant="outline" onClick={onCancel}>
+            {t("components.newQuestionForm.cancel")}
+          </Button>
+          <Button type="submit">
+            {t("components.newQuestionForm.save")}
+          </Button>
         </div>
       </form>
     </Form>

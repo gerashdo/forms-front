@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { formatDateTime } from "@/helpers/dateFormat";
 import { GetFormsResponseForm } from "@/interfaces/form";
 import { ArrowUpDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 
 interface FormDataTableProps {
@@ -29,6 +30,7 @@ export const FormDataTable = ({
   onViewDetails,
   onDelete,
 }: FormDataTableProps) => {
+  const{t} = useTranslation();
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const columns: ColumnDef<GetFormsResponseForm>[] = [
@@ -39,7 +41,7 @@ export const FormDataTable = ({
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Submission Date
+          {t("components.formDataTable.date")}
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -47,12 +49,12 @@ export const FormDataTable = ({
     },
     {
       accessorKey: "Template.title",
-      header: "Template",
+      header: t("components.formDataTable.template"),
       cell: (info) => info.getValue(),
     },
     {
       accessorKey: "User.email",
-      header: "User Email",
+      header: t("components.formDataTable.email"),
       cell: (info) => info.getValue(),
     },
   ];
@@ -63,10 +65,14 @@ export const FormDataTable = ({
       cell: ({ row }) => {
         const form = row.original;
         const menuItems = [
-          {id: "view", label: "View details", action: () => onViewDetails(form.id)},
-          {id: "delete", label: "Delete form", action: () => onDelete(form.id)},
+          {id: "view", label: t("components.formDataTable.view"), action: () => onViewDetails(form.id)},
+          {id: "delete", label: t("components.formDataTable.delete"), action: () => onDelete(form.id)},
         ];
-        return <DataTableDropdownMenu label="Actions" items={menuItems} triggerLabel="Open menu"/>;
+        return <DataTableDropdownMenu
+          label={t("components.formDataTable.label")}
+          items={menuItems}
+          triggerLabel={t("components.formDataTable.triggerLabel")}
+        />;
       }
     })
   }
@@ -85,7 +91,11 @@ export const FormDataTable = ({
 
   return (
     <>
-      <DataTable noDataMessage="No forms submitted yet" table={table} columns={columns} />
+      <DataTable
+        noDataMessage={t("components.formDataTable.noDataMessage")}
+        table={table}
+        columns={columns}
+      />
       <Pagination
         page={currentPage}
         totalPages={totalPages}

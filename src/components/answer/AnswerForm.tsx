@@ -10,6 +10,7 @@ import { getQuestionZodType } from "@/helpers/forms";
 import { getAnswerDefaultValue } from "@/helpers/answer";
 import { Answer } from "@/interfaces/answer";
 import { QuestionTypes } from "@/interfaces/question";
+import { useTranslation } from "react-i18next";
 
 
 interface AnswerFormProps {
@@ -25,6 +26,8 @@ export const AnswerForm = ({
   onCancel,
   includeLable = false,
 }: AnswerFormProps) => {
+  const {t} = useTranslation();
+
   const renderField = (
     questionType: QuestionTypes,
     field: ControllerRenderProps<{
@@ -41,7 +44,7 @@ export const AnswerForm = ({
       case QuestionTypes.BOOLEAN:
         return (
           <div className="flex items-center space-x-2">
-            <FormLabel>Yes</FormLabel>
+            <FormLabel>{t("components.answerForm.yes")}</FormLabel>
             <Checkbox
               checked={field.value as boolean}
               onCheckedChange={field.onChange}
@@ -85,8 +88,12 @@ export const AnswerForm = ({
           )}
         />
         <div className="flex justify-end gap-2 align-middle">
-          <Button variant="ghost" onClick={onCancel}>Cancel</Button>
-          <Button type="submit">Save Changes</Button>
+          <Button variant="ghost" onClick={onCancel}>
+            {t("components.answerForm.cancel")}
+          </Button>
+          <Button type="submit">
+            {t("components.answerForm.save")}
+          </Button>
         </div>
       </form>
     </Form>

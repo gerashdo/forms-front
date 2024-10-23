@@ -6,6 +6,10 @@
       "description": "Here are the most popular templates created by the community"
     }
   },
+  "formPage": {
+    "submittedBy": "Submitted by",
+    "on": "on"
+  },
   "components": {
     "simpleTemplatesTable": {
       "title": "Title",
@@ -107,6 +111,16 @@
       "previous": "Previous",
       "next": "Next",
       "of": "of"
+    },
+    "answerItem": {
+      "yes": "Yes",
+      "no": "No",
+      "edit": "Edit"
+    },
+    "answerForm": {
+      "yes": "Yes",
+      "save": "Save Changes",
+      "cancel": "Cancel"
     }
   },
   "hooks": {

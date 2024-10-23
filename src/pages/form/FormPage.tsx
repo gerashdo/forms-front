@@ -9,11 +9,13 @@ import { getAnswersQuery } from "@/queries/answer";
 import { getFormQuery } from "@/queries/form";
 import { formatDateTime } from "@/helpers/dateFormat";
 import { UserRoles } from "@/interfaces/auth";
+import { useTranslation } from "react-i18next";
 
 
 const route = getRouteApi('/_layout/forms/$formId');
 
 export const FormPage = () => {
+  const {t} = useTranslation();
   const {user} = useRecoilValue(AuthState);
   const {formId} = route.useParams();
   const {startUpdateAnswer} = useUpdateAnswerMutation(Number(formId));
@@ -31,7 +33,7 @@ export const FormPage = () => {
       <CardHeader>
         <CardTitle>{form.Template.title}</CardTitle>
         <CardDescription>
-          Submitted by {form.User.lastName} {form.User.name} ({form.User.email}) on {formatDateTime(form.submissionDate)}
+          {t("formPage.submittedBy")} {form.User.lastName} {form.User.name} ({form.User.email}) {t("formPage.on")} {formatDateTime(form.submissionDate)}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col space-y-6">

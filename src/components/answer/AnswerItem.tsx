@@ -6,6 +6,7 @@ import { isDateQuestion, isEmailQuestion } from "@/helpers/forms";
 import { formatDateTime } from "@/helpers/dateFormat";
 import { QuestionTypes } from "@/interfaces/question";
 import { Answer } from "@/interfaces/answer";
+import { useTranslation } from "react-i18next";
 
 
 interface AnswerItemProps {
@@ -16,6 +17,7 @@ interface AnswerItemProps {
 }
 
 export const AnswerItem = ({answer, index, allowEdition, onSubmitEditAnswer}: AnswerItemProps) => {
+  const {t} = useTranslation();
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const renderAnswer = (answer: Answer) => {
@@ -28,7 +30,10 @@ export const AnswerItem = ({answer, index, allowEdition, onSubmitEditAnswer}: An
       case QuestionTypes.INTEGER:
         return <p>{answer.numberValue}</p>
       case QuestionTypes.BOOLEAN:
-        return <p>{answer.booleanValue ? "Yes" : "No"}</p>
+        return <p>{answer.booleanValue ?
+          t("components.answerItem.yes"):
+          t("components.answerItem.no")}
+        </p>
       case QuestionTypes.MULTIPLE:
         return <p>{answer.multipleTextLineValue}</p>
       default:
@@ -53,7 +58,9 @@ export const AnswerItem = ({answer, index, allowEdition, onSubmitEditAnswer}: An
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between items-center">
-        <CardTitle className="text-xl">{index} - {answer.Question.title}</CardTitle>
+        <CardTitle className="text-xl">
+          {index} - {answer.Question.title}
+        </CardTitle>
         {!isDateQuestion(answer.Question.type, answer.Question.title) &&
           !isEmailQuestion(answer.Question.type, answer.Question.title) &&
           allowEdition &&
@@ -63,7 +70,7 @@ export const AnswerItem = ({answer, index, allowEdition, onSubmitEditAnswer}: An
             size="sm"
             onClick={handleStartEdit}
           >
-            Edit
+            {t("components.answerItem.edit")}
           </Button>
         )}
       </CardHeader>

@@ -4,6 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormDataTable } from "@/components/form/FormDataTable";
 import { useDeleteFormMutation } from "@/hooks/form/useFormMutations";
+import { useUndo } from "@/hooks/useUndo";
 import { getFormsQuery } from "@/queries/form";
 import { initialQueryParamsToGetForms } from "@/constants/form/form";
 
@@ -15,6 +16,7 @@ interface TemplatePageResultsTabProps {
 
 export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageResultsTabProps) => {
   const [page, setPage] = useState<number>(initialQueryParamsToGetForms.page);
+  const {showToast} = useUndo();
   const {startDeleteForm} = useDeleteFormMutation();
   const navigation = useNavigate();
   const formsQuery = useSuspenseQuery(getFormsQuery({
@@ -26,7 +28,14 @@ export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageR
   const totalPages = Math.ceil(formsQuery.data.meta.total / initialQueryParamsToGetForms.limit);
 
   const handleDeleteForm = (formId: number) => {
-    startDeleteForm(formId);
+    showToast(
+      () => startDeleteForm(formId),
+      {
+        title: 'Form is being deleted',
+        description: 'The form and all its answers will be deleted',
+      },
+      7000,
+    )
   }
 
   return (

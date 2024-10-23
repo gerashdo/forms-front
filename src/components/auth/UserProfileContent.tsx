@@ -10,6 +10,7 @@ import { NewTemplateDialog } from "@/components/template/NewTemplateDialog";
 import { useTagsTopics } from "@/hooks/useTagsTopics";
 import { useDeleteTemplateMutation } from "@/hooks/template/useTemplate";
 import { useDeleteFormMutation } from "@/hooks/form/useFormMutations";
+import { useUndo } from "@/hooks/useUndo";
 import { getTemplatesQuery } from "@/queries/template";
 import { getFormsQuery } from "@/queries/form";
 import { User } from "@/interfaces/auth";
@@ -24,6 +25,7 @@ interface UserProfileContent {
 export const UserProfileContent = ({user}: UserProfileContent) => {
   const navigation = useNavigate();
   const {tags, topics} = useTagsTopics();
+  const {showToast} = useUndo();
   const {startDeleteForm} = useDeleteFormMutation();
   const {startDeleteTemplate} = useDeleteTemplateMutation();
   const [templatesPage, setTemplatesPage] = useState<number>(initialQueryParamsToGetTemplates.page);
@@ -45,11 +47,25 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
   const formsTotalPages = Math.ceil(formsQuery.data.meta.total / formsQuery.data.meta.elementsPerPage);
 
   const handleDeleteForm = (formId: number) => {
-    startDeleteForm(formId);
+    showToast(
+      () => startDeleteForm(formId),
+      {
+        title: 'Form is being deleted',
+        description: 'The form and all its answers will be deleted',
+      },
+      7000,
+    )
   }
 
   const handleDeleteTemplate = (templateId: number) => {
-    startDeleteTemplate(templateId);
+    showToast(
+      () => startDeleteTemplate(templateId),
+      {
+        title: 'Template is being deleted',
+        description: 'All the forms filled with this template will be deleted as well',
+      },
+      7000,
+    )
   }
 
   return (

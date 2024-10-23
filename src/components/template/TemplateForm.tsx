@@ -132,7 +132,6 @@ export const TemplateForm = ({
                       role="combobox"
                       className={cn(
                         "w-full justify-between",
-                        !field.value.length && "text-muted-foreground"
                       )}
                     >
                       {field.value.length > 0

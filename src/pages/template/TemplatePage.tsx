@@ -38,7 +38,7 @@ export const TemplatePage = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold mb-6 text-center">{template.title}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center text-neutral-950 dark:text-neutral-50">{template.title}</h1>
 
       <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as PageTabsEnum)}>
         <TabsList className="grid w-full grid-cols-3">

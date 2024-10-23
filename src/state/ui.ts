@@ -1,13 +1,17 @@
+import { localStorageEffect } from "@/helpers/localStorageState";
 import { atom } from "recoil";
 
 
+export type Theme = 'light' | 'dark' | 'system';
+
 interface UIState {
-  isCreateTemplateDialogOpen: boolean;
+  theme: Theme;
 }
 
-export const uiState = atom<UIState>({
+export const UiState = atom<UIState>({
   key: 'uiState',
   default: {
-    isCreateTemplateDialogOpen: false,
-  }
+    theme: 'system',
+  },
+  effects: [localStorageEffect('state_of_ui')],
 })

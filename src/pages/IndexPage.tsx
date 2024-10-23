@@ -24,7 +24,7 @@ export const IndexPage = () => {
     <>
       <main className="flex-grow mt-4">
         <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4 text-center">Latest Templates</h2>
+          <h1 className="text-3xl font-bold mb-4 text-center text-neutral-950 dark:text-neutral-50">Latest Templates</h1>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {latestTemplates.map((template) => (
               <TemplateCard key={template.id} template={template} />

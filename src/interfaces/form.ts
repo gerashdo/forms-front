@@ -87,6 +87,13 @@ export const PostFormCodeMessage: Partial<Record<ErrorCode, string>> = {
   500: 'There was an error processing your request. Please try again later',
 }
 
+export const DeleteFormCodeMessage: Partial<Record<ErrorCode, string>> = {
+  400: 'The form you are trying to delete does not exist',
+  401: 'Please login to delete the form, the session has expired',
+  403: 'You do not have permission to delete this form',
+  500: 'There was an error processing your request. Please try again later',
+}
+
 export enum ALLOWED_FORM_ORDER_BY_FIELDS {
   submissionDate = "submissionDate",
 }

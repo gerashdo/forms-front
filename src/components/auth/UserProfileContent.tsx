@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { TemplateDataTable } from "@/components/template/TemplateDataTable";
 import { NewTemplateDialog } from "@/components/template/NewTemplateDialog";
 import { useTagsTopics } from "@/hooks/useTagsTopics";
+import { useDeleteFormMutation } from "@/hooks/form/useFormMutations";
 import { getTemplatesQuery } from "@/queries/template";
 import { getFormsQuery } from "@/queries/form";
 import { User } from "@/interfaces/auth";
@@ -22,6 +23,7 @@ interface UserProfileContent {
 export const UserProfileContent = ({user}: UserProfileContent) => {
   const navigation = useNavigate();
   const {tags, topics} = useTagsTopics();
+  const {startDeleteForm} = useDeleteFormMutation();
   const [templatesPage, setTemplatesPage] = useState<number>(initialQueryParamsToGetTemplates.page);
   const [formsPage, setFormsPage] = useState<number>(initialQueryParamsToGetForms.page);
   const templatesQuery = useSuspenseQuery(getTemplatesQuery({
@@ -39,6 +41,10 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
   const forms = formsQuery.data.data;
   const templatesTotalPages = Math.ceil(templatesQuery.data.meta.total / templatesQuery.data.meta.elementsPerPage);
   const formsTotalPages = Math.ceil(formsQuery.data.meta.total / formsQuery.data.meta.elementsPerPage);
+
+  const handleDeleteForm = (formId: number) => {
+    startDeleteForm(formId);
+  }
 
   return (
     <>
@@ -99,9 +105,10 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
                 currentPage={formsPage}
                 totalPages={formsTotalPages}
                 onNextPage={() => setFormsPage((prev) => prev + 1)}
+                includeActions
                 onPreviousPage={() => setFormsPage((prev) => prev - 1)}
                 onViewDetails={(formId) => navigation({to: `/forms/${formId}`})}
-                onDelete={(formId) => console.log('Delete form', formId)}
+                onDelete={handleDeleteForm}
               />
             </CardContent>
           </Card>

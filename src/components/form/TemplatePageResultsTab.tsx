@@ -3,8 +3,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormDataTable } from "@/components/form/FormDataTable";
-import { initialQueryParamsToGetForms } from "@/constants/form/form";
+import { useDeleteFormMutation } from "@/hooks/form/useFormMutations";
 import { getFormsQuery } from "@/queries/form";
+import { initialQueryParamsToGetForms } from "@/constants/form/form";
 
 
 interface TemplatePageResultsTabProps {
@@ -14,6 +15,7 @@ interface TemplatePageResultsTabProps {
 
 export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageResultsTabProps) => {
   const [page, setPage] = useState<number>(initialQueryParamsToGetForms.page);
+  const {startDeleteForm} = useDeleteFormMutation();
   const navigation = useNavigate();
   const formsQuery = useSuspenseQuery(getFormsQuery({
     ...initialQueryParamsToGetForms,
@@ -22,6 +24,10 @@ export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageR
   }))
   const forms = formsQuery.data.data
   const totalPages = Math.ceil(formsQuery.data.meta.total / initialQueryParamsToGetForms.limit);
+
+  const handleDeleteForm = (formId: number) => {
+    startDeleteForm(formId);
+  }
 
   return (
     <Card>
@@ -40,7 +46,7 @@ export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageR
           onPreviousPage={() => setPage((prev) => prev - 1)}
           includeActions={allowEdition}
           onViewDetails={(formId) => navigation({to: `/forms/${formId}`})}
-          onDelete={(formId) => console.log('delete', formId)}
+          onDelete={handleDeleteForm}
         />
       </CardContent>
     </Card>

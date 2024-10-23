@@ -19,3 +19,7 @@ export const getForms = async (params: GetFormsQueryParams) => {
 export const getFormById = async (formId: number) => {
   return axios.get<GetFormResponse>(`${BASE_URL}/forms/${formId}`).then((response) => response.data);
 }
+
+export const deleteForm = async ({formId, token}: {formId: number, token: string}) => {
+  return axios.delete(`${BASE_URL}/forms/${formId}`, {headers: {Authorization: getTokenString(token)}});
+}

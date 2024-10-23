@@ -9,10 +9,11 @@ import { Answer } from "@/interfaces/answer";
 
 interface AnswerItemProps {
   answer: Answer;
+  allowEdition?: boolean;
   onSubmitEditAnswer?: (value: string | number | boolean) => void;
 }
 
-export const AnswerItem = ({answer, onSubmitEditAnswer}: AnswerItemProps) => {
+export const AnswerItem = ({answer, allowEdition, onSubmitEditAnswer}: AnswerItemProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const renderAnswer = (answer: Answer) => {
@@ -33,6 +34,11 @@ export const AnswerItem = ({answer, onSubmitEditAnswer}: AnswerItemProps) => {
     }
   }
 
+  const handleStartEdit = () => {
+    if (!allowEdition) return;
+    setIsEditing(true);
+  }
+
   const handleOnCancelEdit = () => {
     setIsEditing(false);
   }
@@ -48,11 +54,12 @@ export const AnswerItem = ({answer, onSubmitEditAnswer}: AnswerItemProps) => {
         <h3 className="text-lg font-semibold">{answer.Question.title}</h3>
         {!isDateQuestion(answer.Question.type, answer.Question.title) &&
           !isEmailQuestion(answer.Question.type, answer.Question.title) &&
+          allowEdition &&
           !isEditing && (
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setIsEditing(true)}
+            onClick={handleStartEdit}
           >
             Edit
           </Button>

@@ -1,16 +1,20 @@
+import { useRecoilValue } from "recoil";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { AnswerItem } from "@/components/answer/AnswerItem";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AuthState } from "@/state/auth";
 import { useUpdateAnswerMutation } from "@/hooks/answer/useAnswerMutations";
 import { getAnswersQuery } from "@/queries/answer";
 import { getFormQuery } from "@/queries/form";
 import { formatDateTime } from "@/helpers/dateFormat";
+import { UserRoles } from "@/interfaces/auth";
 
 
 const route = getRouteApi('/_layout/forms/$formId');
 
 export const FormPage = () => {
+  const {user} = useRecoilValue(AuthState);
   const {formId} = route.useParams();
   const {startUpdateAnswer} = useUpdateAnswerMutation(Number(formId));
   const formQuery = useSuspenseQuery(getFormQuery(Number(formId)));
@@ -35,6 +39,7 @@ export const FormPage = () => {
           <AnswerItem
             key={answer.id}
             answer={answer}
+            allowEdition={user?.id === form.userId || user?.role === UserRoles.ADMIN}
             onSubmitEditAnswer={(value) => onSubmitEditAnswer(answer.id, value)}
           />
         ))}

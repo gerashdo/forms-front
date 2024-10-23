@@ -34,11 +34,12 @@ export const FormPage = () => {
           Submitted by {form.User.lastName} {form.User.name} ({form.User.email}) on {formatDateTime(form.submissionDate)}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        {answers.map(answer => (
+      <CardContent className="flex flex-col space-y-6">
+        {answers.map((answer, index) => (
           <AnswerItem
             key={answer.id}
             answer={answer}
+            index={index + 1}
             allowEdition={user?.id === form.userId || user?.role === UserRoles.ADMIN}
             onSubmitEditAnswer={(value) => onSubmitEditAnswer(answer.id, value)}
           />

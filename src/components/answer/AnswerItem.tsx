@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AnswerForm } from "@/components/answer/AnswerForm";
 import { isDateQuestion, isEmailQuestion } from "@/helpers/forms";
 import { formatDateTime } from "@/helpers/dateFormat";
@@ -9,11 +10,12 @@ import { Answer } from "@/interfaces/answer";
 
 interface AnswerItemProps {
   answer: Answer;
+  index: number;
   allowEdition?: boolean;
   onSubmitEditAnswer?: (value: string | number | boolean) => void;
 }
 
-export const AnswerItem = ({answer, allowEdition, onSubmitEditAnswer}: AnswerItemProps) => {
+export const AnswerItem = ({answer, index, allowEdition, onSubmitEditAnswer}: AnswerItemProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const renderAnswer = (answer: Answer) => {
@@ -49,9 +51,9 @@ export const AnswerItem = ({answer, allowEdition, onSubmitEditAnswer}: AnswerIte
   }
 
   return (
-    <div className="mb-4 p-4 border rounded">
-      <div className="flex justify-between items-start mb-2">
-        <h3 className="text-lg font-semibold">{answer.Question.title}</h3>
+    <Card>
+      <CardHeader className="flex flex-row justify-between items-center">
+        <CardTitle className="text-xl">{index} - {answer.Question.title}</CardTitle>
         {!isDateQuestion(answer.Question.type, answer.Question.title) &&
           !isEmailQuestion(answer.Question.type, answer.Question.title) &&
           allowEdition &&
@@ -64,16 +66,18 @@ export const AnswerItem = ({answer, allowEdition, onSubmitEditAnswer}: AnswerIte
             Edit
           </Button>
         )}
-      </div>
-      {isEditing ? (
-        <AnswerForm
-          answer={answer}
-          onSubmit={handleSumbit}
-          onCancel={handleOnCancelEdit}
-        />
-      ): (
-        renderAnswer(answer)
-      )}
-    </div>
+      </CardHeader>
+      <CardContent>
+        {isEditing ? (
+          <AnswerForm
+            answer={answer}
+            onSubmit={handleSumbit}
+            onCancel={handleOnCancelEdit}
+          />
+        ): (
+          renderAnswer(answer)
+        )}
+      </CardContent>
+    </Card>
   );
 }

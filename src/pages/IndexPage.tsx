@@ -5,9 +5,11 @@ import { Badge } from '@/components/ui/badge';
 import { SimpleTemplateTables } from '@/components/template/SimpleTemplatesTable';
 import { useTags } from '@/hooks/useTagsTopics';
 import { getRecentTemplatesQuery, getTemplatesBySubmissionsQuery } from '@/queries/template';
+import { useTranslation } from 'react-i18next';
 
 
 export const IndexPage = () => {
+  const {t} = useTranslation();
   const navigation = useNavigate();
   const tags = useTags();
   const recentTemplatesQuery = useSuspenseQuery(getRecentTemplatesQuery);
@@ -23,7 +25,9 @@ export const IndexPage = () => {
     <>
       <main className="flex-grow mt-4">
         <section className="mb-8">
-          <h1 className="text-3xl font-bold mb-4 text-center text-neutral-950 dark:text-neutral-50">Latest Templates</h1>
+          <h1 className="text-3xl font-bold mb-4 text-center text-neutral-950 dark:text-neutral-50">
+            {t('index.latestTemplates')}
+          </h1>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {latestTemplates.map((template) => (
               <TemplateCard key={template.id} template={template} />
@@ -41,11 +45,11 @@ export const IndexPage = () => {
           </div>
         </section>
 
-        <section>
+        <section id="popular_templates">
           <SimpleTemplateTables
             templates={popularTemplates}
-            title="Popular Templates"
-            description="Here are the most popular templates created by the community"
+            title={t('index.popularTemplates.title')}
+            description={t('index.popularTemplates.description')}
             onItemClicked={handleItemClick}
           />
         </section>

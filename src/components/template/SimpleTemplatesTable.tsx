@@ -1,6 +1,7 @@
 import { Template } from "@/interfaces/template";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "../ui/table";
+import { useTranslation } from "react-i18next";
 
 
 interface SimpleTemplatesTableProps {
@@ -16,6 +17,8 @@ export const SimpleTemplateTables = ({
   description,
   onItemClicked,
 }: SimpleTemplatesTableProps) => {
+  const {t} = useTranslation();
+
   return (
     <Card>
       <CardHeader>
@@ -26,9 +29,9 @@ export const SimpleTemplateTables = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Topic</TableHead>
-              <TableHead>Submissions</TableHead>
+              <TableHead>{t("components.simpleTemplatesTable.title")}</TableHead>
+              <TableHead>{t("components.simpleTemplatesTable.topic")}</TableHead>
+              <TableHead>{t("components.simpleTemplatesTable.submissions")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

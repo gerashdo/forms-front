@@ -1,11 +1,11 @@
-import { useUiTheme } from "@/hooks/useUiTheme"
+import { useUiSettings } from "@/hooks/useUiSettings";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu";
 import { Button } from "./button";
-import { Moon, Sun } from "lucide-react";
+import { Globe, Moon, Sun } from "lucide-react";
 
 
 export const ModeToggle = () => {
-  const {setTheme} = useUiTheme();
+  const {setTheme} = useUiSettings();
 
   return (
     <DropdownMenu>
@@ -25,6 +25,29 @@ export const ModeToggle = () => {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+export const LanguageToggle = () => {
+  const {setLanguage, language} = useUiSettings();
+
+  return(
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <Globe className="h-[1.2rem] w-[1.2rem]" />
+          {/* <span className="sr-only">{t('language')}</span> */}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setLanguage('en')}>
+          English {language === 'en' && '✓'}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage('es')}>
+          Español {language === 'es' && '✓'}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

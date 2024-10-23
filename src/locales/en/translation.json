@@ -1,0 +1,19 @@
+{
+  "index": {
+    "latestTemplates": "Latest Templates",
+    "popularTemplates": {
+      "title": "Popular Templates",
+      "description": "Here are the most popular templates created by the community"
+    }
+  },
+  "components": {
+    "simpleTemplatesTable": {
+      "title": "Title",
+      "topic": "Topic",
+      "submissions": "Submissions"
+    },
+    "templateCard": {
+      "by": "by"
+    }
+  }
+}

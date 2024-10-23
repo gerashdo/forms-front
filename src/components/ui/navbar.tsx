@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router"
 import { useRecoilState } from "recoil";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { ModeToggle } from "@/components/ui/ModeToggle";
+import { LanguageToggle, ModeToggle } from "@/components/ui/ModeToggle";
 import { isUserAdmin } from "@/helpers/auth";
 import { ChevronDown } from "lucide-react"
 
@@ -62,6 +62,7 @@ export const Navbar = () => {
               Authenticate
             </Link>
           )}
+          <LanguageToggle />
           <ModeToggle />
         </div>
       </div>

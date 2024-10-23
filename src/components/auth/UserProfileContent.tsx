@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { TemplateDataTable } from "@/components/template/TemplateDataTable";
 import { NewTemplateDialog } from "@/components/template/NewTemplateDialog";
 import { useTagsTopics } from "@/hooks/useTagsTopics";
+import { useDeleteTemplateMutation } from "@/hooks/template/useTemplate";
 import { useDeleteFormMutation } from "@/hooks/form/useFormMutations";
 import { getTemplatesQuery } from "@/queries/template";
 import { getFormsQuery } from "@/queries/form";
@@ -24,6 +25,7 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
   const navigation = useNavigate();
   const {tags, topics} = useTagsTopics();
   const {startDeleteForm} = useDeleteFormMutation();
+  const {startDeleteTemplate} = useDeleteTemplateMutation();
   const [templatesPage, setTemplatesPage] = useState<number>(initialQueryParamsToGetTemplates.page);
   const [formsPage, setFormsPage] = useState<number>(initialQueryParamsToGetForms.page);
   const templatesQuery = useSuspenseQuery(getTemplatesQuery({
@@ -44,6 +46,10 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
 
   const handleDeleteForm = (formId: number) => {
     startDeleteForm(formId);
+  }
+
+  const handleDeleteTemplate = (templateId: number) => {
+    startDeleteTemplate(templateId);
   }
 
   return (
@@ -88,7 +94,7 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
                 onNextPage={() => setTemplatesPage((prev) => prev + 1)}
                 onPreviousPage={() => setTemplatesPage((prev) => prev - 1)}
                 onViewDetails={(templateId) => navigation({to: `/templates/${templateId}`})}
-                onDelete={(templateId) => console.log('Delete template', templateId)}
+                onDelete={handleDeleteTemplate}
               />
             </CardContent>
           </Card>

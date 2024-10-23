@@ -3,7 +3,7 @@ import { LoginCodeMessages, PatchUserCodeMessages, SignUpCodeMessages } from "@/
 import { ErrorCode } from "@/interfaces/errorsRequest";
 import { DeleteFormCodeMessage, PostFormCodeMessage } from "@/interfaces/form";
 import { CreateNewQuestionCodeMessage, DeleteQuestionFromTemplateCodeMessage, ReorderQuestionsCodeMessage, UpdateQuestionsCodeMessage } from "@/interfaces/question";
-import { CreateNewTemplateCodeMessage } from "@/interfaces/template";
+import { CreateNewTemplateCodeMessage, DeleteTemplateErrorCodeMessage } from "@/interfaces/template";
 
 
 export const getLoginError = (errorCode: number | string): string => {
@@ -16,6 +16,10 @@ export const getSignUpError = (errorCode: number | string): string => {
 
 export const getPostNewTemplateError = (errorCode: number | string): string => {
   return CreateNewTemplateCodeMessage[errorCode as ErrorCode] || 'An error occurred, please try again later';
+}
+
+export const getDeleteTemplateError = (errorCode: number | string): string => {
+  return DeleteTemplateErrorCodeMessage[errorCode as ErrorCode] || 'An error occurred, please try again later';
 }
 
 export const getPostNewQuestionError = (errorCode: number | string): string => {

@@ -104,3 +104,10 @@ export const CreateNewTemplateCodeMessage: Partial<Record<ErrorCode, string>> = 
   401: 'Please log in againt to create a new template, the session has expired',
   500: 'There was an error processing your request. Please try again later',
 }
+
+export const DeleteTemplateErrorCodeMessage: Partial<Record<ErrorCode, string>> = {
+  400: 'The template you are trying to delete does not exist',
+  401: 'Please log in againt to delete the template, the session has expired',
+  403: 'You are not allowed to delete this template',
+  500: 'There was an error processing your request. Please try again later',
+}

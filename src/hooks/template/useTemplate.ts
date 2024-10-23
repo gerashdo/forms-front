@@ -3,8 +3,8 @@ import { useRecoilValue } from "recoil";
 import { AxiosError, AxiosResponse } from "axios";
 import { toast } from "@/hooks/use-toast";
 import { AuthState } from "@/state/auth";
-import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate, reorderTemplateQuestions, updateTemplate } from "@/requests/templates";
-import { getDeleteQuestionError, getPostNewTemplateError, getReorderQuestionsError } from "@/helpers/getErrorsRequest";
+import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate, deleteTemplate, reorderTemplateQuestions, updateTemplate } from "@/requests/templates";
+import { getDeleteQuestionError, getDeleteTemplateError, getPostNewTemplateError, getReorderQuestionsError } from "@/helpers/getErrorsRequest";
 import { PatchQuestionOrderResponse, PatchTemplateRequest, PatchTemplateResponse, PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template";
 import { GetQuestionsResponse, NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question";
 
@@ -59,7 +59,6 @@ export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) =
       });
     },
     onError: (error: AxiosError) => {
-      console.log(error);
       const responseCode = error.response?.status || 500;
       const errorMessage = getPostNewTemplateError(responseCode);
       toast({
@@ -79,6 +78,36 @@ export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) =
     isLoading: mutation.isPending,
     success: mutation.isSuccess,
     error: mutation.error,
+  }
+}
+
+export const useDeleteTemplateMutation = () => {
+  const authState = useRecoilValue(AuthState);
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: deleteTemplate,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['templates']})
+    },
+    onError: (error: AxiosError) => {
+      const responseCode = error.response?.status || 500;
+      const errorMessage = getDeleteTemplateError(responseCode);
+      toast({
+        title: 'Error deleting the template',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    }
+  })
+
+  const startDeleteTemplate = (templateId: number) => {
+    mutation.mutate({templateId, token: authState.token || ''});
+  }
+
+  return {
+    startDeleteTemplate,
+    isLoading: mutation.isPending,
+    success: mutation.isSuccess
   }
 }
 

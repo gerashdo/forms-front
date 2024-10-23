@@ -93,6 +93,12 @@ export const updateTemplate = async ({templateId, data, token}: {token: string, 
   });
 }
 
+export const deleteTemplate = async ({templateId, token}: {templateId: number, token: string}) => {
+  return axios.delete(`${BASE_URL}/templates/${templateId}`, {
+    headers: {'Authorization': getTokenString(token)}
+  });
+}
+
 type AddQuestionToTemplateProps = {
   templateId: number;
   questionData: NewQuestionFormValues;

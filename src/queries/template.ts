@@ -24,7 +24,7 @@ export const getRecentTemplatesQuery = queryOptions({
 })
 
 export const getTemplatesQuery = (params: GetTemplatesQueryParams) => queryOptions({
-  queryKey: ['templates', {...params}],
+  queryKey: ['templates', {page: params.page}],
   queryFn: () => getTemplates(params),
   placeholderData: keepPreviousData,
 })

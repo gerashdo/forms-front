@@ -1,24 +1,23 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from '@tanstack/react-router';
 import { TemplateCard } from '@/components/template/TemplateCard';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { getRecentTemplatesQuery } from '@/queries/template';
+import { SimpleTemplateTables } from '@/components/template/SimpleTemplatesTable';
 import { useTags } from '@/hooks/useTagsTopics';
+import { getRecentTemplatesQuery, getTemplatesBySubmissionsQuery } from '@/queries/template';
 
 
 export const IndexPage = () => {
+  const navigation = useNavigate();
   const tags = useTags();
   const recentTemplatesQuery = useSuspenseQuery(getRecentTemplatesQuery);
+  const templatesBySubmissionQuery = useSuspenseQuery(getTemplatesBySubmissionsQuery);
   const latestTemplates = recentTemplatesQuery.data.data;
+  const popularTemplates = templatesBySubmissionQuery.data.data;
 
-  const popularTemplates = [
-    { id: 1, name: "Customer Feedback", submissions: 1500 },
-    { id: 2, name: "Event Registration", submissions: 1200 },
-    { id: 3, name: "Job Application", submissions: 1000 },
-    { id: 4, name: "Course Evaluation", submissions: 800 },
-    { id: 5, name: "Market Research Survey", submissions: 750 },
-  ];
+  const handleItemClick = (id: number) => {
+    navigation({to: `/templates/${id}`});
+  }
 
   return (
     <>
@@ -43,30 +42,12 @@ export const IndexPage = () => {
         </section>
 
         <section>
-          <Card>
-            <CardHeader>
-              <CardTitle>Most Popular Templates</CardTitle>
-              <CardDescription>Check out the most popular templates created by the community</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead className="text-right">Submissions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {popularTemplates.map((template) => (
-                    <TableRow key={template.id}>
-                      <TableCell>{template.name}</TableCell>
-                      <TableCell className="text-right">{template.submissions}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          <SimpleTemplateTables
+            templates={popularTemplates}
+            title="Popular Templates"
+            description="Here are the most popular templates created by the community"
+            onItemClicked={handleItemClick}
+          />
         </section>
       </main>
     </>

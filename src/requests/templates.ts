@@ -5,6 +5,7 @@ import {
   GetAllTagsResponse,
   GetAllTopicsResponse,
   GetTemplateResponse,
+  GetTemplatesBySubmissionsResponse,
   GetTemplatesQueryParams,
   GetTemplatesResponse,
   PatchQuestionOrderResponse,
@@ -32,6 +33,10 @@ export const getTemplateById = async (id: string) => {
 
 export const getTemplates = async (params: GetTemplatesQueryParams) => {
   return axios.get<GetTemplatesResponse>(`${BASE_URL}/templates`, {params}).then((response) => response.data);
+}
+
+export const getTemplatesBySubmissions = async () => {
+  return axios.get<GetTemplatesBySubmissionsResponse>(`${BASE_URL}/templates/bysubmissions`).then((response) => response.data);
 }
 
 export const getMostRecentTemplates = async () => {

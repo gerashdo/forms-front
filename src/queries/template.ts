@@ -1,5 +1,5 @@
 import { GetTemplatesQueryParams } from "@/interfaces/template";
-import { getAllTags, getAllTopics, getMostRecentTemplates, getTemplateById, getTemplates } from "@/requests/templates";
+import { getAllTags, getAllTopics, getMostRecentTemplates, getTemplateById, getTemplates, getTemplatesBySubmissions } from "@/requests/templates";
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 
 
@@ -27,4 +27,9 @@ export const getTemplatesQuery = (params: GetTemplatesQueryParams) => queryOptio
   queryKey: ['templates', {page: params.page}],
   queryFn: () => getTemplates(params),
   placeholderData: keepPreviousData,
+})
+
+export const getTemplatesBySubmissionsQuery = queryOptions({
+  queryKey: ['templates', 'bySubmissions'],
+  queryFn: getTemplatesBySubmissions,
 })

@@ -32,6 +32,7 @@ export interface Template {
   User:        User;
   Topic:       Topic;
   Tags:        Tag[];
+  submissions?: string;
 }
 
 export interface GetTemplateResponse {
@@ -59,18 +60,15 @@ export interface MetaGetTemplates {
   elementsPerPage: number;
 }
 
+export interface GetTemplatesBySubmissionsResponse {
+  ok:   boolean;
+  data: Template[];
+}
+
 export interface Topic {
   id:   number;
   name: string;
 }
-
-export interface User {
-  id:       number;
-  name:     string;
-  lastName: string;
-  email:    string;
-}
-
 
 export interface User {
   id:       number;

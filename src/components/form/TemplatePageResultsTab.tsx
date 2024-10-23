@@ -8,10 +8,11 @@ import { getFormsQuery } from "@/queries/form";
 
 
 interface TemplatePageResultsTabProps {
-  templateId: string
+  templateId: string;
+  allowEdition?: boolean;
 }
 
-export const TemplatePageResultsTab = ({templateId}: TemplatePageResultsTabProps) => {
+export const TemplatePageResultsTab = ({templateId, allowEdition}: TemplatePageResultsTabProps) => {
   const [page, setPage] = useState<number>(initialQueryParamsToGetForms.page);
   const navigation = useNavigate();
   const formsQuery = useSuspenseQuery(getFormsQuery({
@@ -37,6 +38,7 @@ export const TemplatePageResultsTab = ({templateId}: TemplatePageResultsTabProps
           totalPages={totalPages}
           onNextPage={() => setPage((prev) => prev + 1)}
           onPreviousPage={() => setPage((prev) => prev - 1)}
+          includeActions={allowEdition}
           onViewDetails={(formId) => navigation({to: `/forms/${formId}`})}
           onDelete={(formId) => console.log('delete', formId)}
         />

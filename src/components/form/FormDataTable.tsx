@@ -3,6 +3,7 @@ import { ColumnDef, getCoreRowModel, getPaginationRowModel, getSortedRowModel, S
 import { DataTable, DataTableDropdownMenu } from "@/components/ui/DataTable";
 import { Pagination } from "@/components/ui/Pagitation";
 import { Button } from "@/components/ui/button";
+import { formatDateTime } from "@/helpers/dateFormat";
 import { GetFormsResponseForm } from "@/interfaces/form";
 import { ArrowUpDown } from "lucide-react";
 
@@ -13,8 +14,9 @@ interface FormDataTableProps {
   currentPage: number;
   onNextPage: () => void;
   onPreviousPage: () => void;
-  onViewDetails: (formId: number) => void;
-  onDelete: (formId: number) => void;
+  includeActions?: boolean;
+  onViewDetails?: (formId: number) => void;
+  onDelete?: (formId: number) => void;
 }
 
 export const FormDataTable = ({
@@ -23,6 +25,7 @@ export const FormDataTable = ({
   totalPages,
   onNextPage,
   onPreviousPage,
+  includeActions,
   onViewDetails,
   onDelete,
 }: FormDataTableProps) => {
@@ -40,7 +43,7 @@ export const FormDataTable = ({
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
-      cell: ({ row }) => <div>{row.getValue("submissionDate")}</div>,
+      cell: ({ row }) => <div>{formatDateTime(row.getValue("submissionDate"))}</div>,
     },
     {
       accessorKey: "Template.title",
@@ -52,7 +55,10 @@ export const FormDataTable = ({
       header: "User Email",
       cell: (info) => info.getValue(),
     },
-    {
+  ];
+
+  if (includeActions && onViewDetails && onDelete) {
+    columns.push({
       id: "actions",
       cell: ({ row }) => {
         const form = row.original;
@@ -61,9 +67,9 @@ export const FormDataTable = ({
           {id: "delete", label: "Delete form", action: () => onDelete(form.id)},
         ];
         return <DataTableDropdownMenu label="Actions" items={menuItems} triggerLabel="Open menu"/>;
-      },
-    },
-  ];
+      }
+    })
+  }
 
   const table = useReactTable({
     data: forms,

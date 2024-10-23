@@ -82,6 +82,7 @@ export interface GetFormsQueryParams {
 
 export const PostFormCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid data, please check the data for the form submission',
+  401: 'Please login to submit the form, the session has expired',
   422: 'The form submission could not be processed, please check that all the questions are answered, or if you have already submitted the form',
   500: 'There was an error processing your request. Please try again later',
 }

@@ -4,9 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "../use-toast";
 import { getPostFormError } from "@/helpers/getErrorsRequest";
 import { PostFormRequest } from "@/interfaces/form";
+import { useRecoilValue } from "recoil";
+import { AuthState } from "@/state/auth";
 
 
 export const usePostFormMutation = () => {
+  const authState = useRecoilValue(AuthState);
   const mutation = useMutation({
     mutationFn: submitForm,
     onSuccess: () => {
@@ -27,7 +30,7 @@ export const usePostFormMutation = () => {
   })
 
   const startSubmitForm = (form: PostFormRequest) => {
-    mutation.mutate(form);
+    mutation.mutate({data: form, token: authState.token || ''});
   }
 
   return {

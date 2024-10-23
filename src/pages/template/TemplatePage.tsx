@@ -66,7 +66,10 @@ export const TemplatePage = () => {
           />
         </TabsContent>
         <TabsContent value={PageTabsEnum.RESULTS}>
-          <TemplatePageResultsTab templateId={templateId}/>
+          <TemplatePageResultsTab
+            templateId={templateId}
+            allowEdition={(user?.id === template.User.id) || user?.role === UserRoles.ADMIN}
+          />
         </TabsContent>
       </Tabs>
     </>

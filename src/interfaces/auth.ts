@@ -80,7 +80,7 @@ export const SignUpCodeMessages: Partial<Record<ErrorCode, string>> = {
 
 export const PatchUserCodeMessages: Partial<Record<ErrorCode, string>> = {
   400: 'Invalid request, the data you provided is not valid',
-  401: 'Please login again to continue',
+  401: 'Please login again to continue, the session has expired',
   403: 'You are not allowed to perform this action',
   500: 'There was an error processing your request. Please try again later',
 }

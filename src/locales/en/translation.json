@@ -121,6 +121,43 @@
       "yes": "Yes",
       "save": "Save Changes",
       "cancel": "Cancel"
+    },
+    "userProfileContent": {
+      "deleteFormToast": {
+        "title": "Form is being deleted",
+        "description": "The form and all its answers will be deleted."
+      },
+      "deleteTemplateToast": {
+        "title": "Template is being deleted",
+        "description": "All the forms filled with this template will be deleted as well."
+      },
+      "tabs": {
+        "templates": {
+          "title": "My Templates",
+          "description": "Manage your created templates here."
+        },
+        "forms": {
+          "title": "My Forms",
+          "description": "Manage your filled forms here."
+        }
+      }
+    },
+    "newTemplateDialog": {
+      "title": "Let's create a new template",
+      "description": "Create a new template to share with the community.",
+      "create": "Create Template"
+    },
+    "templateDataTable": {
+      "title": "Title",
+      "topic": "Topic",
+      "date": "Date of Creation",
+      "public": "Is Public",
+      "userEmail": "Creator",
+      "view": "View details",
+      "delete": "Delete template",
+      "label": "Actions",
+      "triggerLabel": "Open menu",
+      "noDataMessage": "No templates created yet."
     }
   },
   "hooks": {

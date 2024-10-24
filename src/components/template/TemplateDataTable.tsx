@@ -6,6 +6,7 @@ import { Pagination } from "@/components/ui/Pagitation";
 import { formatDateTime } from "@/helpers/dateFormat";
 import { Template } from "@/interfaces/template"
 import { ArrowUpDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 
 interface TemplateDataTableProps {
@@ -27,6 +28,7 @@ export const TemplateDataTable = ({
   onViewDetails,
   onDelete,
 }: TemplateDataTableProps) => {
+  const {t} = useTranslation();
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const columns: ColumnDef<Template>[] = [
@@ -37,7 +39,7 @@ export const TemplateDataTable = ({
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Title
+          {t('components.templateDataTable.title')}
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -45,7 +47,7 @@ export const TemplateDataTable = ({
     },
     {
       accessorKey: "Topic.name",
-      header: "Topic",
+      header: t('components.templateDataTable.topic'),
       cell: (info) => info.getValue(),
     },
     {
@@ -55,7 +57,7 @@ export const TemplateDataTable = ({
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Date of creation
+          {t('components.templateDataTable.date')}
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -63,12 +65,12 @@ export const TemplateDataTable = ({
     },
     {
       accessorKey: "isPublic",
-      header: "Public",
+      header: t('components.templateDataTable.public'),
       cell: (info) => info.getValue() ? "Yes" : "No",
     },
     {
       accessorKey: "User.email",
-      header: "Creator",
+      header: t('components.templateDataTable.userEmail'),
       cell: (info) => info.getValue(),
     },
     {
@@ -76,10 +78,14 @@ export const TemplateDataTable = ({
       cell: ({row}) => {
         const template = row.original;
         const menuItems = [
-          {id: "view", label: "View details", action: () => onViewDetails(template.id)},
-          {id: "delete", label: "Delete template", action: () => onDelete(template.id)},
+          {id: "view", label: t("components.templateDataTable.view"), action: () => onViewDetails(template.id)},
+          {id: "delete", label: t("components.templateDataTable.delete"), action: () => onDelete(template.id)},
         ];
-        return <DataTableDropdownMenu label="Actions" items={menuItems} triggerLabel="Open menu"/>;
+        return <DataTableDropdownMenu
+          label={t("components.templateDataTable.label")}
+          items={menuItems}
+          triggerLabel={t("components.templateDataTable.triggerLabel")}
+        />;
       },
     }
   ]
@@ -100,7 +106,7 @@ export const TemplateDataTable = ({
       <DataTable
         table={table}
         columns={columns}
-        noDataMessage="No templates created yet."
+        noDataMessage={t('components.templateDataTable.noDataMessage')}
       />
       <Pagination
         page={currentPage}

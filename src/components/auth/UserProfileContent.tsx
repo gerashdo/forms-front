@@ -16,6 +16,7 @@ import { getFormsQuery } from "@/queries/form";
 import { User } from "@/interfaces/auth";
 import { initialQueryParamsToGetTemplates } from "@/constants/templates/template";
 import { initialQueryParamsToGetForms } from "@/constants/form/form";
+import { useTranslation } from "react-i18next";
 
 
 interface UserProfileContent {
@@ -23,6 +24,7 @@ interface UserProfileContent {
 }
 
 export const UserProfileContent = ({user}: UserProfileContent) => {
+  const {t} = useTranslation();
   const navigation = useNavigate();
   const {tags, topics} = useTagsTopics();
   const {showToast} = useUndo();
@@ -50,8 +52,8 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
     showToast(
       () => startDeleteForm(formId),
       {
-        title: 'Form is being deleted',
-        description: 'The form and all its answers will be deleted',
+        title: t('components.userProfileContent.deleteFormToast.title'),
+        description: t('components.userProfileContent.deleteFormToast.description'),
       },
       7000,
     )
@@ -61,8 +63,8 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
     showToast(
       () => startDeleteTemplate(templateId),
       {
-        title: 'Template is being deleted',
-        description: 'All the forms filled with this template will be deleted as well',
+        title: t('components.userProfileContent.deleteTemplateToast.title'),
+        description: t('components.userProfileContent.deleteTemplateToast.description'),
       },
       7000,
     )
@@ -86,15 +88,23 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
 
       <Tabs defaultValue="templates">
         <TabsList>
-          <TabsTrigger value="templates">My Templates</TabsTrigger>
-          <TabsTrigger value="forms">My Filled Forms</TabsTrigger>
+          <TabsTrigger value="templates">
+            {t('components.userProfileContent.tabs.templates.title')}
+          </TabsTrigger>
+          <TabsTrigger value="forms">
+            {t('components.userProfileContent.tabs.forms.title')}
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="templates">
           <Card>
             <CardHeader className="flex flex-row justify-between align-middle">
-              <div>
-                <CardTitle>My Templates</CardTitle>
-                <CardDescription>Manage your created templates here</CardDescription>
+              <div className="space-y-1.5">
+                <CardTitle>
+                  {t('components.userProfileContent.tabs.templates.title')}
+                </CardTitle>
+                <CardDescription>
+                  {t('components.userProfileContent.tabs.templates.description')}
+                </CardDescription>
               </div>
               <NewTemplateDialog
                 topics={topics}
@@ -118,8 +128,12 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
         <TabsContent value="forms">
           <Card>
             <CardHeader>
-              <CardTitle>Filled Forms</CardTitle>
-              <CardDescription>View your filled forms here</CardDescription>
+              <CardTitle>
+                {t('components.userProfileContent.tabs.forms.title')}
+              </CardTitle>
+              <CardDescription>
+                {t('components.userProfileContent.tabs.forms.description')}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <FormDataTable

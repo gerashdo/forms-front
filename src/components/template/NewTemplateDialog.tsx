@@ -3,6 +3,7 @@ import { Button } from "../ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "../ui/dialog"
 import { ScrollArea } from "../ui/scroll-area"
 import { TemplateForm } from "./TemplateForm"
+import { useTranslation } from "react-i18next"
 
 
 interface NewTemplateDialogProps {
@@ -16,18 +17,24 @@ export const NewTemplateDialog = ({
   tags,
   onSuccess,
 }: NewTemplateDialogProps) => {
+  const {t} = useTranslation();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Create Template</Button>
+        <Button>
+          {t('components.newTemplateDialog.create')}
+        </Button>
       </DialogTrigger>
       <DialogContent className='p-1'>
         <ScrollArea className='max-h-[80vh] p-5'>
           <div className='m-2'>
-            <DialogHeader>
-              <DialogTitle>Let's create a new template</DialogTitle>
+            <DialogHeader className="mb-4">
+              <DialogTitle>
+                {t('components.newTemplateDialog.title')}
+              </DialogTitle>
               <DialogDescription>
-                Create a new template to share with the community
+                {t('components.newTemplateDialog.description')}
               </DialogDescription>
             </DialogHeader>
             <TemplateForm

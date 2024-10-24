@@ -1,5 +1,6 @@
 import { ErrorCode } from "./errorsRequest";
 import { QuestionTypes } from "./question";
+import i18n from "@/i18n";
 
 
 export type PostFormRequest = {
@@ -81,17 +82,17 @@ export interface GetFormsQueryParams {
 }
 
 export const PostFormCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid data, please check the data for the form submission',
-  401: 'Please login to submit the form, the session has expired',
-  422: 'The form submission could not be processed, please check that all the questions are answered, or if you have already submitted the form',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.postFormCodeMessage.400"),
+  401: i18n.t("errors.postFormCodeMessage.401"),
+  422: i18n.t("errors.postFormCodeMessage.422"),
+  500: i18n.t("errors.postFormCodeMessage.500"),
 }
 
 export const DeleteFormCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'The form you are trying to delete does not exist',
-  401: 'Please login to delete the form, the session has expired',
-  403: 'You do not have permission to delete this form',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.deleteFormCodeMessage.400"),
+  401: i18n.t("errors.deleteFormCodeMessage.401"),
+  403: i18n.t("errors.deleteFormCodeMessage.403"),
+  500: i18n.t("errors.deleteFormCodeMessage.500"),
 }
 
 export enum ALLOWED_FORM_ORDER_BY_FIELDS {

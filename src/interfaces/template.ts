@@ -2,6 +2,7 @@ import * as z from 'zod';
 import { Question } from './question';
 import { ALLOWED_TEMPLATE_ORDER_BY, ALLOWED_TEMPLATE_ORDER_BY_FIELDS, newTemplateSchema } from '@/constants/templates/template';
 import { ErrorCode } from './errorsRequest';
+import i18n from '@/i18n';
 
 
 export type NewTemplateFormValues = z.infer<typeof newTemplateSchema>;
@@ -98,14 +99,14 @@ export interface PatchQuestionOrderResponse {
 }
 
 export const CreateNewTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid request, please check the data for the template',
-  401: 'Please log in againt to create a new template, the session has expired',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.createNewTemplateCodeMessage.400"),
+  401: i18n.t("errors.createNewTemplateCodeMessage.401"),
+  500: i18n.t("errors.createNewTemplateCodeMessage.500"),
 }
 
 export const DeleteTemplateErrorCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'The template you are trying to delete does not exist',
-  401: 'Please log in againt to delete the template, the session has expired',
-  403: 'You are not allowed to delete this template',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.deleteTemplateErrorCodeMessage.400"),
+  401: i18n.t("errors.deleteTemplateErrorCodeMessage.401"),
+  403: i18n.t("errors.deleteTemplateErrorCodeMessage.403"),
+  500: i18n.t("errors.deleteTemplateErrorCodeMessage.500"),
 }

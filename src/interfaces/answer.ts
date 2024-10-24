@@ -1,5 +1,6 @@
 import { ErrorCode } from "./errorsRequest";
 import { QuestionTypes } from "./question";
+import i18n from "@/i18n";
 
 
 export interface GetAnswersResponse {
@@ -33,10 +34,10 @@ export interface PatchAnswerResponse {
 }
 
 export const PatchAnswerCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid data, please check the data for the answer edition',
-  401: 'Please log in to edit an answer, the session has expired',
-  403: 'You are not allowed to edit this answer',
-  404: 'The answer you are trying to edit does not exist',
-  422: 'You are trying to set values in the wrong type of question',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.patchAnswerCodeMessage.400"),
+  401: i18n.t("errors.patchAnswerCodeMessage.401"),
+  403: i18n.t("errors.patchAnswerCodeMessage.403"),
+  404: i18n.t("errors.patchAnswerCodeMessage.404"),
+  422: i18n.t("errors.patchAnswerCodeMessage.422"),
+  500: i18n.t("errors.patchAnswerCodeMessage.500"),
 }

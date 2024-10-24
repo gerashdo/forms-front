@@ -214,11 +214,100 @@
       "password": "Password",
       "signup": "Register",
       "signing": "Registering..."
+    },
+    "formForm": {
+      "yes": "Yes",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "submitting": "Submitting..."
     }
   },
   "hooks": {
     "useUndo": {
       "undo": "Undo"
+    },
+    "useUpdateAnswerMutation": {
+      "successToast": {
+        "title": "Answer updated",
+        "description": "The answer was updated successfully."
+      },
+      "errorToast": {
+        "title": "Error updating answer"
+      }
+    },
+    "usePostFormMutation": {
+      "successToast": {
+        "title": "Form submitted",
+        "description": "The form was submitted successfully."
+      },
+      "errorToast": {
+        "title": "Error submitting form"
+      }
+    },
+    "useDeleteFormMutation": {
+      "errorToast": {
+        "title": "Error deleting form"
+      }
+    },
+    "useUpdateQuestionMutation": {
+      "successToast": {
+        "title": "Question updated",
+        "description": "The question was updated successfully."
+      },
+      "errorToast": {
+        "title": "Error updating question"
+      }
+    },
+    "useCreateTemplate": {
+      "errorToast": {
+        "title": "Error creating the template"
+      }
+    },
+    "useUpdateTemplateMutation": {
+      "successToast": {
+        "title": "Template updated",
+        "description": "The template was updated successfully."
+      },
+      "errorToast": {
+        "title": "Error updating template"
+      }
+    },
+    "useDeleteTemplateMutation": {
+      "errorToast": {
+        "title": "Error deleting template"
+      }
+    },
+    "useAddQuestionToTemplate": {
+      "successToast": {
+        "title": "Question added to the template",
+        "description": "The question was added successfully."
+      },
+      "errorToast": {
+        "title": "Error adding question"
+      }
+    },
+    "useDeleteQuestionFromTemplate": {
+      "successToast": {
+        "title": "Question removed from the template",
+        "description": "The question was removed successfully."
+      },
+      "errorToast": {
+        "title": "Error removing question"
+      }
+    },
+    "useReorderQuestionsMutation": {
+      "errorToast": {
+        "title": "Error reordering the questions"
+      }
+    },
+    "useSingUp": {
+      "successToast": {
+        "title": "Account created",
+        "description": "Your account has been created successfully."
+      },
+      "errorToast": {
+        "title": "Error creating account"
+      }
     }
   },
   "constants": {
@@ -232,6 +321,105 @@
       "integer": "Integer Number",
       "boolean": "True/False",
       "multiple": "Multiple Lines Text"
+    },
+    "loginSchema": {
+      "email": "Invalid email address format",
+      "password": "The password must be at least 6 characters"
+    },
+    "signupSchema": {
+      "name": "The name must be at least 1 character",
+      "lastName": "The last name must be at least 1 character"
+    },
+    "newQuestionSchema": {
+      "title": "The title is required",
+      "type": "Choose a question type"
+    },
+    "newTemplateSchema": {
+      "title": "The title is required",
+      "description": "The description is required",
+      "topic": "You must select a topic",
+      "tags": "At least one tag is required",
+      "imageSize": "Image must be less than 2MB",
+      "imageType": "File must be an png, jpg or jepg image"
+    }
+  },
+  "methods": {
+    "getQuestionZodType": {
+      "text": "This field is required",
+      "integer": {
+        "number": "The value should be a number",
+        "min": "The value should be greater than or equal to 0"
+      }
+    }
+  },
+  "errors": {
+    "general": "An error occurred, please try again later",
+    "patchAnswerCodeMessage": {
+      "400": "Invalid data, please check the data for the answer edition",
+      "401": "Please log in to edit an answer, the session has expired",
+      "403": "You are not allowed to edit this answer",
+      "404": "The answer you are trying to edit does not exist",
+      "422": "You are trying to set values in the wrong type of question",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "loginCodeMessages": {
+      "400": "Invalid request, please check your email or password",
+      "404": "User not found",
+      "500": "There was an error processing your request. Please check your email or password or try again later"
+    },
+    "signupCodeMessages": {
+      "400": "Invalid request, please check your data",
+      "409": "Email already in use",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "patchUserCodeMessages": {
+      "400": "Invalid request, the data you provided is not valid",
+      "401": "Please login again to continue, the session has expired",
+      "403": "You are not allowed to perform this action",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "postFormCodeMessage": {
+      "400": "Invalid data, please check the data for the form submission",
+      "401": "Please login to submit the form, the session has expired",
+      "422": "The form submission could not be processed, please check that all the questions are answered, or if you have already submitted the form",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "deleteFormCodeMessage": {
+      "400": "The form you are trying to delete does not exist",
+      "401": "Please login to delete the form, the session has expired",
+      "403": "You do not have permission to delete this form",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "createNewQuestionCodeMessage": {
+      "400": "Invalid request, please check the data for the question",
+      "401": "Please log in again to create a new question, the session has expired",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "deleteQuestionFromTemplateCodeMessage": {
+      "400": "Invalid request, template or question not found, please check the data",
+      "401": "Please log in again to delete the question, the session has expired",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "reorderQuestionsCodeMessage": {
+      "400": "The order of the questions could not be updated",
+      "401": "Please log in again to reorder the questions, the session has expired",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "updateQuestionsCodeMessage": {
+      "400": "Invalid data, please check the data for the question",
+      "401": "Please log in again to update the question, the session has expired",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "createNewTemplateCodeMessage": {
+      "400": "Invalid request, please check the data for the template",
+      "401": "Please log in again to create a new template, the session has expired",
+      "500": "There was an error processing your request. Please try again later"
+    },
+    "deleteTemplateErrorCodeMessage": {
+      "400": "The template you are trying to delete does not exist",
+      "401": "Please log in again to delete the template, the session has expired",
+      "403": "You are not allowed to delete this template",
+      "500": "There was an error processing your request. Please try again later"
     }
   }
 }

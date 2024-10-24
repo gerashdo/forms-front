@@ -1,6 +1,8 @@
 import * as z from "zod";
 import { ALLOWED_USER_ORDER_BY, ALLOWED_USER_ORDER_BY_FIELDS, loginSchema, signupSchema } from "@/constants/auth/auth";
 import { ErrorCode } from "./errorsRequest";
+import i18n from "@/i18n";
+
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 
@@ -67,20 +69,20 @@ export enum UserRoles {
 }
 
 export const LoginCodeMessages: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid request, please check your email or password',
-  404: 'User not found',
-  500: 'There was an error processing your request. Please check your email or password or try again later',
+  400: i18n.t("errors.loginCodeMessages.400"),
+  404: i18n.t("errors.loginCodeMessages.404"),
+  500: i18n.t("errors.loginCodeMessages.500"),
 }
 
 export const SignUpCodeMessages: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid request, please check your data',
-  409: 'Email already in use',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.signupCodeMessages.400"),
+  409: i18n.t("errors.signupCodeMessages.409"),
+  500: i18n.t("errors.signupCodeMessages.500"),
 }
 
 export const PatchUserCodeMessages: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid request, the data you provided is not valid',
-  401: 'Please login again to continue, the session has expired',
-  403: 'You are not allowed to perform this action',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.patchUserCodeMessages.400"),
+  401: i18n.t("errors.patchUserCodeMessages.401"),
+  403: i18n.t("errors.patchUserCodeMessages.403"),
+  500: i18n.t("errors.patchUserCodeMessages.500"),
 }

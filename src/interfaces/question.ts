@@ -1,6 +1,7 @@
 import * as z from "zod";
 import { newQuestionSchema } from "@/constants/templates/question";
 import { ErrorCode } from "./errorsRequest";
+import i18n from "@/i18n";
 
 
 export type NewQuestionFormValues = z.infer<typeof newQuestionSchema>;
@@ -40,25 +41,25 @@ export interface PatchQuestionResponse {
 export type PatchQuestionRequest = Omit<Partial<Question>, "id" | "templateId">;
 
 export const CreateNewQuestionCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid request, please check the data for the question',
-  401: 'Please log in again to create a new question, the session has expired',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.createNewQuestionCodeMessage.400"),
+  401: i18n.t("errors.createNewQuestionCodeMessage.401"),
+  500: i18n.t("errors.createNewQuestionCodeMessage.500"),
 }
 
 export const DeleteQuestionFromTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid request, template or question not found, please check the data',
-  401: 'Please log in again to delete the question, the session has expired',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.deleteQuestionFromTemplateCodeMessage.400"),
+  401: i18n.t("errors.deleteQuestionFromTemplateCodeMessage.401"),
+  500: i18n.t("errors.deleteQuestionFromTemplateCodeMessage.500"),
 }
 
 export const ReorderQuestionsCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'The order of the questions could not be updated',
-  401: 'Please log in again to reorder the questions, the session has expired',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.reorderQuestionsCodeMessage.400"),
+  401: i18n.t("errors.reorderQuestionsCodeMessage.401"),
+  500: i18n.t("errors.reorderQuestionsCodeMessage.500"),
 }
 
 export const UpdateQuestionsCodeMessage: Partial<Record<ErrorCode, string>> = {
-  400: 'Invalid data, please check the data for the question',
-  401: 'Please log in again to update the question, the session has expired',
-  500: 'There was an error processing your request. Please try again later',
+  400: i18n.t("errors.updateQuestionsCodeMessage.400"),
+  401: i18n.t("errors.updateQuestionsCodeMessage.401"),
+  500: i18n.t("errors.updateQuestionsCodeMessage.500"),
 }

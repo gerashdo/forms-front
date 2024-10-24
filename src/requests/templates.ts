@@ -89,7 +89,7 @@ export const updateTemplate = async ({templateId, data, token}: {token: string, 
   if (data.image !== undefined) {
     formData.append('image', data.image);
   }
-  console.log('data to update', data);
+
   return axios.patch<PatchTemplateResponse>(`${BASE_URL}/templates/${templateId}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',

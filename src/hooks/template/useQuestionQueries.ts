@@ -32,7 +32,6 @@ export const useUpdateQuestionMutation = (templateId: string) => {
     onError: (error: AxiosError) => {
       const errorCode = error.response?.status || 500
       const errorMessage = getUpdateQuestionError(errorCode)
-      console.log(error)
       toast({
         title: t('hooks.useUpdateQuestionMutation.errorToast.title'),
         description: errorMessage,

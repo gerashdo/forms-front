@@ -34,7 +34,6 @@ export const useUpdateAnswerMutation = (formId: number) => {
       });
     },
     onError: (error: AxiosError) => {
-      console.log({error});
       const responseCode = error.response?.status || 500;
       const errorMessage = getPatchAnswerError(responseCode);
       toast({

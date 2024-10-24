@@ -101,12 +101,13 @@ export interface PatchQuestionOrderResponse {
 export const CreateNewTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.createNewTemplateCodeMessage.400"),
   401: i18n.t("errors.createNewTemplateCodeMessage.401"),
+  403: i18n.t("errors.generalErrors.403"),
   500: i18n.t("errors.createNewTemplateCodeMessage.500"),
 }
 
 export const DeleteTemplateErrorCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.deleteTemplateErrorCodeMessage.400"),
   401: i18n.t("errors.deleteTemplateErrorCodeMessage.401"),
-  403: i18n.t("errors.deleteTemplateErrorCodeMessage.403"),
+  403: i18n.t("errors.generalErrors.403"),
   500: i18n.t("errors.deleteTemplateErrorCodeMessage.500"),
 }

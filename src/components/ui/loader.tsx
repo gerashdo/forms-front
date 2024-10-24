@@ -29,7 +29,7 @@ export const Loading = ({ size = 'md', fullscreen = false, text }: LoadingProps)
       <Loader2 className={cn("animate-spin text-primary text-neutral-950 dark:text-neutral-50", sizeClasses[size])} />
       {text && <p className="text-sm text-neutral-950 dark:text-neutral-50">{text}</p>}
       <span className="sr-only">
-        {t("components.loder.loading")}
+        {t("components.loader.loading")}
       </span>
     </div>
   )

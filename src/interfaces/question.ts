@@ -43,23 +43,27 @@ export type PatchQuestionRequest = Omit<Partial<Question>, "id" | "templateId">;
 export const CreateNewQuestionCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.createNewQuestionCodeMessage.400"),
   401: i18n.t("errors.createNewQuestionCodeMessage.401"),
+  403: i18n.t("errors.generalErrors.403"),
   500: i18n.t("errors.createNewQuestionCodeMessage.500"),
 }
 
 export const DeleteQuestionFromTemplateCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.deleteQuestionFromTemplateCodeMessage.400"),
   401: i18n.t("errors.deleteQuestionFromTemplateCodeMessage.401"),
+  403: i18n.t("errors.generalErrors.403"),
   500: i18n.t("errors.deleteQuestionFromTemplateCodeMessage.500"),
 }
 
 export const ReorderQuestionsCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.reorderQuestionsCodeMessage.400"),
   401: i18n.t("errors.reorderQuestionsCodeMessage.401"),
+  403: i18n.t("errors.generalErrors.403"),
   500: i18n.t("errors.reorderQuestionsCodeMessage.500"),
 }
 
 export const UpdateQuestionsCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.updateQuestionsCodeMessage.400"),
   401: i18n.t("errors.updateQuestionsCodeMessage.401"),
+  403: i18n.t("errors.generalErrors.403"),
   500: i18n.t("errors.updateQuestionsCodeMessage.500"),
 }

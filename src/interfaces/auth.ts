@@ -83,6 +83,6 @@ export const SignUpCodeMessages: Partial<Record<ErrorCode, string>> = {
 export const PatchUserCodeMessages: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.patchUserCodeMessages.400"),
   401: i18n.t("errors.patchUserCodeMessages.401"),
-  403: i18n.t("errors.patchUserCodeMessages.403"),
+  403: i18n.t("errors.generalErrors.403"),
   500: i18n.t("errors.patchUserCodeMessages.500"),
 }

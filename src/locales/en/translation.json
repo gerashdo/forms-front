@@ -147,6 +147,9 @@
         "title": "Deleting Template...",
         "description": "All forms using this template will be removed."
       },
+      "blockedAlert": {
+        "title": "Your account is currently blocked, so some actions may not be available."
+      },
       "tabs": {
         "templates": {
           "title": "My Templates",
@@ -227,7 +230,7 @@
       "submit": "Submit",
       "submitting": "Submitting..."
     },
-    "loading": {
+    "loader": {
       "loading": "Loading..."
     }
   },
@@ -363,10 +366,12 @@
   },
   "errors": {
     "general": "Something went wrong, please try again later.",
+    "generalErrors": {
+      "403":"You're not allowed to perform this action."
+    },
     "patchAnswerCodeMessage": {
       "400": "Invalid data. Please double-check the information you provided.",
       "401": "Your session has expired. Please log in to continue editing the answer.",
-      "403": "You're not allowed to edit this answer.",
       "404": "The answer you're trying to edit doesn't exist.",
       "422": "The answer you're trying to update doesn't match the question type.",
       "500": "We couldn't process your request. Please try again later."
@@ -384,7 +389,6 @@
     "patchUserCodeMessages": {
       "400": "Invalid request. The data you provided isn't valid.",
       "401": "Your session has expired. Please log in again.",
-      "403": "You're not allowed to perform this action.",
       "500": "Something went wrong. Please try again later."
     },
     "postFormCodeMessage": {
@@ -396,7 +400,6 @@
     "deleteFormCodeMessage": {
       "400": "The form you're trying to delete doesn't exist.",
       "401": "Please log in to delete the form. Your session has expired.",
-      "403": "You don't have permission to delete this form.",
       "500": "We couldn't process your request. Please try again later."
     },
     "createNewQuestionCodeMessage": {
@@ -427,7 +430,6 @@
     "deleteTemplateErrorCodeMessage": {
       "400": "The template you're trying to delete doesn't exist.",
       "401": "Please log in again to delete the template. Your session has expired.",
-      "403": "You're not allowed to delete this template.",
       "500": "We encountered an error. Please try again later."
     }
   }

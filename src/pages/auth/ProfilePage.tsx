@@ -10,7 +10,7 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <UserProfileContent user={user} />
+      <UserProfileContent user={user} isSelf/>
     </div>
   );
 }

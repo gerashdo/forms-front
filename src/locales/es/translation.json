@@ -147,6 +147,9 @@
         "title": "Eliminando plantilla...",
         "description": "Todos los formularios que usan esta plantilla serán eliminados."
       },
+      "blockedAlert": {
+        "title": "Tu cuenta está bloqueada, por lo que algunas acciones pueden no estar disponibles."
+      },
       "tabs": {
         "templates": {
           "title": "Mis plantillas",
@@ -363,6 +366,9 @@
   },
   "errors": {
     "general": "Algo salió mal, por favor intenta nuevamente más tarde.",
+    "generalErrors": {
+      "403": "No tienes permiso para realizar esta acción."
+    },
     "patchAnswerCodeMessage": {
       "400": "Datos inválidos. Por favor, revisa la información que proporcionaste.",
       "401": "Tu sesión ha expirado. Por favor, inicia sesión para continuar editando la respuesta.",
@@ -384,7 +390,6 @@
     "patchUserCodeMessages": {
       "400": "Solicitud inválida. Los datos que proporcionaste no son válidos.",
       "401": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
-      "403": "No tienes permiso para realizar esta acción.",
       "500": "Algo salió mal. Por favor, intenta nuevamente más tarde."
     },
     "postFormCodeMessage": {
@@ -396,7 +401,6 @@
     "deleteFormCodeMessage": {
       "400": "El formulario que intentas eliminar no existe.",
       "401": "Por favor, inicia sesión para eliminar el formulario. Tu sesión ha expirado.",
-      "403": "No tienes permiso para eliminar este formulario.",
       "500": "No pudimos procesar tu solicitud. Por favor, intenta nuevamente más tarde."
     },
     "createNewQuestionCodeMessage": {
@@ -427,7 +431,6 @@
     "deleteTemplateErrorCodeMessage": {
       "400": "La plantilla que intentas eliminar no existe.",
       "401": "Por favor, inicia sesión nuevamente para eliminar la plantilla. Tu sesión ha expirado.",
-      "403": "No tienes permiso para eliminar esta plantilla.",
       "500": "Encontramos un error. Por favor, intenta nuevamente más tarde."
     }
   }

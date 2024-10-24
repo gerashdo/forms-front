@@ -84,6 +84,7 @@ export interface GetFormsQueryParams {
 export const PostFormCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.postFormCodeMessage.400"),
   401: i18n.t("errors.postFormCodeMessage.401"),
+  403: i18n.t("errors.generalErrors.403"),
   422: i18n.t("errors.postFormCodeMessage.422"),
   500: i18n.t("errors.postFormCodeMessage.500"),
 }
@@ -91,7 +92,7 @@ export const PostFormCodeMessage: Partial<Record<ErrorCode, string>> = {
 export const DeleteFormCodeMessage: Partial<Record<ErrorCode, string>> = {
   400: i18n.t("errors.deleteFormCodeMessage.400"),
   401: i18n.t("errors.deleteFormCodeMessage.401"),
-  403: i18n.t("errors.deleteFormCodeMessage.403"),
+  403: i18n.t("errors.generalErrors.403"),
   500: i18n.t("errors.deleteFormCodeMessage.500"),
 }
 

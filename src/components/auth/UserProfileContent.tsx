@@ -7,6 +7,7 @@ import { FormDataTable } from "@/components/form/FormDataTable";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { TemplateDataTable } from "@/components/template/TemplateDataTable";
 import { NewTemplateDialog } from "@/components/template/NewTemplateDialog";
+import { AlertBox } from "@/components/ui/alert";
 import { useTagsTopics } from "@/hooks/useTagsTopics";
 import { useDeleteTemplateMutation } from "@/hooks/template/useTemplate";
 import { useDeleteFormMutation } from "@/hooks/form/useFormMutations";
@@ -16,14 +17,16 @@ import { getFormsQuery } from "@/queries/form";
 import { User } from "@/interfaces/auth";
 import { initialQueryParamsToGetTemplates } from "@/constants/templates/template";
 import { initialQueryParamsToGetForms } from "@/constants/form/form";
+import { LockIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 
 interface UserProfileContent {
   user: User;
+  isSelf?: boolean;
 }
 
-export const UserProfileContent = ({user}: UserProfileContent) => {
+export const UserProfileContent = ({user, isSelf}: UserProfileContent) => {
   const {t} = useTranslation();
   const navigation = useNavigate();
   const {tags, topics} = useTagsTopics();
@@ -73,16 +76,25 @@ export const UserProfileContent = ({user}: UserProfileContent) => {
   return (
     <>
       <Card className="mb-8">
-        <CardContent className="flex items-center space-x-4 p-6">
-          <Avatar className="h-20 w-20">
-            <AvatarFallback className="text-3xl font-semibold">
-              {user.lastName.charAt(0)}{user.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <h2 className="text-2xl font-bold">{user.lastName} {user.name}</h2>
-            <p className="text-neutral-500 dark:text-neutral-400">{user.email}</p>
+        <CardContent className="flex items-center justify-between p-6">
+          <div className="flex items-center space-x-4">
+            <Avatar className="h-20 w-20">
+              <AvatarFallback className="text-3xl font-semibold">
+                {user.lastName.charAt(0)}{user.name.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <h2 className="text-2xl font-bold">{user.lastName} {user.name}</h2>
+              <p className="text-neutral-500 dark:text-neutral-400">{user.email}</p>
+            </div>
           </div>
+          {isSelf && user.blocked && (
+            <AlertBox
+              variant="warning"
+              icon={<LockIcon className="h-5 w-5" />}
+              title={t('components.userProfileContent.blockedAlert.title')}
+            />
+          )}
         </CardContent>
       </Card>
 

@@ -1,9 +1,10 @@
 import { Template } from "@/interfaces/template";
 import { CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { GlobeIcon, LockIcon } from "lucide-react";
-import { UsersSimpleList } from "../auth/UsersSimpleList";
+import { AlertBox } from "@/components/ui/alert";
+import { UsersSimpleList } from "@/components/auth/UsersSimpleList";
 import { getCloudinaryUrl } from "@/helpers/images";
+import { GlobeIcon, LockIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 
@@ -60,19 +61,17 @@ export const TemplateCardData = ({template}: TemplateCardDataProps) => {
         </div>
       </div>
       {template.isPublic ? (
-        <div className="bg-green-100 border border-green-200 rounded-md p-4 flex items-center space-x-2">
-          <GlobeIcon className="h-5 w-5 text-green-600" />
-          <p className="text-sm text-green-600 font-medium">
-            {t("components.templateCardData.isPublic.yes")}
-          </p>
-        </div>
+        <AlertBox
+          variant="success"
+          title={t("components.templateCardData.isPublic.yes")}
+          icon={<GlobeIcon className="h-5 w-5" />}
+        />
       ) : (
-        <div className="bg-yellow-100 border border-yellow-200 rounded-md p-4 flex items-center space-x-2">
-          <LockIcon className="h-5 w-5 text-yellow-600" />
-          <p className="text-sm text-yellow-600 font-medium">
-            {t("components.templateCardData.isPublic.no")}
-          </p>
-        </div>
+        <AlertBox
+          variant="warning"
+          title={t("components.templateCardData.isPublic.no")}
+          icon={<LockIcon className="h-5 w-5" />}
+        />
       )}
       {!template.isPublic && (
         <div className="space-y-2 col-span-2">

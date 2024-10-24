@@ -1,7 +1,7 @@
-import { initialGetUsersParams } from '@/constants/auth/auth'
-import { getAuthStateSnapshot, isAuthenticated, isUserAdmin } from '@/helpers/auth'
-import { getUsersQuery } from '@/queries/auth'
-import { createFileRoute, Navigate, redirect } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router';
+import { getUsersQuery } from '@/queries/auth';
+import { getAuthStateSnapshot, isAuthenticated, isUserAdmin } from '@/helpers/auth';
+import { initialGetUsersParams } from '@/constants/auth/auth';
 
 
 export const Route = createFileRoute('/_layout/users/')({
@@ -20,5 +20,4 @@ export const Route = createFileRoute('/_layout/users/')({
       {...initialGetUsersParams}
     ))
   },
-  errorComponent: () => <Navigate to="/" />,
 })

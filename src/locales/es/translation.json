@@ -20,6 +20,11 @@
     "login": "Iniciar sesión",
     "signup": "Regístrate"
   },
+  "notFoundPage": {
+    "title": "Página No Encontrada",
+    "description": "Lo sentimos, no pudimos encontrar la página que estás buscando.",
+    "home": "Regresar a inicio"
+  },
   "components": {
     "simpleTemplatesTable": {
       "title": "Título",

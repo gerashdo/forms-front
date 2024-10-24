@@ -8,6 +8,7 @@ import { Question, QuestionTypes } from "@/interfaces/question";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Checkbox } from "../ui/checkbox";
+import { useTranslation } from "react-i18next";
 
 
 interface FormFormProps {
@@ -25,6 +26,7 @@ export const FormForm = ({
   isLoading,
   defaultValues,
 }: FormFormProps) => {
+  const {t} = useTranslation();
   const formSchema = generateFormSchemaFromQuestions(questions);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,7 +48,9 @@ export const FormForm = ({
       case QuestionTypes.BOOLEAN:
         return (
           <div className="flex items-center space-x-2">
-            <FormLabel>Yes</FormLabel>
+            <FormLabel>
+              {t("components.formForm.yes")}
+            </FormLabel>
             <Checkbox
               checked={field.value}
               onCheckedChange={field.onChange}
@@ -78,9 +82,14 @@ export const FormForm = ({
           />
         ))}
         <div className="flex justify-end gap-2 align-middle">
-          <Button type="button" variant="ghost" onClick={onCancel}>Cancel</Button>
+          <Button type="button" variant="ghost" onClick={onCancel}>
+            {t("components.formForm.cancel")}
+          </Button>
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Submitting..." : "Submit"}
+            {isLoading ?
+              t("components.formForm.submitting") :
+              t("components.formForm.submit")
+            }
           </Button>
         </div>
       </form>

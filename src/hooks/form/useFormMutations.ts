@@ -6,9 +6,11 @@ import { getDeleteFormError, getPostFormError } from "@/helpers/getErrorsRequest
 import { PostFormRequest } from "@/interfaces/form";
 import { useRecoilValue } from "recoil";
 import { AuthState } from "@/state/auth";
+import { useTranslation } from "react-i18next";
 
 
 export const usePostFormMutation = () => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -16,15 +18,15 @@ export const usePostFormMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ["forms"]});
       toast({
-        title: 'Form submitted',
-        description: 'The form was submitted successfully',
+        title: t("hooks.usePostFormMutation.successToast.title"),
+        description: t("hooks.usePostFormMutation.successToast.description"),
       });
     },
     onError: (error: AxiosError) => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getPostFormError(responseCode);
       toast({
-        title: 'Error submitting the form',
+        title: t("hooks.usePostFormMutation.errorToast.title"),
         description: errorMessage,
         variant: 'destructive',
       });
@@ -43,6 +45,7 @@ export const usePostFormMutation = () => {
 }
 
 export const useDeleteFormMutation = () => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -54,7 +57,7 @@ export const useDeleteFormMutation = () => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getDeleteFormError(responseCode);
       toast({
-        title: 'Error deleting the form',
+        title: t("hooks.useDeleteFormMutation.errorToast.title"),
         description: errorMessage,
         variant: 'destructive',
       });

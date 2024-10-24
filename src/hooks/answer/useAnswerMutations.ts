@@ -6,9 +6,11 @@ import { toast } from "@/hooks/use-toast";
 import { updateAnswer } from "@/requests/answer";
 import { getPatchAnswerError } from "@/helpers/getErrorsRequest";
 import { GetAnswersResponse, PatchAnswerResponse } from "@/interfaces/answer";
+import { useTranslation } from "react-i18next";
 
 
 export const useUpdateAnswerMutation = (formId: number) => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -27,8 +29,8 @@ export const useUpdateAnswerMutation = (formId: number) => {
         }
       });
       toast({
-        title: 'Answer updated',
-        description: 'The answer was updated successfully',
+        title: t("hooks.useUpdateAnswerMutation.successToast.title"),
+        description: t("hooks.useUpdateAnswerMutation.successToast.description"),
       });
     },
     onError: (error: AxiosError) => {
@@ -36,7 +38,7 @@ export const useUpdateAnswerMutation = (formId: number) => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getPatchAnswerError(responseCode);
       toast({
-        title: 'Error updating the answer',
+        title: t("hooks.useUpdateAnswerMutation.errorToast.title"),
         description: errorMessage,
         variant: 'destructive',
       });

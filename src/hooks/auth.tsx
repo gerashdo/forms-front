@@ -6,23 +6,25 @@ import { toast, useToast } from '@/hooks/use-toast';
 import { AuthState } from '@/state/auth';
 import { getLoginError, getPatchUserError, getSignUpError } from '@/helpers/getErrorsRequest';
 import { GetUsersResponse, LoginFormValues, LoginResponse, PatchUserRequestBody, PatchUserResponse, SignupFormValues } from '@/interfaces/auth';
+import { useTranslation } from 'react-i18next';
 
 
 export const useSingUp = () => {
+  const {t} = useTranslation();
   const {toast} = useToast();
   const mutation = useMutation({
     mutationFn: signup,
     onSuccess: () => {
       toast({
-        title: 'Account created',
-        description: 'Your account has been created successfully'
+        title: t('hooks.useSingUp.successToast.title'),
+        description: t('hooks.useSingUp.successToast.description'),
       });
     },
     onError: (error: AxiosError) => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getSignUpError(responseCode);
       toast({
-        title: 'Error creating account',
+        title: t('hooks.useSingUp.errorToast.title'),
         description: errorMessage,
         variant:'destructive',
       });

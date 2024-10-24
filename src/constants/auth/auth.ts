@@ -1,15 +1,16 @@
 import * as z from "zod";
 import { GetUsersParams } from "@/interfaces/auth";
+import i18n from "@/i18n";
 
 
 export const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  email: z.string().email({ message: i18n.t("constants.loginSchema.email") }),
+  password: z.string().min(6, { message: i18n.t("constants.loginSchema.password") }),
 })
 
 export const signupSchema = loginSchema.extend({
-  name: z.string().min(3, { message: "Name must be at least 3 characters" }),
-  lastName: z.string().min(3, { message: "Last name must be at least 3 characters" }),
+  name: z.string().min(1, { message: i18n.t("constants.signupSchema.name") }),
+  lastName: z.string().min(1, { message: i18n.t("constants.signupSchema.lastName") }),
 })
 
 export enum ALLOWED_USER_ORDER_BY_FIELDS {

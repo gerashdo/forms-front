@@ -55,7 +55,6 @@ export const useTemplateForm = ({onSuccess, isEditing, defaultValues, templateId
 
   const updateTemplate = (values: PatchTemplateRequest) => {
     if (!authState.user || !templateId) return;
-    console.log('update', values);
     startUpdateTemplate(templateId, values);
   }
 

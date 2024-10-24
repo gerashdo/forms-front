@@ -7,6 +7,7 @@ import { addQuestionToTemplate, createTemplate, deleteQuestionFromTemplate, dele
 import { getDeleteQuestionError, getDeleteTemplateError, getPostNewTemplateError, getReorderQuestionsError } from "@/helpers/getErrorsRequest";
 import { PatchQuestionOrderResponse, PatchTemplateRequest, PatchTemplateResponse, PostNewTemplateRequest, PostNewTemplateResponse } from "@/interfaces/template";
 import { GetQuestionsResponse, NewQuestionFormValues, PostQuestionResponse } from "@/interfaces/question";
+import { useTranslation } from "react-i18next";
 
 
 type UseCreateTemplateProps = {
@@ -14,6 +15,7 @@ type UseCreateTemplateProps = {
 }
 
 export const useCreateTemplate = ({onSuccess}: UseCreateTemplateProps) => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const mutation = useMutation({
     mutationFn: createTemplate,
@@ -25,7 +27,7 @@ export const useCreateTemplate = ({onSuccess}: UseCreateTemplateProps) => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getPostNewTemplateError(responseCode);
       toast({
-        title: 'Error creating the template',
+        title: t('hooks.useCreateTemplate.errorToast.title'),
         description: errorMessage,
         variant:'destructive',
       });
@@ -45,6 +47,7 @@ export const useCreateTemplate = ({onSuccess}: UseCreateTemplateProps) => {
 }
 
 export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -54,15 +57,15 @@ export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) =
       queryClient.invalidateQueries({queryKey: ['template', {templateId}]});
       onSuccess(data.data.data.id);
       toast({
-        title: 'Template updated',
-        description: 'The template was updated successfully',
+        title: t('hooks.useUpdateTemplateMutation.successToast.title'),
+        description: t('hooks.useUpdateTemplateMutation.successToast.description'),
       });
     },
     onError: (error: AxiosError) => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getPostNewTemplateError(responseCode);
       toast({
-        title: 'Error updating the template',
+        title: t('hooks.useUpdateTemplateMutation.errorToast.title'),
         description: errorMessage,
         variant: 'destructive',
       });
@@ -82,6 +85,7 @@ export const useUpdateTemplateMutation = ({onSuccess}: UseCreateTemplateProps) =
 }
 
 export const useDeleteTemplateMutation = () => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -93,7 +97,7 @@ export const useDeleteTemplateMutation = () => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getDeleteTemplateError(responseCode);
       toast({
-        title: 'Error deleting the template',
+        title: t('hooks.useDeleteTemplateMutation.errorToast.title'),
         description: errorMessage,
         variant: 'destructive',
       });
@@ -112,6 +116,7 @@ export const useDeleteTemplateMutation = () => {
 }
 
 export const useAddQuestionToTemplate = (templateId: number) => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -128,15 +133,15 @@ export const useAddQuestionToTemplate = (templateId: number) => {
         }
       });
       toast({
-        title: 'Question added to the template',
-        description: 'The question was added successfully',
+        title: t('hooks.useAddQuestionToTemplate.successToast.title'),
+        description: t('hooks.useAddQuestionToTemplate.successToast.description'),
       });
     },
     onError: (error: AxiosError) => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getPostNewTemplateError(responseCode);
       toast({
-        title: 'Error adding the question',
+        title: t('hooks.useAddQuestionToTemplate.errorToast.title'),
         description: errorMessage,
         variant: 'destructive',
       });
@@ -155,6 +160,7 @@ export const useAddQuestionToTemplate = (templateId: number) => {
 }
 
 export const useDeleteQuestionFromTemplate = (templateId: number) => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -164,15 +170,15 @@ export const useDeleteQuestionFromTemplate = (templateId: number) => {
         queryKey: ['questions', {templateId: templateId.toString()}]
       });
       toast({
-        title: 'Question deleted from the template',
-        description: 'The question was deleted successfully',
+        title: t('hooks.useDeleteQuestionFromTemplate.successToast.title'),
+        description: t('hooks.useDeleteQuestionFromTemplate.successToast.description'),
       });
     },
     onError: (error: AxiosError) => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getDeleteQuestionError(responseCode);
       toast({
-        title: 'Error adding the question',
+        title: t('hooks.useDeleteQuestionFromTemplate.errorToast.title'),
         description: errorMessage,
         variant: 'destructive',
       });
@@ -191,6 +197,7 @@ export const useDeleteQuestionFromTemplate = (templateId: number) => {
 }
 
 export const useReorderQuestionsMutation = (templateId: number) => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -208,7 +215,7 @@ export const useReorderQuestionsMutation = (templateId: number) => {
       const responseCode = error.response?.status || 500;
       const errorMessage = getReorderQuestionsError(responseCode);
       toast({
-        title: 'Error reordering the questions',
+        title: t('hooks.useReorderQuestionsMutation.errorToast.title'),
         description: errorMessage,
         variant: 'destructive',
       });

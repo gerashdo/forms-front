@@ -6,9 +6,11 @@ import { toast } from "@/hooks/use-toast";
 import { updateQuestion } from "@/requests/questions"
 import { getUpdateQuestionError } from "@/helpers/getErrorsRequest";
 import { GetQuestionsResponse, PatchQuestionRequest } from "@/interfaces/question"
+import { useTranslation } from "react-i18next";
 
 
 export const useUpdateQuestionMutation = (templateId: string) => {
+  const {t} = useTranslation();
   const authState = useRecoilValue(AuthState);
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -23,8 +25,8 @@ export const useUpdateQuestionMutation = (templateId: string) => {
         }
       })
       toast({
-        title: 'Question updated',
-        description: 'The question has been updated successfully',
+        title: t('hooks.useUpdateQuestionMutation.successToast.title'),
+        description: t('hooks.useUpdateQuestionMutation.successToast.description'),
       })
     },
     onError: (error: AxiosError) => {
@@ -32,7 +34,7 @@ export const useUpdateQuestionMutation = (templateId: string) => {
       const errorMessage = getUpdateQuestionError(errorCode)
       console.log(error)
       toast({
-        title: 'Error updating the question',
+        title: t('hooks.useUpdateQuestionMutation.errorToast.title'),
         description: errorMessage,
         variant: 'destructive',
       })

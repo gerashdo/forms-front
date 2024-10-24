@@ -24,7 +24,7 @@ export const useUndo = () => {
             undo = true;
             if (onUndo) onUndo();
           }}
-        >Undo</ToastAction>
+        >{t("hooks.useUndo.undo")}</ToastAction>
       ),
       duration: undoDuration,
     });

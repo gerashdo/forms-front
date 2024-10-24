@@ -5,10 +5,13 @@ import i18n from "@/i18n";
 
 export const newQuestionSchema = z.object({
   id: z.string().optional(),
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, {message: i18n.t("constants.newQuestionSchema.title")}),
   description: z.string().optional(),
   visible: z.boolean().default(true),
-  type: z.enum([QuestionTypes.MULTIPLE, QuestionTypes.BOOLEAN, QuestionTypes.TEXT, QuestionTypes.INTEGER]),
+  type: z.enum(
+    [QuestionTypes.MULTIPLE, QuestionTypes.BOOLEAN, QuestionTypes.TEXT, QuestionTypes.INTEGER],
+    {message: i18n.t("constants.newQuestionSchema.type")}
+  ),
 })
 
 export const questionTypeLabels = {

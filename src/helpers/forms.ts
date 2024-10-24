@@ -2,6 +2,7 @@ import * as z from "zod";
 import { Question, QuestionTypes } from "@/interfaces/question";
 import { User } from "@/interfaces/auth";
 import { PostFormRequest } from "@/interfaces/form";
+import i18n from "@/i18n";
 
 
 export const isEmailQuestion = (questionType: QuestionTypes, questionTitle: string): boolean => {
@@ -15,15 +16,16 @@ export const isDateQuestion = (questionType: QuestionTypes, questionTitle: strin
 export const getQuestionZodType = (type: QuestionTypes) => {
   switch (type) {
     case QuestionTypes.TEXT:
-      return z.string().min(1, "This field is required");
+      return z.string().min(1, i18n.t("methods.getQuestionZodType.text"));
     case QuestionTypes.MULTIPLE:
-      return z.string().min(1, "This field is required");
+      return z.string().min(1, i18n.t("methods.getQuestionZodType.text"));
     case QuestionTypes.INTEGER:
-      return z.coerce.number({message: "The value should be a number"}).min(0, "Must be greater or equals to 0");
+      return z.coerce.number({message: i18n.t("methods.getQuestionZodType.integer.number")})
+        .min(0, i18n.t("methods.getQuestionZodType.integer.min"));
     case QuestionTypes.BOOLEAN:
       return z.boolean();
     default:
-      return z.string().min(1, "This field is required");
+      return z.string().min(1, i18n.t("methods.getQuestionZodType.text"));
   }
 }
 

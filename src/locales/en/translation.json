@@ -226,6 +226,9 @@
       "cancel": "Cancel",
       "submit": "Submit",
       "submitting": "Submitting..."
+    },
+    "loading": {
+      "loading": "Loading..."
     }
   },
   "hooks": {

@@ -29,7 +29,8 @@
     "simpleTemplatesTable": {
       "title": "Título",
       "topic": "Tema",
-      "submissions": "Envios"
+      "submissions": "Envios",
+      "noTemplates": "No se han creado envíos todavía."
     },
     "templateCard": {
       "by": "Por"

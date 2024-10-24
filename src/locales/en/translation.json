@@ -29,7 +29,8 @@
     "simpleTemplatesTable": {
       "title": "Title",
       "topic": "Topic",
-      "submissions": "Submissions"
+      "submissions": "Submissions",
+      "noTemplates": "There has been no submissions created yet."
     },
     "templateCard": {
       "by": "by"

@@ -35,7 +35,7 @@ export const SimpleTemplateTables = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {templates.map((template) => (
+            {templates.length > 0 && templates.map((template) => (
               <TableRow key={template.id}>
                 <TableCell
                   onClick={() => onItemClicked ? onItemClicked(template.id!) : null}
@@ -48,6 +48,13 @@ export const SimpleTemplateTables = ({
                 <TableCell>{template.submissions}</TableCell>
               </TableRow>
             ))}
+            {templates.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center">
+                  {t("components.simpleTemplatesTable.noTemplates")}
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </CardContent>

@@ -23,9 +23,9 @@ export const IndexPage = () => {
 
   return (
     <>
-      <main className="flex-grow mt-4">
-        <section className="mb-8">
-          <h1 className="text-3xl font-bold mb-4 text-center text-neutral-950 dark:text-neutral-50">
+      <main className="flex flex-col flex-grow mt-8 gap-12">
+        <section className="">
+          <h1 className="text-3xl font-bold mb-8 text-center text-neutral-950 dark:text-neutral-50">
             {t('index.latestTemplates')}
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -35,7 +35,7 @@ export const IndexPage = () => {
           </div>
         </section>
 
-        <section className='mb-8'>
+        <section className=''>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <Badge key={tag.id}>

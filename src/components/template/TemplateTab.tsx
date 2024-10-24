@@ -34,7 +34,8 @@ export const TemplateTab = ({
   }
 
   return (
-      <Card className={className} {...props}>
+    <div className={className} {...props}>
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-1.5">
             <CardTitle>{t("components.templateTab.title")}</CardTitle>
@@ -85,5 +86,6 @@ export const TemplateTab = ({
           <TemplateCardData template={template} />
         )}
       </Card>
+    </div>
   )
 }

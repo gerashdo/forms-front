@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button"
 import { LanguageToggle, ModeToggle } from "@/components/ui/ModeToggle";
 import { isUserAdmin } from "@/helpers/auth";
 import { ChevronDown } from "lucide-react"
+import { useTranslation } from "react-i18next";
 
 
 export const Navbar = () => {
+  const {t} = useTranslation();
   const [authState, setAuthState] = useRecoilState(AuthState);
   const onLogout = () => {
     setAuthState({
@@ -22,7 +24,7 @@ export const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4">
         <div className="flex items-center space-x-4">
           <Link to="/" className="text-3xl font-bold">
-            TestYou
+            {t('components.navbar.appName')}
           </Link>
           <nav className="hidden md:flex space-x-4 ps-20">
             {authState.user && isUserAdmin(authState.user) && (
@@ -30,7 +32,7 @@ export const Navbar = () => {
                 to="/users"
                 className="text-sm font-medium"
               >
-                Users
+                {t('components.navbar.users')}
               </Link>
             )}
           </nav>
@@ -51,15 +53,17 @@ export const Navbar = () => {
               <DropdownMenuContent align="end">
                 <Link to="/profile">
                   <DropdownMenuItem>
-                    Profile
+                    {t('components.navbar.profile')}
                   </DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={onLogout}>
+                  {t('components.navbar.logout')}
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <Link to="/auth" className="text-sm font-medium">
-              Authenticate
+              {t('components.navbar.authenticate')}
             </Link>
           )}
           <LanguageToggle />

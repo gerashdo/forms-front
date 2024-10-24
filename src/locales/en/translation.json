@@ -10,6 +10,10 @@
     "submittedBy": "Submitted by",
     "on": "on"
   },
+  "usersPage": {
+    "title": "Users",
+    "description": "Manage the users and their roles here."
+  },
   "components": {
     "simpleTemplatesTable": {
       "title": "Title",
@@ -158,6 +162,38 @@
       "label": "Actions",
       "triggerLabel": "Open menu",
       "noDataMessage": "No templates created yet."
+    },
+    "usersDataTable": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "makeAdmin": "Give Admin Role",
+      "admin": "Admin",
+      "user": "User",
+      "block": "Block User",
+      "view": "View details",
+      "delete": "Delete user",
+      "label": "Actions",
+      "triggerLabel": "Open menu",
+      "noDataMessage": "No users found."
+    },
+    "navbar": {
+      "appName": "TestYourself",
+      "users": "Users",
+      "profile": "Profile",
+      "logout": "Logout",
+      "authenticate": "Authenticate"
+    },
+    "languageToggle": {
+      "language": "Select Language",
+      "english": "English",
+      "spanish": "Spanish"
+    },
+    "modeToggle": {
+      "mode": "Select Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
     }
   },
   "hooks": {

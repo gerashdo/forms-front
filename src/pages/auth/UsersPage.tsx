@@ -9,10 +9,11 @@ import { AuthState } from "@/state/auth";
 import { getUsersQuery } from "@/queries/auth";
 import { initialGetUsersParams } from '@/constants/auth/auth';
 import { UserRoles } from "@/interfaces/auth";
-
+import { useTranslation } from "react-i18next";
 
 
 export const UsersPage = () => {
+  const {t} = useTranslation();
   const navigation = useNavigate();
   const {token} = useRecoilValue(AuthState);
   const [page, setPage] = useState<number>(initialGetUsersParams.page);
@@ -45,9 +46,11 @@ export const UsersPage = () => {
     <main>
       <Card>
         <CardHeader>
-          <CardTitle>Users</CardTitle>
+          <CardTitle>
+            {t("usersPage.title")}
+          </CardTitle>
           <CardDescription>
-            Manage the users and their roles here.
+            {t("usersPage.description")}
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -7,6 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Pagination } from "@/components/ui/Pagitation";
 import { User, UserRoles } from "@/interfaces/auth";
 import { ArrowUpDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 
 interface UsersDataTableProps {
@@ -38,11 +39,12 @@ export const UsersDataTable = ({
   onToggleBlock,
   onToggleAdmin,
 }: UsersDataTableProps) => {
+  const {t} = useTranslation();
   const [sorting, setSorting] = useState<SortingState>([]);
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "name",
-      header: "Name",
+      header: t('components.usersDataTable.name'),
       cell: ({row}) => {
         const user = row.original;
         return (
@@ -66,7 +68,7 @@ export const UsersDataTable = ({
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          {t('components.usersDataTable.email')}
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -79,18 +81,20 @@ export const UsersDataTable = ({
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Role
+          {t('components.usersDataTable.role')}
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
-      cell: ({row}) => row.getValue("role") === UserRoles.ADMIN ? "Admin" : "User"
+      cell: ({row}) => row.getValue("role") === UserRoles.ADMIN ?
+        t('components.usersDataTable.admin') :
+        t('components.usersDataTable.user')
     },
   ]
 
   if (includeMakeAdmin && onToggleAdmin) {
     columns.push({
       id: "makeAdmin",
-      header: "Give admin role",
+      header: t('components.usersDataTable.makeAdmin'),
       cell: ({row}) => {
         const user = row.original;
         return (
@@ -106,7 +110,7 @@ export const UsersDataTable = ({
   if (includeBlock && onToggleBlock) {
     columns.push({
       id: "block",
-      header: "Block user",
+      header: t('components.usersDataTable.block'),
       cell: ({row}) => {
         const user = row.original;
         return (
@@ -125,14 +129,14 @@ export const UsersDataTable = ({
       cell: ({row}) => {
         const user = row.original;
         const menuItems = [
-          {id: "view", label: "View details", action: () => onViewDetails(user.id)},
-          {id: "delete", label: "Delete user", action: () => onDelete(user.id)},
+          {id: "view", label: t("components.usersDataTable.view"), action: () => onViewDetails(user.id)},
+          {id: "delete", label: t("components.usersDataTable.delete"), action: () => onDelete(user.id)},
         ]
         return (
           <DataTableDropdownMenu
-            label="Actions"
+            label={t("components.usersDataTable.label")}
             items={menuItems}
-            triggerLabel="Open menu"
+            triggerLabel={t("components.usersDataTable.triggerLabel")}
           />
         )
       }
@@ -154,7 +158,7 @@ export const UsersDataTable = ({
   return (
     <>
       <DataTable
-        noDataMessage="No users found"
+        noDataMessage={t('components.usersDataTable.noDataMessage')}
         table={table}
         columns={columns}
       />

@@ -7,6 +7,7 @@ import { useSingUp } from "@/hooks/auth";
 import { signupSchema } from "@/constants/auth/auth";
 import { SignupFormValues } from "@/interfaces/auth";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 
 interface SignUpFormProps {
@@ -14,6 +15,7 @@ interface SignUpFormProps {
 }
 
 const SignUpForm = ({onSuccess}: SignUpFormProps) => {
+  const {t} = useTranslation();
   const {signUpUser, success, isLoading} = useSingUp();
 
   const signupForm = useForm<SignupFormValues>({
@@ -44,7 +46,9 @@ const SignUpForm = ({onSuccess}: SignUpFormProps) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>
+                {t("components.signupForm.name")}
+              </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -57,7 +61,9 @@ const SignUpForm = ({onSuccess}: SignUpFormProps) => {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last Name</FormLabel>
+              <FormLabel>
+                {t("components.signupForm.lastName")}
+              </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -70,7 +76,9 @@ const SignUpForm = ({onSuccess}: SignUpFormProps) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>
+                {t("components.signupForm.email")}
+              </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -83,7 +91,9 @@ const SignUpForm = ({onSuccess}: SignUpFormProps) => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>
+                {t("components.signupForm.password")}
+              </FormLabel>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
@@ -92,7 +102,10 @@ const SignUpForm = ({onSuccess}: SignUpFormProps) => {
           )}
         />
         <Button className="w-full" type="submit" disabled={isLoading}>
-          {isLoading ? "Signing up..." : "Sign Up"}
+          {isLoading ?
+            t("components.signupForm.signing") :
+            t("components.signupForm.signup")
+          }
         </Button>
       </form>
     </Form>

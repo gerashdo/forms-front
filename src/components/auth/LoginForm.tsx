@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth";
 import { loginSchema } from "@/constants/auth/auth";
 import { LoginFormValues } from "@/interfaces/auth";
+import { useTranslation } from "react-i18next";
 
 
 interface LoginFormProps {
@@ -14,6 +15,7 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({onSuccess}: LoginFormProps) => {
+  const {t} = useTranslation();
   const {loginUser, isLoading, success} = useLogin()
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -45,7 +47,9 @@ const LoginForm = ({onSuccess}: LoginFormProps) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>
+                {t("components.loginForm.email")}
+              </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -58,7 +62,9 @@ const LoginForm = ({onSuccess}: LoginFormProps) => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>
+                {t("components.loginForm.password")}
+              </FormLabel>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
@@ -67,7 +73,10 @@ const LoginForm = ({onSuccess}: LoginFormProps) => {
           )}
         />
         <Button className="w-full" type="submit" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
+          {isLoading ?
+            t("components.loginForm.logining") :
+            t("components.loginForm.login")
+          }
         </Button>
       </form>
     </Form>

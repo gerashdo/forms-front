@@ -14,6 +14,12 @@
     "title": "Users",
     "description": "Manage the users and their roles here."
   },
+  "authPage": {
+    "title": "Welcome",
+    "description": "Login or create an account to get started.",
+    "login": "Login",
+    "signup": "Register"
+  },
   "components": {
     "simpleTemplatesTable": {
       "title": "Title",
@@ -194,6 +200,20 @@
       "light": "Light",
       "dark": "Dark",
       "system": "System"
+    },
+    "loginForm": {
+      "email": "Email",
+      "password": "Password",
+      "login": "Login",
+      "logining": "Logging in..."
+    },
+    "signupForm": {
+      "name": "Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "signup": "Register",
+      "signing": "Registering..."
     }
   },
   "hooks": {

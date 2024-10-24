@@ -1,9 +1,425 @@
 {
   "index": {
-    "latestTemplates": "Ultimos Templates",
+    "latestTemplates": "Plantillas más recientes",
     "popularTemplates": {
-      "title": "Templates Populares",
-      "description": "Estos son los templates más populares en nuestra plataforma"
+      "title": "Plantillas populares",
+      "description": "¡Echa un vistazo a estas plantillas populares de la comunidad!"
+    }
+  },
+  "formPage": {
+    "submittedBy": "Por",
+    "on": "el"
+  },
+  "usersPage": {
+    "title": "Gestionar usuarios",
+    "description": "Aquí es donde puedes gestionar los roles de los usuarios."
+  },
+  "authPage": {
+    "title": "¡Hola!",
+    "description": "Inicia sesión o regístrate para comenzar.",
+    "login": "Iniciar sesión",
+    "signup": "Regístrate"
+  },
+  "components": {
+    "simpleTemplatesTable": {
+      "title": "Título",
+      "topic": "Tema",
+      "submissions": "Envios"
+    },
+    "templateCard": {
+      "by": "Por"
+    },
+    "questionsTab": {
+      "title": "Preguntas",
+      "description": {
+        "edit": "Edita las preguntas de tu plantilla.",
+        "view": "Aquí están las preguntas para esta plantilla."
+      },
+      "addQuestion": "Agregar una pregunta",
+      "sure": "¿Estás seguro...",
+      "deleteDescription": "de que quieres eliminar esta pregunta?",
+      "remove": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "newQuestionForm": {
+      "title": "Título de la pregunta",
+      "description": "Descripción",
+      "type": "Tipo",
+      "selectType": "Elige el tipo de pregunta",
+      "visible": "Visible",
+      "visibleDescription": "Haz que esta pregunta sea visible en la plantilla.",
+      "save": "Guardar pregunta",
+      "cancel": "Cancelar"
+    },
+    "sortableQuestionItem": {
+      "title": "Título",
+      "type": "Tipo",
+      "visible": "¿Visible?",
+      "description": "Descripción",
+      "noDescription": "No se proporcionó descripción."
+    },
+    "templateTab": {
+      "title": "Configuración general",
+      "description": {
+        "edit": "Edita la configuración de tu plantilla aquí.",
+        "view": "Resumen de la configuración de la plantilla."
+      },
+      "answerTemplate": "Responder plantilla",
+      "edit": "Editar plantilla"
+    },
+    "templateForm": {
+      "title": "Título",
+      "titlePlaceholder": "Ingresa un título para la plantilla",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Agrega una breve descripción",
+      "topic": "Tema",
+      "topicPlaceholder": "Selecciona un tema",
+      "tags": "Etiquetas",
+      "noTags": "No hay etiquetas disponibles",
+      "selected": "Seleccionado",
+      "selectTags": "Elige etiquetas",
+      "search": "Buscar etiquetas...",
+      "image": "Subir una imagen",
+      "publicLabel": "Hacer esta plantilla pública",
+      "publicDescription": "Cualquiera con una cuenta puede usar esta plantilla.",
+      "save": "Guardar plantilla",
+      "submitting": "Guardando...",
+      "cancel": "Cancelar"
+    },
+    "templateCardData": {
+      "title": "Título",
+      "description": "Descripción",
+      "topic": "Tema",
+      "image": "Imagen",
+      "noImage": "No se proporcionó imagen",
+      "tags": "Etiquetas",
+      "isPublic": {
+        "yes": "Esta plantilla es pública. Cualquier usuario puede usarla.",
+        "no": "Esta plantilla es privada. Solo los usuarios seleccionados pueden acceder a ella."
+      },
+      "usersWithAccess": "Usuarios permitidos"
+    },
+    "templatePageResultsTab": {
+      "deleteToast": {
+        "title": "Eliminando formulario...",
+        "description": "El formulario y todas sus respuestas serán eliminados."
+      },
+      "title": "Resultados",
+      "description": "Aquí están los formularios enviados para esta plantilla."
+    },
+    "formDataTable": {
+      "date": "Fecha de envío",
+      "template": "Plantilla",
+      "email": "Correo electrónico del usuario",
+      "view": "Ver detalles",
+      "delete": "Eliminar envío",
+      "label": "Acciones",
+      "triggerLabel": "Abrir menú",
+      "noDataMessage": "Aún no se han enviado formularios."
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "of": "de"
+    },
+    "answerItem": {
+      "yes": "Sí",
+      "no": "No",
+      "edit": "Editar"
+    },
+    "answerForm": {
+      "yes": "Sí",
+      "save": "Guardar cambios",
+      "cancel": "Cancelar"
+    },
+    "userProfileContent": {
+      "deleteFormToast": {
+        "title": "Eliminando formulario...",
+        "description": "Todas las respuestas a este formulario serán eliminadas."
+      },
+      "deleteTemplateToast": {
+        "title": "Eliminando plantilla...",
+        "description": "Todos los formularios que usan esta plantilla serán eliminados."
+      },
+      "tabs": {
+        "templates": {
+          "title": "Mis plantillas",
+          "description": "Gestiona las plantillas que has creado."
+        },
+        "forms": {
+          "title": "Mis formularios",
+          "description": "Consulta y gestiona tus formularios enviados."
+        }
+      }
+    },
+    "newTemplateDialog": {
+      "title": "Crear una nueva plantilla",
+      "description": "Comienza a compartir tu plantilla con la comunidad.",
+      "create": "Crear plantilla"
+    },
+    "templateDataTable": {
+      "title": "Título",
+      "topic": "Tema",
+      "date": "Creado el",
+      "public": "Público",
+      "userEmail": "Creado por",
+      "view": "Ver detalles",
+      "delete": "Eliminar plantilla",
+      "label": "Acciones",
+      "triggerLabel": "Abrir menú",
+      "noDataMessage": "Aún no se han creado plantillas."
+    },
+    "usersDataTable": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "role": "Rol",
+      "makeAdmin": "Hacer administrador",
+      "admin": "Administrador",
+      "user": "Usuario",
+      "block": "Bloquear usuario",
+      "view": "Ver detalles",
+      "delete": "Eliminar usuario",
+      "label": "Acciones",
+      "triggerLabel": "Abrir menú",
+      "noDataMessage": "No se encontraron usuarios."
+    },
+    "navbar": {
+      "appName": "TestYourself",
+      "users": "Usuarios",
+      "profile": "Perfil",
+      "logout": "Cerrar sesión",
+      "authenticate": "Iniciar sesión"
+    },
+    "languageToggle": {
+      "language": "Elegir idioma",
+      "english": "Inglés",
+      "spanish": "Español"
+    },
+    "modeToggle": {
+      "mode": "Seleccionar tema",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Por defecto del sistema"
+    },
+    "loginForm": {
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "login": "Iniciar sesión",
+      "logining": "Iniciando sesión..."
+    },
+    "signupForm": {
+      "name": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "signup": "Registrarse",
+      "signing": "Registrando..."
+    },
+    "formForm": {
+      "yes": "Sí",
+      "cancel": "Cancelar",
+      "submit": "Enviar",
+      "submitting": "Enviando..."
+    }
+  },
+  "hooks": {
+    "useUndo": {
+      "undo": "Deshacer"
+    },
+    "useUpdateAnswerMutation": {
+      "successToast": {
+        "title": "Respuesta actualizada",
+        "description": "La respuesta se actualizó con éxito."
+      },
+      "errorToast": {
+        "title": "Error al actualizar la respuesta"
+      }
+    },
+    "usePostFormMutation": {
+      "successToast": {
+        "title": "Formulario enviado",
+        "description": "El formulario se envió con éxito."
+      },
+      "errorToast": {
+        "title": "Error al enviar el formulario"
+      }
+    },
+    "useDeleteFormMutation": {
+      "errorToast": {
+        "title": "Error al eliminar el formulario"
+      }
+    },
+    "useUpdateQuestionMutation": {
+      "successToast": {
+        "title": "Pregunta actualizada",
+        "description": "La pregunta se actualizó con éxito."
+      },
+      "errorToast": {
+        "title": "Error al actualizar la pregunta"
+      }
+    },
+    "useCreateTemplate": {
+      "errorToast": {
+        "title": "Error al crear la plantilla"
+      }
+    },
+    "useUpdateTemplateMutation": {
+      "successToast": {
+        "title": "Plantilla actualizada",
+        "description": "La plantilla se actualizó con éxito."
+      },
+      "errorToast": {
+        "title": "Error al actualizar la plantilla"
+      }
+    },
+    "useDeleteTemplateMutation": {
+      "errorToast": {
+        "title": "Error al eliminar la plantilla"
+      }
+    },
+    "useAddQuestionToTemplate": {
+      "successToast": {
+        "title": "Pregunta añadida a la plantilla",
+        "description": "La pregunta se añadió con éxito."
+      },
+      "errorToast": {
+        "title": "Error al añadir la pregunta"
+      }
+    },
+    "useDeleteQuestionFromTemplate": {
+      "successToast": {
+        "title": "Pregunta eliminada de la plantilla",
+        "description": "La pregunta se eliminó con éxito."
+      },
+      "errorToast": {
+        "title": "Error al eliminar la pregunta"
+      }
+    },
+    "useReorderQuestionsMutation": {
+      "errorToast": {
+        "title": "Error al reordenar las preguntas"
+      }
+    },
+    "useSingUp": {
+      "successToast": {
+        "title": "Cuenta creada",
+        "description": "Tu cuenta se ha creado con éxito."
+      },
+      "errorToast": {
+        "title": "Error al crear la cuenta"
+      }
+    }
+  },
+  "constants": {
+    "pageTabs": {
+      "settings": "Configuración",
+      "results": "Resultados",
+      "aggregations": "Agregaciones"
+    },
+    "questionTypeLabels": {
+      "text": "Texto de una sola línea",
+      "integer": "Número",
+      "boolean": "Verdadero/Falso",
+      "multiple": "Texto de varias líneas"
+    },
+    "loginSchema": {
+      "email": "Por favor, introduce una dirección de correo electrónico válida",
+      "password": "La contraseña debe tener al menos 6 caracteres"
+    },
+    "signupSchema": {
+      "name": "El nombre debe tener al menos 1 carácter",
+      "lastName": "El apellido debe tener al menos 1 carácter"
+    },
+    "newQuestionSchema": {
+      "title": "El título es obligatorio",
+      "type": "Por favor, selecciona un tipo de pregunta"
+    },
+    "newTemplateSchema": {
+      "title": "El título es obligatorio",
+      "description": "La descripción es obligatoria",
+      "topic": "Por favor, selecciona un tema",
+      "tags": "Debes añadir al menos una etiqueta",
+      "imageSize": "El tamaño de la imagen debe ser menor de 2 MB",
+      "imageType": "El archivo debe ser una imagen PNG, JPG o JPEG"
+    }
+  },
+  "methods": {
+    "getQuestionZodType": {
+      "text": "Este campo es obligatorio",
+      "integer": {
+        "number": "Por favor, introduce un número válido",
+        "min": "El valor debe ser 0 o mayor"
+      }
+    }
+  },
+  "errors": {
+    "general": "Algo salió mal, por favor intenta nuevamente más tarde.",
+    "patchAnswerCodeMessage": {
+      "400": "Datos inválidos. Por favor, revisa la información que proporcionaste.",
+      "401": "Tu sesión ha expirado. Por favor, inicia sesión para continuar editando la respuesta.",
+      "403": "No tienes permiso para editar esta respuesta.",
+      "404": "La respuesta que intentas editar no existe.",
+      "422": "La respuesta que intentas actualizar no coincide con el tipo de pregunta.",
+      "500": "No pudimos procesar tu solicitud. Por favor, intenta nuevamente más tarde."
+    },
+    "loginCodeMessages": {
+      "400": "Solicitud inválida. Por favor, verifica tu correo electrónico o contraseña e intenta nuevamente.",
+      "404": "Usuario no encontrado.",
+      "500": "Encontramos un error. Por favor, verifica tu correo electrónico o contraseña o intenta nuevamente más tarde."
+    },
+    "signupCodeMessages": {
+      "400": "Solicitud inválida. Por favor, revisa los datos que ingresaste.",
+      "409": "Este correo electrónico ya está registrado.",
+      "500": "No pudimos procesar tu solicitud. Por favor, intenta nuevamente más tarde."
+    },
+    "patchUserCodeMessages": {
+      "400": "Solicitud inválida. Los datos que proporcionaste no son válidos.",
+      "401": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+      "403": "No tienes permiso para realizar esta acción.",
+      "500": "Algo salió mal. Por favor, intenta nuevamente más tarde."
+    },
+    "postFormCodeMessage": {
+      "400": "Datos inválidos. Por favor, verifica los detalles del formulario e intenta nuevamente.",
+      "401": "La sesión ha expirado. Por favor, inicia sesión para enviar el formulario.",
+      "422": "El envío del formulario falló. Asegúrate de que todas las preguntas estén respondidas o verifica si ya has enviado el formulario.",
+      "500": "Encontramos un problema al procesar tu formulario. Por favor, intenta nuevamente más tarde."
+    },
+    "deleteFormCodeMessage": {
+      "400": "El formulario que intentas eliminar no existe.",
+      "401": "Por favor, inicia sesión para eliminar el formulario. Tu sesión ha expirado.",
+      "403": "No tienes permiso para eliminar este formulario.",
+      "500": "No pudimos procesar tu solicitud. Por favor, intenta nuevamente más tarde."
+    },
+    "createNewQuestionCodeMessage": {
+      "400": "Solicitud inválida. Por favor, verifica los detalles de la nueva pregunta.",
+      "401": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente para crear una nueva pregunta.",
+      "500": "Algo salió mal al crear la pregunta. Por favor, intenta nuevamente más tarde."
+    },
+    "deleteQuestionFromTemplateCodeMessage": {
+      "400": "Solicitud inválida. Plantilla o pregunta no encontrada. Por favor, revisa los detalles.",
+      "401": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente para eliminar la pregunta.",
+      "500": "Encontramos un error al eliminar la pregunta. Por favor, intenta nuevamente más tarde."
+    },
+    "reorderQuestionsCodeMessage": {
+      "400": "No se pudo actualizar el orden de las preguntas.",
+      "401": "Por favor, inicia sesión nuevamente para reordenar las preguntas. Tu sesión ha expirado.",
+      "500": "No pudimos procesar tu solicitud. Por favor, intenta nuevamente más tarde."
+    },
+    "updateQuestionsCodeMessage": {
+      "400": "Datos inválidos. Por favor, revisa los detalles de la pregunta.",
+      "401": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente para actualizar la pregunta.",
+      "500": "Encontramos un problema al actualizar la pregunta. Por favor, intenta nuevamente más tarde."
+    },
+    "createNewTemplateCodeMessage": {
+      "400": "Solicitud inválida. Por favor, verifica los detalles de la plantilla.",
+      "401": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente para crear una nueva plantilla.",
+      "500": "No pudimos procesar tu solicitud. Por favor, intenta nuevamente más tarde."
+    },
+    "deleteTemplateErrorCodeMessage": {
+      "400": "La plantilla que intentas eliminar no existe.",
+      "401": "Por favor, inicia sesión nuevamente para eliminar la plantilla. Tu sesión ha expirado.",
+      "403": "No tienes permiso para eliminar esta plantilla.",
+      "500": "Encontramos un error. Por favor, intenta nuevamente más tarde."
     }
   }
 }

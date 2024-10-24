@@ -1,51 +1,25 @@
-# React + TypeScript + Vite
+# Test Yourself App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Steps to setup develpment project
 
-Currently, two official plugins are available:
+1. Clone the repository
+2. Run `npm install`
+3. Setup the environment variables for the backend API URL, refer to the `.env.template` file
+4. Run `npm run dev` to start the development server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Missing Features
+- [ ] Add restrictions to blocked users.
+- [ ] Allow signup with services like Google.
+- [ ] Add allowed user for private templates.
+- [ ] Implement feature for question visibility.
+- [ ] Implement likes and comments for templates.
+- [ ] Searching command.
+- [ ] Delete user account.
+- [ ] Add markdown support.
+- [ ] Add tests.
 
-## Expanding the ESLint configuration
+### Documentation
+The documentation can be found in the `docs` folder.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# forms-front
+### Links
+[Bakend url](https://github.com/gerashdo/forms-backend)
